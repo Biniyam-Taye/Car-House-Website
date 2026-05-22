@@ -25,14 +25,13 @@ const Navbar = () => {
         ${location.pathname === "/" ? "bg-light" : "bg-white"}`}
     >
       {/* Logo */}
-      <Link to="/" className="flex items-center gap-2">
+      <Link to="/">
         <motion.img
           whileHover={{ scale: 1.05 }}
           src={assets.logo}
           alt="logo"
-          className="h-14 rounded-full"
+          className="h-12"
         />
-        <span className="text-xl font-bold text-gray-800">MT Car Rental</span>
       </Link>
 
       {/* Menu Links & Search */}
