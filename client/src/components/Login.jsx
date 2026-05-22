@@ -8,15 +8,13 @@ const Login = () => {
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [role, setRole] = React.useState("user");
 
   const onSubmitHandler = async (event) => {
     try {
       event.preventDefault();
-      const { data } = await axios.post(`/api/user/${state}`, {
-        name,
-        email,
-        password,
-      });
+      const payload = state === "login" ? { email, password } : { name, email, password, role };
+      const { data } = await axios.post(`/api/user/${state}`, payload);
       if (data.success) {
         navigate("/");
         setToken(data.token);
@@ -45,17 +43,32 @@ const Login = () => {
           {state === "login" ? "Login" : "Sign Up"}
         </p>
         {state === "register" && (
-          <div className="w-full">
-            <p>Name</p>
-            <input
-              onChange={(e) => setName(e.target.value)}
-              value={name}
-              placeholder="type here"
-              className="border border-gray-200 rounded w-full p-2 mt-1 outline-primary"
-              type="text"
-              required
-            />
-          </div>
+          <>
+            <div className="w-full">
+              <p>Name</p>
+              <input
+                onChange={(e) => setName(e.target.value)}
+                value={name}
+                placeholder="type here"
+                className="border border-gray-200 rounded w-full p-2 mt-1 outline-primary"
+                type="text"
+                required
+              />
+            </div>
+            <div className="w-full mt-2 text-gray-600">
+              <p className="mb-2 font-medium">I want to:</p>
+              <div className="flex items-center gap-6">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input type="radio" name="role" value="user" checked={role === "user"} onChange={(e) => setRole(e.target.value)} className="accent-primary" />
+                  Rent Cars
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input type="radio" name="role" value="owner" checked={role === "owner"} onChange={(e) => setRole(e.target.value)} className="accent-primary" />
+                  List Cars
+                </label>
+              </div>
+            </div>
+          </>
         )}
         <div className="w-full ">
           <p>Email</p>

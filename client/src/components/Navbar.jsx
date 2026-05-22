@@ -13,20 +13,7 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
-  //function changeRole
-  const changeRole = async () => {
-    try {
-      const { data } = await axios.post("/api/owner/change-role");
-      if (data.success) {
-        setIsOwner(true);
-        toast.success(data.message);
-      } else {
-        toast.error(data.message);
-      }
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
+
 
   return (
     <motion.div
@@ -79,12 +66,14 @@ const Navbar = () => {
 
         {/* Dashboard & Login Buttons */}
         <div className="flex max-sm:flex-col items-start sm:items-center gap-6 ">
-          <button
-            onClick={() => (isOwner ? navigate("/owner") : changeRole())}
-            className="cursor-pointer"
-          >
-            {isOwner ? "Dashboard" : "List Cars"}
-          </button>
+          {isOwner && (
+            <button
+              onClick={() => navigate("/owner")}
+              className="cursor-pointer"
+            >
+              Dashboard
+            </button>
+          )}
           <button
             onClick={() => {
               user ? logOut() : setShowLogin(true);

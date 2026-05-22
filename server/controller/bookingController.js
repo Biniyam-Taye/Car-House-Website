@@ -51,6 +51,12 @@ export const createBooking = async (req, res) => {
       return res.json({ success: false, message: "Car is not available" });
     }
     const carData = await Car.findById(car);
+    if (!carData) {
+      return res.json({ success: false, message: "Car not found" });
+    }
+    if (carData.owner.toString() === _id.toString()) {
+      return res.json({ success: false, message: "You cannot book your own car" });
+    }
 
     //calculate price based on pickupdate an returndate
     const picked = new Date(pickupDate);
