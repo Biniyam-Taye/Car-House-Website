@@ -10,7 +10,7 @@ import { motion } from "motion/react";
 const CarDetails = () => {
   const { id } = useParams();
 
-  const { cars, axios, pickupDate, setPickupDate, returnDate, setReturnDate } =
+  const { cars, axios, pickupDate, setPickupDate, returnDate, setReturnDate, user, setShowLogin } =
     useAppContext();
 
   const navigate = useNavigate();
@@ -19,6 +19,12 @@ const CarDetails = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!user) {
+      toast.error("Please register or log in to book");
+      setShowLogin(true);
+      return;
+    }
 
     try {
       const { data } = await axios.post("/api/booking/create", {

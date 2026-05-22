@@ -37,6 +37,11 @@ const MyBookings = () => {
         subTitle="View and manage your all car bookings"
         align="left"
       />
+      {!user ? (
+        <div className="flex flex-col items-center justify-center mt-20 gap-4">
+          <p className="text-gray-500 text-lg">Please register or log in to view your bookings.</p>
+        </div>
+      ) : (
       <div>
         {bookings.map((booking, index) => (
           <motion.div
@@ -124,6 +129,7 @@ const MyBookings = () => {
           </motion.div>
         ))}
       </div>
+      )}
     </motion.div>
   );
 };
