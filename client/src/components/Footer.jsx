@@ -26,7 +26,7 @@ const Footer = () => {
               transition={{ duration: 0.5, delay: 0.3 }}
               src={assets.logo}
               alt="logo"
-              className="h-8 md:h-9 rounded-full"
+              className="h-14 rounded-full"
             />
             <span className="text-xl font-bold text-gray-800">MT Car Rental</span>
           </div>
