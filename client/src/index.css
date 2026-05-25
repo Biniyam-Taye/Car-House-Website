@@ -3,6 +3,10 @@
 * {
   font-family: "Outfit", sans-serif;
 }
+body {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
 @theme {
   --color-primary: #2563eb;
   --color-primary-dull: #1f58d8;
