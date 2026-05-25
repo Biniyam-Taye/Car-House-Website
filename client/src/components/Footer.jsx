@@ -1,5 +1,6 @@
 import React from "react";
 import { assets } from "../assets/assets";
+import { Link } from "react-router-dom";
 import { motion } from "motion/react";
 
 const Footer = () => {
@@ -84,16 +85,16 @@ const Footer = () => {
             </h2>
             <ul className="mt-3 flex flex-col gap-1.5">
               <li>
-                <a href="#">Home</a>
+                <Link to="/">Home</Link>
               </li>
               <li>
-                <a href="#">Browse Cars</a>
+                <Link to="/cars">Browse Cars</Link>
               </li>
               <li>
-                <a href="#">List Your Car</a>
+                <Link to="/owner">List Your Car</Link>
               </li>
               <li>
-                <a href="#">About Us</a>
+                <Link to="/">About Us</Link>
               </li>
             </ul>
           </div>
@@ -103,16 +104,16 @@ const Footer = () => {
             </h2>
             <ul className="mt-3 flex flex-col gap-1.5">
               <li>
-                <a href="#">Help Center</a>
+                <Link to="/">Help Center</Link>
               </li>
               <li>
-                <a href="#">Terms of Servoce</a>
+                <Link to="/">Terms of Service</Link>
               </li>
               <li>
-                <a href="#">Privacy Policy</a>
+                <Link to="/">Privacy Policy</Link>
               </li>
               <li>
-                <a href="#">Insurance</a>
+                <Link to="/">Insurance</Link>
               </li>
             </ul>
           </div>
@@ -139,15 +140,15 @@ const Footer = () => {
         <p>@ {new Date().getFullYear()} Brand.All rights reserved.</p>
         <ul className="flex items-center gap-4">
           <li>
-            <a href="#">Privacy</a>
+            <Link to="/">Privacy</Link>
           </li>
-          <ul>|</ul>
+          <li>|</li>
           <li>
-            <a href="#">Terms</a>
+            <Link to="/">Terms</Link>
           </li>
-          <ul>|</ul>
+          <li>|</li>
           <li>
-            <a href="#">Sitemap</a>
+            <Link to="/">Sitemap</Link>
           </li>
         </ul>
       </motion.div>
