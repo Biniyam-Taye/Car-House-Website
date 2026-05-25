@@ -5,7 +5,7 @@ import { useAppContext } from "../../context/AppContext";
 import toast from "react-hot-toast";
 
 const AddCar = () => {
-  const { axios, currency } = useAppContext();
+  const { axios, currency, fetchCars } = useAppContext();
 
   const [image, setImage] = useState(null);
   const [car, setCar] = useState({
@@ -48,6 +48,10 @@ const AddCar = () => {
           location: "",
           description: "",
         });
+        // Refresh the global cars list so the new car appears immediately
+        if (fetchCars) {
+          fetchCars();
+        }
       } else {
         toast.error(data.message);
       }

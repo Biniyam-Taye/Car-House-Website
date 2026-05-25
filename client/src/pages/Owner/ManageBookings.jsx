@@ -110,6 +110,28 @@ const ManageBookings = () => {
                       {booking.status}
                     </span>
                   )}
+                  <button
+                    onClick={async () => {
+                      if (window.confirm("Are you sure you want to delete this booking?")) {
+                        try {
+                          const { data } = await axios.post("/api/booking/delete", {
+                            bookingId: booking._id,
+                          });
+                          if (data.success) {
+                            toast.success("Booking deleted successfully");
+                            fetchOwnerBookings();
+                          } else {
+                            toast.error(data.message);
+                          }
+                        } catch (error) {
+                          toast.error(error.message);
+                        }
+                      }
+                    }}
+                    className="ml-3 px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 text-xs transition"
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}

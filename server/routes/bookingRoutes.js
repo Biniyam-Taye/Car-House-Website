@@ -7,6 +7,7 @@ import {
   createCheckoutSession,
   getOwnerBookings,
   getUserBookings,
+  deleteBooking,
 } from "../controller/bookingController.js";
 
 const bookingRouter = express.Router();
@@ -17,5 +18,6 @@ bookingRouter.post("/checkout-session", protect, createCheckoutSession);
 bookingRouter.get("/user", protect, getUserBookings);
 bookingRouter.get("/owner", protect, getOwnerBookings);
 bookingRouter.post("/change-status", protect, changeBookingStatus);
+bookingRouter.post("/delete", protect, deleteBooking);
 
 export default bookingRouter;

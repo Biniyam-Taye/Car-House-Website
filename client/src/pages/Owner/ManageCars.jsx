@@ -5,7 +5,7 @@ import { useAppContext } from "../../context/AppContext";
 import toast from "react-hot-toast";
 
 const ManageCars = () => {
-  const { isOwner, axios, currency } = useAppContext();
+  const { isOwner, axios, currency, fetchCars: fetchGlobalCars } = useAppContext();
 
   const [cars, setCars] = useState([]);
 
@@ -28,6 +28,7 @@ const ManageCars = () => {
       if (data.success) {
         toast.success(data.message);
         fetchOwnerCars();
+        if (fetchGlobalCars) fetchGlobalCars();
       } else {
         toast.error(data.message);
       }
@@ -45,6 +46,7 @@ const ManageCars = () => {
       if (data.success) {
         toast.success(data.message);
         fetchOwnerCars();
+        if (fetchGlobalCars) fetchGlobalCars();
       } else {
         toast.error(data.message);
       }

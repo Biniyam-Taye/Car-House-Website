@@ -106,6 +106,8 @@ export const createCheckoutSession = async (req, res) => {
 
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_dummy');
 
+    const origin = req.headers.origin || "http://localhost:5173";
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
@@ -122,8 +124,8 @@ export const createCheckoutSession = async (req, res) => {
         },
       ],
       mode: 'payment',
-      success_url: `http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}&car=${car}&pickupDate=${pickupDate}&returnDate=${returnDate}`,
-      cancel_url: `http://localhost:5173/car-details/${car}`,
+      success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}&car=${car}&pickupDate=${pickupDate}&returnDate=${returnDate}`,
+      cancel_url: `${origin}/car-details/${car}`,
     });
 
     res.json({ success: true, sessionId: session.id, url: session.url });
@@ -189,6 +191,33 @@ export const changeBookingStatus = async (req, res) => {
     await bookingDoc.save();
 
     res.json({ success: true, message: "Status Updated" });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+//API to delete a booking
+export const deleteBooking = async (req, res) => {
+  try {
+    const { _id } = req.user;
+    const { bookingId } = req.body;
+
+    const bookingDoc = await booking.findById(bookingId);
+
+    if (!bookingDoc) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Booking not found" });
+    }
+
+    if (bookingDoc.owner.toString() !== _id.toString()) {
+      return res.status(403).json({ success: false, message: "Unauthorized" });
+    }
+
+    await booking.findByIdAndDelete(bookingId);
+
+    res.json({ success: true, message: "Booking Deleted" });
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ success: false, message: error.message });
