@@ -1,5 +1,6 @@
 import booking from "../models/Booking.js";
 import Car from "../models/car.js";
+import Stripe from "stripe";
 
 //function to check Availability of car for given date
 const checkAvailiability = async (car, pickupDate, returnDate) => {
@@ -74,6 +75,58 @@ export const createBooking = async (req, res) => {
     });
 
     res.json({ success: true, message: "Booking Created" });
+  } catch (error) {
+    console.log(error.message);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+//API to create Stripe checkout session
+export const createCheckoutSession = async (req, res) => {
+  try {
+    const { _id } = req.user;
+    const { car, pickupDate, returnDate } = req.body;
+
+    const isAvaliable = await checkAvailiability(car, pickupDate, returnDate);
+    if (!isAvaliable) {
+      return res.json({ success: false, message: "Car is not available" });
+    }
+    const carData = await Car.findById(car);
+    if (!carData) {
+      return res.json({ success: false, message: "Car not found" });
+    }
+    if (carData.owner.toString() === _id.toString()) {
+      return res.json({ success: false, message: "You cannot book your own car" });
+    }
+
+    const picked = new Date(pickupDate);
+    const returned = new Date(returnDate);
+    const noOfDays = Math.ceil((returned - picked) / (1000 * 60 * 60 * 24));
+    const price = carData.pricePerDay * noOfDays;
+
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_dummy');
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [
+        {
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: `${carData.brand} ${carData.model} Booking`,
+              description: `From ${pickupDate} to ${returnDate}`,
+            },
+            unit_amount: price * 100, // Stripe uses cents
+          },
+          quantity: 1,
+        },
+      ],
+      mode: 'payment',
+      success_url: `http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}&car=${car}&pickupDate=${pickupDate}&returnDate=${returnDate}`,
+      cancel_url: `http://localhost:5173/car-details/${car}`,
+    });
+
+    res.json({ success: true, sessionId: session.id });
   } catch (error) {
     console.log(error.message);
     res.json({ success: false, message: error.message });

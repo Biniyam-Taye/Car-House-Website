@@ -6,6 +6,9 @@ import Loader from "../components/Loader";
 import { useAppContext } from "../context/AppContext";
 import toast from "react-hot-toast";
 import { motion } from "motion/react";
+import { loadStripe } from "@stripe/stripe-js";
+
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || 'pk_test_dummy');
 
 const CarDetails = () => {
   const { id } = useParams();
@@ -27,14 +30,20 @@ const CarDetails = () => {
     }
 
     try {
-      const { data } = await axios.post("/api/booking/create", {
+      const { data } = await axios.post("/api/booking/checkout-session", {
         car: id,
         pickupDate,
         returnDate,
       });
       if (data.success) {
-        toast.success(data.message);
-        navigate("/my-bookings");
+        // Redirect to Stripe checkout
+        const stripe = await stripePromise;
+        const result = await stripe.redirectToCheckout({
+          sessionId: data.sessionId,
+        });
+        if (result.error) {
+          toast.error(result.error.message);
+        }
       } else {
         toast.error(data.message);
       }
