@@ -21,8 +21,8 @@ const Navbar = () => {
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
-        className="flex items-center justify-between px-6 md:px-10 py-2.5 mx-auto w-full max-w-[98%]
-          text-gray-600 bg-white/85 backdrop-blur-md relative transition-all rounded-[40px] shadow-[0_10px_35px_rgba(0,0,0,0.08)] border border-white/50"
+        className="flex items-center justify-between px-6 md:px-10 py-5 mx-auto w-full max-w-[98%]
+          text-gray-600 bg-white/90 backdrop-blur-md relative transition-all rounded-[40px] shadow-[0_10px_35px_rgba(0,0,0,0.06)] border-[2.5px] border-gray-200"
       >
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
