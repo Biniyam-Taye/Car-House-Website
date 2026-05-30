@@ -25,14 +25,17 @@ const Navbar = () => {
           text-gray-600 bg-white/90 backdrop-blur-md relative transition-all rounded-[40px] shadow-[0_10px_35px_rgba(0,0,0,0.06)] border-[2.5px] border-gray-200"
       >
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2">
+        <Link to="/" className="flex items-center gap-2.5 group">
           <motion.img
-            whileHover={{ scale: 1.1, rotate: 5 }}
+            whileHover={{ rotate: 360, scale: 1.15 }}
+            transition={{ type: "spring", stiffness: 200, damping: 12 }}
             src={assets.logo}
             alt="logo"
-            className="h-10 md:h-11"
+            className="h-9 md:h-10 cursor-pointer"
           />
-          <span className="text-xl font-extrabold text-gray-900 hidden sm:block tracking-tight">HotelDemo</span>
+          <span className="text-xl font-extrabold text-gray-900 hidden sm:block tracking-tight transition-all duration-500 bg-gradient-to-r from-gray-900 via-blue-600 to-indigo-600 bg-[size:200%] bg-clip-text group-hover:text-transparent group-hover:bg-right">
+            HotelDemo
+          </span>
         </Link>
 
         {/* Menu Links & Search */}
@@ -89,11 +92,14 @@ const Navbar = () => {
               onClick={() => {
                 user ? logOut() : setShowLogin(true);
               }}
-              className="cursor-pointer w-full sm:w-auto px-6 py-2.5 bg-[#1e78ff] transition-all duration-300 text-white font-semibold rounded-full relative group overflow-hidden flex items-center justify-center hover:scale-105 shadow-[0_4px_15px_rgba(30,120,255,0.3)] hover:shadow-[0_8px_25px_rgba(30,120,255,0.55)]"
+              className="cursor-pointer w-full sm:w-auto px-6 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 transition-all duration-300 text-white font-semibold rounded-full relative overflow-hidden flex items-center justify-center gap-0 hover:gap-2 shadow-[0_4px_15px_rgba(30,120,255,0.3)] hover:shadow-[0_8px_25px_rgba(30,120,255,0.5)] hover:scale-105 group"
             >
-              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full -z-10"></span>
-              <span className="absolute top-0 -inset-x-12 w-12 h-full bg-white/25 transform skew-x-12 -translate-x-12 group-hover:translate-x-[260px] transition-transform duration-700 ease-out -z-10"></span>
-              <span className="relative z-10">{user ? "Logout" : "Sign Up"}</span>
+              <span className="relative z-10 transition-all duration-300">{user ? "Logout" : "Sign Up"}</span>
+              <span className="w-0 group-hover:w-4 overflow-hidden transition-all duration-300 flex items-center">
+                <svg className="w-4 h-4 text-white shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                </svg>
+              </span>
             </button>
           </div>
         </div>
