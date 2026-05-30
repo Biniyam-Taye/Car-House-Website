@@ -48,10 +48,11 @@ const Navbar = () => {
             <Link
               key={index}
               to={link.path}
-              className="relative font-medium text-gray-600 px-4 py-2 rounded-full transition-all duration-300 hover:text-blue-600 hover:bg-blue-50/80 hover:shadow-[0_4px_12px_rgba(59,130,246,0.08)] hover:scale-105"
+              className="relative px-5 py-2.5 font-semibold text-[15px] text-gray-600 transition-all duration-300 hover:text-white rounded-full group flex items-center justify-center"
               onClick={() => setOpen(false)} // Close menu on click (mobile)
             >
-              {link.name}
+              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-blue-600 to-indigo-600 opacity-0 scale-50 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 rounded-full shadow-[0_6px_20px_rgba(37,99,235,0.35)]"></span>
+              <span className="relative z-10">{link.name}</span>
             </Link>
           ))}
 
@@ -75,21 +76,24 @@ const Navbar = () => {
                 Dashboard
               </button>
             )}
-            <button
-              onClick={() => {
-                !user && setShowLogin(true);
-              }}
-              className="font-medium text-gray-700 hover:text-blue-600 transition-colors hidden sm:block px-3 py-1.5 rounded-full hover:bg-gray-50"
-            >
-              {!user && "Login"}
-            </button>
+            {!user && (
+              <button
+                onClick={() => setShowLogin(true)}
+                className="relative px-5 py-2.5 font-semibold text-[15px] text-gray-600 transition-all duration-300 rounded-full hover:text-white border border-gray-200 hover:border-transparent group overflow-hidden hidden sm:flex items-center justify-center cursor-pointer"
+              >
+                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-gray-900 to-gray-800 -translate-x-full group-hover:translate-x-0 transition-transform duration-300 rounded-full -z-10"></span>
+                <span className="relative z-10">Login</span>
+              </button>
+            )}
             <button
               onClick={() => {
                 user ? logOut() : setShowLogin(true);
               }}
-              className="cursor-pointer w-full sm:w-auto px-6 py-2.5 bg-[#1e78ff] hover:bg-blue-600 transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_20px_rgba(30,120,255,0.6)] text-white font-semibold rounded-full"
+              className="cursor-pointer w-full sm:w-auto px-6 py-2.5 bg-[#1e78ff] transition-all duration-300 text-white font-semibold rounded-full relative group overflow-hidden flex items-center justify-center hover:scale-105 shadow-[0_4px_15px_rgba(30,120,255,0.3)] hover:shadow-[0_8px_25px_rgba(30,120,255,0.55)]"
             >
-              {user ? "Logout" : "Sign Up"}
+              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full -z-10"></span>
+              <span className="absolute top-0 -inset-x-12 w-12 h-full bg-white/25 transform skew-x-12 -translate-x-12 group-hover:translate-x-[260px] transition-transform duration-700 ease-out -z-10"></span>
+              <span className="relative z-10">{user ? "Logout" : "Sign Up"}</span>
             </button>
           </div>
         </div>
