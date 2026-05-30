@@ -41,9 +41,10 @@ const Hero = () => {
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
           <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
         </span>
-        <span className="tracking-wide">
-          ⚡ Special Offer: Save <span className="text-blue-600 font-extrabold">15% off</span> on premium cars! Code: <span className="font-bold text-gray-900 bg-gray-100 border border-gray-200 px-2 py-0.5 rounded">DRIVE15</span>
-        </span>
+        <span className="tracking-wide flex items-center gap-1.5">
+            <svg className="w-4 h-4 text-yellow-500 shrink-0" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            Special Offer: Save <span className="text-blue-600 font-extrabold">15% off</span> on premium cars! Code: <span className="font-bold text-gray-900 bg-gray-100 border border-gray-200 px-2 py-0.5 rounded">DRIVE15</span>
+          </span>
       </motion.div>
 
       {/* Hero Header Text & Badges */}
@@ -54,8 +55,9 @@ const Hero = () => {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="px-4 py-1.5 bg-blue-50 rounded-full border border-blue-100 flex items-center gap-1.5 shadow-sm"
         >
-          <span className="text-[11px] font-extrabold text-blue-600 uppercase tracking-widest flex items-center gap-1">
-            ✨ The Ultimate Drive Experience
+          <span className="text-[11px] font-extrabold text-blue-600 uppercase tracking-widest flex items-center gap-1.5">
+            <svg className="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            The Ultimate Drive Experience
           </span>
         </motion.div>
         
