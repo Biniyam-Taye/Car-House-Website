@@ -2,15 +2,15 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "keywords": [],
+  "license": "ISC",
+  "author": "",
   "type": "module",
+  "main": "server.js",
   "scripts": {
     "server": "nodemon server.js",
     "start": "node server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "axois": "^0.0.1-security",
     "bcrypt": "^6.0.0",
