@@ -24,9 +24,9 @@ const Navbar = () => {
 
     const handleScroll = () => {
       const currentScroll = window.scrollY;
-      if (currentScroll > 150) {
+      if (currentScroll > 40) {
         setIsVisible(true);
-      } else if (currentScroll < 50) {
+      } else if (currentScroll < 10) {
         setIsVisible(false);
       }
     };
