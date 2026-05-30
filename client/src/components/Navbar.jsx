@@ -23,14 +23,15 @@ const Navbar = () => {
     }
 
     const handleScroll = () => {
-      if (window.scrollY > 150) {
+      const currentScroll = window.scrollY;
+      if (currentScroll > 150) {
         setIsVisible(true);
-      } else {
+      } else if (currentScroll < 50) {
         setIsVisible(false);
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll(); // Trigger initially
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isHomePage]);
@@ -38,9 +39,9 @@ const Navbar = () => {
   return (
     <div className={`px-6 md:px-12 pt-6 z-50 fixed w-full top-0 left-0 transition-all duration-300 ${isVisible ? "pointer-events-auto" : "pointer-events-none"}`}>
       <motion.div role="navigation"
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: isVisible ? 0 : -100, opacity: isVisible ? 1 : 0 }}
-        transition={{ duration: 0.4, ease: "easeInOut" }}
+        initial={{ y: -120, opacity: 0 }}
+        animate={{ y: isVisible ? 0 : -120, opacity: isVisible ? 1 : 0 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
         className="flex items-center justify-between px-6 md:px-10 py-5 mx-auto w-full max-w-[98%]
           text-gray-600 bg-white/90 backdrop-blur-md relative transition-all rounded-[40px] shadow-[0_10px_35px_rgba(0,0,0,0.06)] border-[2.5px] border-gray-200"
       >
