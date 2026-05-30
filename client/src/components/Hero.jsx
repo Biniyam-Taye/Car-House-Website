@@ -30,6 +30,22 @@ const Hero = () => {
       <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-blue-400/10 rounded-full blur-[120px] -z-10 pointer-events-none"></div>
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-400/10 rounded-full blur-[140px] -z-10 pointer-events-none"></div>
 
+      {/* Floating Announcement Bar (Covers Navbar space when hidden at the top) */}
+      <motion.div
+        initial={{ y: -30, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        className="absolute top-8 left-1/2 -translate-x-1/2 hidden md:flex items-center gap-3 px-5 py-2.5 bg-white/80 backdrop-blur-sm rounded-full border border-gray-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.02)] text-xs text-gray-600 font-semibold z-10"
+      >
+        <span className="flex h-2.5 w-2.5 relative">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+        </span>
+        <span className="tracking-wide">
+          ⚡ Special Offer: Save <span className="text-blue-600 font-extrabold">15% off</span> on premium cars! Code: <span className="font-bold text-gray-900 bg-gray-100 border border-gray-200 px-2 py-0.5 rounded">DRIVE15</span>
+        </span>
+      </motion.div>
+
       {/* Hero Header Text & Badges */}
       <div className="flex flex-col items-center gap-4 mt-4">
         <motion.div
