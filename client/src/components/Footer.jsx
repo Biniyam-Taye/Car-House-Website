@@ -6,78 +6,94 @@ import { motion } from "motion/react";
 const Footer = () => {
   return (
     <motion.div role="contentinfo"
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      className="bg-[#f8f9fa] rounded-t-[50px] shadow-[0_-10px_40px_rgba(0,0,0,0.04)] mt-20 pt-16 pb-8 px-8 md:px-16 lg:px-24 xl:px-32 text-sm text-gray-500"
+      transition={{ duration: 0.7 }}
+      className="bg-gradient-to-b from-gray-50 to-gray-100/70 rounded-t-[70px] md:rounded-t-[100px] border-t border-gray-200/50 shadow-[0_-15px_50px_rgba(0,0,0,0.04)] mt-28 pt-20 pb-8 px-6 md:px-12 lg:px-20 xl:px-28 text-sm text-gray-500"
     >
-      <div className="flex flex-wrap justify-between gap-12 mb-12">
+      <div className="max-w-7xl mx-auto flex flex-wrap justify-between gap-12 mb-16">
         {/* Left Section */}
-        <div className="w-full lg:w-1/3">
-          <div className="flex items-center gap-2 mb-4">
+        <div className="w-full lg:w-1/3 pr-0 lg:pr-8">
+          <div className="flex items-center gap-2.5 mb-5">
             <motion.img 
-              whileHover={{ scale: 1.1, rotate: -5 }}
+              whileHover={{ scale: 1.1, rotate: -8 }}
               transition={{ type: "spring", stiffness: 300 }}
               src={assets.logo} 
               alt="logo" 
-              className="h-10 md:h-12" 
+              className="h-9 md:h-11" 
             />
             <span className="text-xl font-extrabold text-gray-900 tracking-tight">HotelDemo</span>
           </div>
-          <p className="mb-6 leading-relaxed">
+          <p className="mb-6 leading-relaxed text-gray-500 font-normal">
             Book your perfect stay with us. We offer seamless hotel reservations, trusted listings, and the best prices to make your travel experience smooth, comfortable, and memorable.
           </p>
-          <div className="flex items-center gap-4">
-            <a href="#" className="hover:opacity-75 transition-all transform hover:scale-110 hover:-translate-y-1"><img src={assets.instagram_logo} alt="instagram" className="w-5 h-5 opacity-60 grayscale hover:grayscale-0 transition-all" /></a>
-            <a href="#" className="hover:opacity-75 transition-all transform hover:scale-110 hover:-translate-y-1"><img src={assets.facebook_logo} alt="facebook" className="w-5 h-5 opacity-60 grayscale hover:grayscale-0 transition-all" /></a>
-            <a href="#" className="hover:opacity-75 transition-all transform hover:scale-110 hover:-translate-y-1"><img src={assets.twitter_logo} alt="twitter" className="w-5 h-5 opacity-60 grayscale hover:grayscale-0 transition-all" /></a>
-            <a href="#" className="hover:opacity-75 transition-all transform hover:scale-110 hover:-translate-y-1"><img src={assets.gmail_logo} alt="email" className="w-5 h-5 opacity-60 hover:text-red-500 transition-all" /></a>
+          <div className="flex items-center gap-3">
+            <a href="#" className="w-9 h-9 flex items-center justify-center bg-white rounded-full border border-gray-200 shadow-sm hover:border-pink-300 hover:bg-pink-50/50 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-md">
+              <img src={assets.instagram_logo} alt="instagram" className="w-4 h-4 opacity-75 transition-all" />
+            </a>
+            <a href="#" className="w-9 h-9 flex items-center justify-center bg-white rounded-full border border-gray-200 shadow-sm hover:border-blue-300 hover:bg-blue-50/50 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-md">
+              <img src={assets.facebook_logo} alt="facebook" className="w-4 h-4 opacity-75 transition-all" />
+            </a>
+            <a href="#" className="w-9 h-9 flex items-center justify-center bg-white rounded-full border border-gray-200 shadow-sm hover:border-sky-300 hover:bg-sky-50/50 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-md">
+              <img src={assets.twitter_logo} alt="twitter" className="w-4 h-4 opacity-75 transition-all" />
+            </a>
+            <a href="#" className="w-9 h-9 flex items-center justify-center bg-white rounded-full border border-gray-200 shadow-sm hover:border-red-300 hover:bg-red-50/50 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-md">
+              <img src={assets.gmail_logo} alt="email" className="w-4 h-4 opacity-75 transition-all" />
+            </a>
           </div>
         </div>
 
         {/* Links Section */}
-        <div className="w-full lg:w-1/3 flex justify-between gap-8">
+        <div className="w-full lg:w-1/3 flex justify-between gap-6">
           <div>
-            <h3 className="text-gray-900 font-semibold tracking-wider mb-6">COMPANY</h3>
-            <ul className="flex flex-col gap-3">
-              <li><Link to="/" className="hover:text-blue-600 transition-colors font-medium">About</Link></li>
-              <li><Link to="/" className="hover:text-blue-600 transition-colors font-medium">Careers</Link></li>
-              <li><Link to="/" className="hover:text-blue-600 transition-colors font-medium">Press</Link></li>
-              <li><Link to="/" className="hover:text-blue-600 transition-colors font-medium">Blog</Link></li>
-              <li><Link to="/" className="hover:text-blue-600 transition-colors font-medium">Partners</Link></li>
+            <h3 className="text-gray-900 font-bold text-xs tracking-widest uppercase mb-6">COMPANY</h3>
+            <ul className="flex flex-col gap-3.5">
+              <li><Link to="/" className="hover:text-blue-600 transition-colors font-medium text-gray-500">About</Link></li>
+              <li><Link to="/" className="hover:text-blue-600 transition-colors font-medium text-gray-500">Careers</Link></li>
+              <li><Link to="/" className="hover:text-blue-600 transition-colors font-medium text-gray-500">Press</Link></li>
+              <li><Link to="/" className="hover:text-blue-600 transition-colors font-medium text-gray-500">Blog</Link></li>
+              <li><Link to="/" className="hover:text-blue-600 transition-colors font-medium text-gray-500">Partners</Link></li>
             </ul>
           </div>
           <div>
-            <h3 className="text-gray-900 font-semibold tracking-wider mb-6">RESOURCES</h3>
-            <ul className="flex flex-col gap-3">
-              <li><Link to="/" className="hover:text-blue-600 transition-colors font-medium">Help</Link></li>
-              <li><Link to="/" className="hover:text-blue-600 transition-colors font-medium">Safety</Link></li>
-              <li><Link to="/" className="hover:text-blue-600 transition-colors font-medium">Cancel</Link></li>
-              <li><Link to="/" className="hover:text-blue-600 transition-colors font-medium">Support</Link></li>
-              <li><Link to="/" className="hover:text-blue-600 transition-colors font-medium">Access</Link></li>
+            <h3 className="text-gray-900 font-bold text-xs tracking-widest uppercase mb-6">RESOURCES</h3>
+            <ul className="flex flex-col gap-3.5">
+              <li><Link to="/" className="hover:text-blue-600 transition-colors font-medium text-gray-500">Help</Link></li>
+              <li><Link to="/" className="hover:text-blue-600 transition-colors font-medium text-gray-500">Safety</Link></li>
+              <li><Link to="/" className="hover:text-blue-600 transition-colors font-medium text-gray-500">Cancel</Link></li>
+              <li><Link to="/" className="hover:text-blue-600 transition-colors font-medium text-gray-500">Support</Link></li>
+              <li><Link to="/" className="hover:text-blue-600 transition-colors font-medium text-gray-500">Access</Link></li>
             </ul>
           </div>
         </div>
 
         {/* Newsletter Section */}
         <div className="w-full lg:w-1/4">
-          <h3 className="text-gray-900 font-semibold tracking-wider mb-6">STAY UPDATED</h3>
-          <p className="mb-4 leading-relaxed">
+          <h3 className="text-gray-900 font-bold text-xs tracking-widest uppercase mb-6">STAY UPDATED</h3>
+          <p className="mb-4 leading-relaxed text-gray-500">
             The latest news, articles, and resources, sent to your inbox weekly.
           </p>
-          <p className="text-xs text-gray-400 mt-6">
-            Subscribe via our <a href="#" className="text-blue-500 hover:underline font-medium">Journal</a> page for editorial updates.
+          <div className="mt-4 flex items-center bg-white rounded-full p-1 border border-gray-200 focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-100 transition-all shadow-sm">
+            <input type="email" placeholder="Your email address" className="bg-transparent pl-4 pr-2 py-1.5 w-full text-xs outline-none text-gray-700 font-medium" />
+            <button className="bg-blue-600 hover:bg-blue-700 text-white rounded-full p-2 transition-all hover:scale-105 active:scale-95 shadow-sm">
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+              </svg>
+            </button>
+          </div>
+          <p className="text-xs text-gray-400 mt-4 leading-normal">
+            Subscribe via our <a href="#" className="text-blue-500 hover:underline font-semibold transition-all">Journal</a> page for editorial updates.
           </p>
         </div>
       </div>
 
       {/* Bottom Section */}
-      <div className="pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4">
-        <p>Copyright ©{new Date().getFullYear()} - Biniyam Taye. All rights reserved.</p>
-        <div className="flex gap-6">
-          <Link to="/" className="hover:text-gray-900 transition-colors font-medium">Privacy</Link>
-          <Link to="/" className="hover:text-gray-900 transition-colors font-medium">Terms</Link>
-          <Link to="/" className="hover:text-gray-900 transition-colors font-medium">Sitemap</Link>
+      <div className="max-w-7xl mx-auto pt-8 border-t border-gray-200/80 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p className="text-xs text-gray-400">Copyright ©{new Date().getFullYear()} - Biniyam Taye. All rights reserved.</p>
+        <div className="flex gap-6 text-xs font-semibold text-gray-400">
+          <Link to="/" className="hover:text-gray-900 transition-colors">Privacy</Link>
+          <Link to="/" className="hover:text-gray-900 transition-colors">Terms</Link>
+          <Link to="/" className="hover:text-gray-900 transition-colors">Sitemap</Link>
         </div>
       </div>
     </motion.div>

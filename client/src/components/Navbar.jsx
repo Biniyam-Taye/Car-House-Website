@@ -16,13 +16,13 @@ const Navbar = () => {
 
 
   return (
-    <div className="px-4 pt-4 z-50 fixed w-full top-0 left-0">
+    <div className="px-2 md:px-4 pt-3 z-50 fixed w-full top-0 left-0">
       <motion.div role="navigation"
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
-        className="flex items-center justify-between px-6 md:px-10 py-3 mx-auto max-w-7xl
-          text-gray-600 bg-white relative transition-all rounded-[40px] shadow-[0_10px_40px_rgba(0,0,0,0.1)] border border-gray-100"
+        className="flex items-center justify-between px-6 md:px-10 py-2.5 mx-auto w-full max-w-[98%]
+          text-gray-600 bg-white/85 backdrop-blur-md relative transition-all rounded-[40px] shadow-[0_10px_35px_rgba(0,0,0,0.08)] border border-white/50"
       >
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
@@ -30,7 +30,7 @@ const Navbar = () => {
             whileHover={{ scale: 1.1, rotate: 5 }}
             src={assets.logo}
             alt="logo"
-            className="h-10 md:h-12"
+            className="h-10 md:h-11"
           />
           <span className="text-xl font-extrabold text-gray-900 hidden sm:block tracking-tight">HotelDemo</span>
         </Link>
@@ -38,7 +38,7 @@ const Navbar = () => {
         {/* Menu Links & Search */}
         <div
           className={`absolute top-20 right-0 h-screen w-full sm:h-auto sm:w-auto sm:static
-            flex flex-col sm:flex-row items-start sm:items-center gap-6 sm:gap-8 p-6
+            flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 p-6
             sm:p-0 rounded-3xl sm:rounded-none shadow-2xl sm:shadow-none bg-white sm:bg-transparent
             transform transition-transform duration-300
             ${open ? "translate-x-0" : "translate-x-full"} sm:translate-x-0`}
@@ -48,7 +48,7 @@ const Navbar = () => {
             <Link
               key={index}
               to={link.path}
-              className="relative font-bold text-gray-600 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600 transition-all duration-300 transform hover:scale-110 before:content-[''] before:absolute before:-bottom-1 before:left-0 before:w-0 before:h-1 before:rounded-full before:bg-gradient-to-r before:from-blue-600 before:to-purple-600 hover:before:w-full before:transition-all before:duration-300"
+              className="relative font-medium text-gray-600 px-4 py-2 rounded-full transition-all duration-300 hover:text-blue-600 hover:bg-blue-50/80 hover:shadow-[0_4px_12px_rgba(59,130,246,0.08)] hover:scale-105"
               onClick={() => setOpen(false)} // Close menu on click (mobile)
             >
               {link.name}
@@ -70,16 +70,16 @@ const Navbar = () => {
             {isOwner && (
               <button
                 onClick={() => navigate("/owner")}
-                className="font-bold text-gray-700 hover:text-blue-600 transition-colors"
+                className="font-medium text-gray-700 hover:text-blue-600 transition-colors px-3 py-1.5 rounded-full hover:bg-gray-50"
               >
                 Dashboard
               </button>
             )}
             <button
               onClick={() => {
-                !user && setShowLogin(true); // Assuming setShowLogin triggers modal. Adjust if needed.
+                !user && setShowLogin(true);
               }}
-              className="font-bold text-gray-700 hover:text-blue-600 transition-colors hidden sm:block"
+              className="font-medium text-gray-700 hover:text-blue-600 transition-colors hidden sm:block px-3 py-1.5 rounded-full hover:bg-gray-50"
             >
               {!user && "Login"}
             </button>
@@ -87,7 +87,7 @@ const Navbar = () => {
               onClick={() => {
                 user ? logOut() : setShowLogin(true);
               }}
-              className="cursor-pointer w-full sm:w-auto px-8 py-3 bg-[#1e78ff] hover:bg-blue-600 transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_20px_rgba(30,120,255,0.6)] text-white font-bold rounded-full"
+              className="cursor-pointer w-full sm:w-auto px-6 py-2.5 bg-[#1e78ff] hover:bg-blue-600 transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_20px_rgba(30,120,255,0.6)] text-white font-semibold rounded-full"
             >
               {user ? "Logout" : "Sign Up"}
             </button>
