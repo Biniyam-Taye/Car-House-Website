@@ -9,7 +9,7 @@ const Footer = () => {
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7 }}
-      className="bg-[#f9fafb] rounded-[50px] border-[2.5px] border-gray-200 shadow-[0_15px_45px_rgba(0,0,0,0.03)] mt-28 mb-10 mx-4 md:mx-10 pt-20 pb-8 px-6 md:px-12 lg:px-20 xl:px-28 text-sm text-gray-500"
+      className="bg-[#f9fafb] rounded-[50px] border-[2.5px] border-gray-200 shadow-[0_15px_45px_rgba(0,0,0,0.03)] mt-28 mb-12 mx-6 md:mx-12 pt-20 pb-8 px-6 md:px-12 lg:px-20 xl:px-28 text-sm text-gray-500"
     >
       <div className="max-w-7xl mx-auto flex flex-wrap justify-between gap-12 mb-16">
         {/* Left Section */}

@@ -16,7 +16,7 @@ const Navbar = () => {
 
 
   return (
-    <div className="px-2 md:px-4 pt-3 z-50 fixed w-full top-0 left-0">
+    <div className="px-6 md:px-12 pt-6 z-50 fixed w-full top-0 left-0">
       <motion.div role="navigation"
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
