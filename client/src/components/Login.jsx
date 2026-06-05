@@ -4,8 +4,8 @@ import toast from "react-hot-toast";
 import { motion } from "motion/react";
 
 const Login = () => {
-  const { setShowLogin, axios, setToken, navigate } = useAppContext();
-  const [state, setState] = React.useState("login");
+  const { setShowLogin, axios, setToken, navigate, loginMode } = useAppContext();
+  const [state, setState] = React.useState(loginMode || "login");
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
