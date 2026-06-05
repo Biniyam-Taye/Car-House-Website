@@ -44,21 +44,13 @@ const CTASection = () => {
   ];
 
   return (
-    <div className="relative overflow-hidden px-6 md:px-16 lg:px-24 xl:px-32 py-12">
-      {/* Ambient dark background */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-950 to-indigo-950" />
-        <div className="absolute -top-24 -left-24 w-[380px] h-[380px] rounded-full bg-blue-600/20 blur-[90px]" />
-        <div className="absolute -bottom-24 -right-24 w-[380px] h-[380px] rounded-full bg-indigo-600/25 blur-[100px]" />
-        <div
-          className="absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)",
-            backgroundSize: "50px 50px",
-          }}
-        />
-      </div>
+    <div className="relative overflow-hidden px-6 md:px-16 lg:px-24 xl:px-32 py-12 bg-white">
+      {/* Soft blue-indigo gradient band across the top edge for subtle depth */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent" />
+
+      {/* Very subtle background tint */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-50/60 via-white to-indigo-50/40 -z-10" />
 
       <div className="max-w-5xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-10">
         {/* Left – text */}
@@ -69,13 +61,13 @@ const CTASection = () => {
           transition={{ duration: 0.6 }}
           className="flex-1 text-center lg:text-left"
         >
-          <h2 className="text-3xl md:text-4xl font-black text-white leading-tight tracking-tight mb-3">
+          <h2 className="text-3xl md:text-4xl font-black text-gray-900 leading-tight tracking-tight mb-3">
             Your Dream Ride{" "}
-            <span className="bg-gradient-to-r from-blue-400 via-cyan-300 to-indigo-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
               Starts Right Here.
             </span>
           </h2>
-          <p className="text-gray-400 text-sm md:text-base leading-relaxed mb-6 max-w-lg">
+          <p className="text-gray-500 text-sm md:text-base leading-relaxed mb-6 max-w-lg">
             Join thousands of drivers who experience premium car rentals with zero stress. Sign up in seconds — completely hassle-free.
           </p>
 
@@ -84,9 +76,9 @@ const CTASection = () => {
             {perks.map((perk, i) => (
               <div
                 key={i}
-                className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-gray-300 text-xs font-medium hover:bg-white/10 hover:text-white transition-all duration-300"
+                className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-100 text-gray-600 text-xs font-medium hover:bg-blue-100 hover:border-blue-200 hover:text-blue-700 transition-all duration-300"
               >
-                <span className="text-blue-400">{perk.icon}</span>
+                <span className="text-blue-500">{perk.icon}</span>
                 {perk.label}
               </div>
             ))}
@@ -109,7 +101,7 @@ const CTASection = () => {
               if (user) { navigate("/cars"); scrollTo(0, 0); }
               else { setShowLogin(true); }
             }}
-            className="relative group w-full sm:w-auto lg:w-52 px-8 py-3.5 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-bold text-sm shadow-[0_6px_24px_rgba(59,130,246,0.45)] hover:shadow-[0_10px_36px_rgba(59,130,246,0.65)] transition-all duration-300 overflow-hidden"
+            className="relative group w-full sm:w-auto lg:w-52 px-8 py-3.5 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-sm shadow-[0_6px_24px_rgba(59,130,246,0.3)] hover:shadow-[0_10px_32px_rgba(59,130,246,0.45)] transition-all duration-300 overflow-hidden cursor-pointer"
           >
             <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out" />
             <span className="relative flex items-center justify-center gap-2">
@@ -125,9 +117,9 @@ const CTASection = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.97 }}
             onClick={() => { navigate("/cars"); scrollTo(0, 0); }}
-            className="w-full sm:w-auto lg:w-52 px-8 py-3.5 rounded-full bg-white/5 border-2 border-white/20 text-white font-semibold text-sm backdrop-blur-sm hover:bg-white/10 hover:border-white/40 transition-all duration-300 flex items-center justify-center gap-2"
+            className="w-full sm:w-auto lg:w-52 px-8 py-3.5 rounded-full bg-white border-2 border-gray-200 text-gray-700 font-semibold text-sm hover:border-blue-300 hover:text-blue-600 hover:bg-blue-50 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
           >
-            <svg className="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
             Browse Fleet
