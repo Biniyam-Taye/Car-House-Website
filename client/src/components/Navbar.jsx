@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { assets, menuLinks } from "../assets/assets";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import toast from "react-hot-toast";
 import { motion } from "motion/react";
@@ -9,38 +9,16 @@ const Navbar = () => {
   const { setShowLogin, user, logOut, isOwner, axios, setIsOwner } =
     useAppContext();
 
-  const location = useLocation();
+
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
-  const isHomePage = location.pathname === "/";
-  const [isVisible, setIsVisible] = useState(!isHomePage);
-
-  useEffect(() => {
-    if (!isHomePage) {
-      setIsVisible(true);
-      return;
-    }
-
-    const handleScroll = () => {
-      const currentScroll = window.scrollY;
-      if (currentScroll > 40) {
-        setIsVisible(true);
-      } else if (currentScroll < 10) {
-        setIsVisible(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // Trigger initially
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isHomePage]);
 
   return (
-    <div className={`px-6 md:px-12 pt-6 z-50 fixed w-full top-0 left-0 transition-all duration-300 ${isVisible ? "pointer-events-auto" : "pointer-events-none"}`}>
+    <div className={`px-6 md:px-12 pt-6 z-50 fixed w-full top-0 left-0 transition-all duration-300 pointer-events-auto`}>
       <motion.div role="navigation"
         initial={{ y: -120, opacity: 0 }}
-        animate={{ y: isVisible ? 0 : -120, opacity: isVisible ? 1 : 0 }}
+        animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
         className="flex items-center justify-between px-6 md:px-10 py-5 mx-auto w-full max-w-[98%]
           text-gray-600 bg-white/90 backdrop-blur-md relative transition-all rounded-[40px] shadow-[0_10px_35px_rgba(0,0,0,0.06)] border-[2.5px] border-gray-200"
