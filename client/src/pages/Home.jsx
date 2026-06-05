@@ -4,6 +4,7 @@ import FeaturedSection from '../components/FeaturedSection'
 import Banner from '../components/Banner'
 import CarCategories from '../components/CarCategories'
 import UserTestimonials from '../components/UserTestimonials'
+import CTASection from '../components/CTASection'
 
 const Home = () => {
   return (
@@ -14,6 +15,7 @@ const Home = () => {
      <Banner />
      <CarCategories />
      <UserTestimonials />
+     <CTASection />
     </>
   )
 }
