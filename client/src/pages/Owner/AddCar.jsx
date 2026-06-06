@@ -160,7 +160,7 @@ const AddCar = () => {
                   accept="image/*"
                   hidden
                   onChange={(e) => setImage(e.target.files[0])}
-                  required
+
                 />
               </label>
               <p className="text-xs text-gray-400">This image will be used as the main display card image.</p>
@@ -229,7 +229,7 @@ const AddCar = () => {
               <input
                 type="text"
                 placeholder="e.g. BYD, Nissan, Toyota"
-                required
+          
                 className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none focus:border-primary transition-all"
                 value={car.brand}
                 onChange={(e) => setCar({ ...car, brand: e.target.value })}
@@ -240,7 +240,7 @@ const AddCar = () => {
               <input
                 type="text"
                 placeholder="e.g. Song Plus Smart, Patrol"
-                required
+          
                 className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none focus:border-primary transition-all"
                 value={car.model}
                 onChange={(e) => setCar({ ...car, model: e.target.value })}
@@ -251,7 +251,7 @@ const AddCar = () => {
               <input
                 type="text"
                 placeholder="e.g. 2025/4 or 2018"
-                required
+          
                 className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none focus:border-primary transition-all"
                 value={car.year}
                 onChange={(e) => setCar({ ...car, year: e.target.value })}
@@ -286,7 +286,7 @@ const AddCar = () => {
                 onChange={(e) => setCar({ ...car, category: e.target.value })}
                 className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none bg-white focus:border-primary transition-all"
                 value={car.category}
-                required
+                
               >
                 <option value="">Select a category</option>
                 <option value="Sedan">Sedan</option>
@@ -348,7 +348,7 @@ const AddCar = () => {
               <input
                 type="text"
                 placeholder="e.g. Addis Ababa, New York"
-                required
+                
                 className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none focus:border-primary transition-all"
                 value={car.location}
                 onChange={(e) => setCar({ ...car, location: e.target.value })}
@@ -359,7 +359,7 @@ const AddCar = () => {
               <input
                 type="number"
                 placeholder="e.g. 5"
-                required
+
                 className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none focus:border-primary transition-all"
                 value={car.seating_capacity}
                 onChange={(e) => setCar({ ...car, seating_capacity: e.target.value })}
@@ -378,7 +378,7 @@ const AddCar = () => {
                 onChange={(e) => setCar({ ...car, transmission: e.target.value })}
                 className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none bg-white focus:border-primary transition-all"
                 value={car.transmission}
-                required
+                
               >
                 <option value="">Select Transmission</option>
                 <option value="Automatic">Automatic</option>
@@ -392,7 +392,7 @@ const AddCar = () => {
                 onChange={(e) => setCar({ ...car, fuel_type: e.target.value })}
                 value={car.fuel_type}
                 className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none bg-white focus:border-primary transition-all"
-                required
+                
               >
                 <option value="">Select Fuel Type</option>
                 <option value="Petrol">Petrol</option>
@@ -490,7 +490,7 @@ const AddCar = () => {
               <input
                 type="number"
                 placeholder="e.g. 150"
-                required
+                
                 className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none focus:border-primary transition-all"
                 value={car.pricePerDay}
                 onChange={(e) => setCar({ ...car, pricePerDay: e.target.value })}
@@ -538,7 +538,7 @@ const AddCar = () => {
             <textarea
               rows={4}
               placeholder="eg. A luxury SUV with powerful engine..."
-              required
+              
               className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none focus:border-primary transition-all"
               value={car.description}
               onChange={(e) => setCar({ ...car, description: e.target.value })}
