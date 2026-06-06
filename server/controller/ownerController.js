@@ -4,12 +4,21 @@ import Car from "../models/car.js";
 import booking from "../models/Booking.js";
 import fs from "fs";
 
+const isApprovedOwner = (user) =>
+  user.role === "owner" && user.approvalStatus === "approved";
+
 // API to change role of user
 export const changeRoleToOwner = async (req, res) => {
   try {
     const { _id } = req.user;
-    await User.findByIdAndUpdate(_id, { role: "owner" });
-    res.json({ success: true, message: "Now you can list cars" });
+    await User.findByIdAndUpdate(_id, {
+      role: "owner",
+      approvalStatus: "pending",
+    });
+    res.json({
+      success: true,
+      message: "Application submitted. Wait for Head Admin approval.",
+    });
   } catch (error) {
     console.log(error.message);
     res.json({ success: false, message: error.message });
@@ -19,7 +28,10 @@ export const changeRoleToOwner = async (req, res) => {
 // API to list Car
 export const addCar = async (req, res) => {
   try {
-    const { _id } = req.user;
+    const { _id, role, approvalStatus } = req.user;
+    if (!isApprovedOwner({ role, approvalStatus })) {
+      return res.json({ success: false, message: "unauthorized" });
+    }
     let car = JSON.parse(req.body.carData);
     
     // Multer upload.fields puts files in req.files
@@ -83,7 +95,10 @@ export const addCar = async (req, res) => {
 //API to list owner cars
 export const getOwnerCars = async (req, res) => {
   try {
-    const { _id } = req.user;
+    const { _id, role, approvalStatus } = req.user;
+    if (!isApprovedOwner({ role, approvalStatus })) {
+      return res.json({ success: false, message: "unauthorized" });
+    }
     const cars = await Car.find({ owner: _id });
     res.json({ success: true, cars });
   } catch (error) {
@@ -134,8 +149,8 @@ export const deleteCar = async (req, res) => {
 
 export const getDashboardData = async (req, res) => {
   try {
-    const { _id, role } = req.user;
-    if (role !== "owner") {
+    const { _id, role, approvalStatus } = req.user;
+    if (!isApprovedOwner({ role, approvalStatus })) {
       return res.json({ success: false, message: "unauthorized" });
     }
     const cars = await Car.find({ owner: _id });
@@ -200,7 +215,40 @@ export const updateUserImage = async (req, res) => {
     const image = optimizedImageUrl;
 
     await User.findByIdAndUpdate(_id, { image });
-    res.json({ success: true, message: "Image Updated" });
+    res.json({ success: true, message: "Image Updated", image });
+  } catch (error) {
+    console.log(error.message);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+export const updateOwnerProfile = async (req, res) => {
+  try {
+    const { _id, role, approvalStatus } = req.user;
+    if (!isApprovedOwner({ role, approvalStatus })) {
+      return res.json({ success: false, message: "unauthorized" });
+    }
+
+    const { name, phone, businessName, location, bio } = req.body;
+
+    if (!name || !phone || !businessName || !location) {
+      return res.json({
+        success: false,
+        message: "Please fill all required profile fields",
+      });
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      _id,
+      { name, phone, businessName, location, bio: bio || "" },
+      { new: true }
+    ).select("-password");
+
+    res.json({
+      success: true,
+      message: "Profile updated successfully",
+      user: updatedUser,
+    });
   } catch (error) {
     console.log(error.message);
     res.json({ success: false, message: error.message });

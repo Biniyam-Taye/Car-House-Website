@@ -15,17 +15,49 @@ const Login = ({ defaultState = "login" }) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [role, setRole] = React.useState("user");
+  const [phone, setPhone] = React.useState("");
+  const [businessName, setBusinessName] = React.useState("");
+  const [location, setLocation] = React.useState("");
+  const [bio, setBio] = React.useState("");
 
   const onSubmitHandler = async (event) => {
     try {
       event.preventDefault();
-      const payload = state === "login" ? { email, password } : { name, email, password, role };
-      const { data } = await axios.post(`/api/user/${state}`, payload);
+      const payload =
+        state === "login"
+          ? { email, password }
+          : {
+              name,
+              email,
+              password,
+              role,
+              ...(role === "owner" && { phone, businessName, location, bio }),
+            };
+      const { data } = await axios.post(`/api/user/${state === "login" ? "login" : "register"}`, payload);
       if (data.success) {
-        navigate("/");
-        setToken(data.token);
-        localStorage.setItem("token", data.token);
-        setShowLogin(false);
+        if (data.pendingApproval) {
+          toast.success(data.message);
+          navigate("/login");
+          return;
+        }
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+          axios.defaults.headers.common["Authorization"] = `${data.token}`;
+          setToken(data.token);
+          setShowLogin(false);
+          const roleRes = await axios.get("/api/user/data");
+          if (roleRes.data.success && roleRes.data.user.role === "head_admin") {
+            navigate("/admin");
+          } else if (
+            roleRes.data.success &&
+            roleRes.data.user.role === "owner" &&
+            roleRes.data.user.approvalStatus === "approved"
+          ) {
+            navigate("/owner");
+          } else {
+            navigate("/");
+          }
+        }
       } else {
         toast.error(data.message);
       }
@@ -176,6 +208,58 @@ const Login = ({ defaultState = "login" }) => {
                       </label>
                     </div>
                   </div>
+
+                  {role === "owner" && (
+                    <div className="space-y-4 p-4 bg-blue-50/50 border border-blue-100 rounded-xl">
+                      <p className="text-xs text-blue-700 font-medium">
+                        Complete your profile for Head Admin review. You can log in after approval.
+                      </p>
+                      <div className="space-y-1">
+                        <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Phone Number</label>
+                        <input
+                          onChange={(e) => setPhone(e.target.value)}
+                          value={phone}
+                          placeholder="+1 555 123 4567"
+                          className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 outline-none transition-all"
+                          type="tel"
+                          required
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Business / Company Name</label>
+                        <input
+                          onChange={(e) => setBusinessName(e.target.value)}
+                          value={businessName}
+                          placeholder="Your car rental business"
+                          className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 outline-none transition-all"
+                          type="text"
+                          required
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Location / City</label>
+                        <input
+                          onChange={(e) => setLocation(e.target.value)}
+                          value={location}
+                          placeholder="New York, NY"
+                          className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 outline-none transition-all"
+                          type="text"
+                          required
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">About You</label>
+                        <textarea
+                          onChange={(e) => setBio(e.target.value)}
+                          value={bio}
+                          placeholder="Tell us about your experience listing cars..."
+                          className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 outline-none transition-all resize-none"
+                          rows={3}
+                          required
+                        />
+                      </div>
+                    </div>
+                  )}
                 </>
               )}
 

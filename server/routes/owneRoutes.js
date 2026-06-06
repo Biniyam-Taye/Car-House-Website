@@ -8,6 +8,7 @@ import {
   getOwnerCars,
   toggleCarAvailability,
   updateUserImage,
+  updateOwnerProfile,
 } from "../controller/ownerController.js";
 import upload from "../middleware/multer.js";
 
@@ -34,5 +35,6 @@ ownerRouter.post(
   protect,
   updateUserImage
 );
+ownerRouter.post("/update-profile", protect, updateOwnerProfile);
 
 export default ownerRouter;

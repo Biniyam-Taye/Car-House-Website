@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { motion } from "motion/react";
 
 const Navbar = () => {
-  const { setShowLogin, user, logOut, isOwner, axios, setIsOwner } =
+  const { setShowLogin, user, logOut, isOwner, isHeadAdmin } =
     useAppContext();
 
 
@@ -70,6 +70,14 @@ const Navbar = () => {
 
           {/* Dashboard & Login Buttons */}
           <div className="flex max-sm:flex-col items-start sm:items-center gap-4 w-full sm:w-auto">
+            {isHeadAdmin && (
+              <button
+                onClick={() => navigate("/admin")}
+                className="font-medium text-gray-700 hover:text-blue-600 transition-colors px-3 py-1.5 rounded-full hover:bg-gray-50"
+              >
+                Head Admin
+              </button>
+            )}
             {isOwner && (
               <button
                 onClick={() => navigate("/owner")}

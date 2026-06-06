@@ -8,6 +8,7 @@ const Dashboard = lazy(() => import("../pages/Owner/Dashboard"));
 const AddCar = lazy(() => import("../pages/Owner/AddCar"));
 const ManageCars = lazy(() => import("../pages/Owner/ManageCars"));
 const ManageBookings = lazy(() => import("../pages/Owner/ManageBookings"));
+const ProfileSettings = lazy(() => import("../pages/Owner/ProfileSettings"));
 
 const OwnerRoutes = () => (
   <Suspense fallback={<div>Loading...</div>}>
@@ -17,6 +18,7 @@ const OwnerRoutes = () => (
         <Route path="add-car" element={<AddCar />} />
         <Route path="manage-cars" element={<ManageCars />} />
         <Route path="manage-bookings" element={<ManageBookings />} />
+        <Route path="profile" element={<ProfileSettings />} />
       </Route>
       <Route path="*" element={<NotFoundPage />} />
     </Routes>

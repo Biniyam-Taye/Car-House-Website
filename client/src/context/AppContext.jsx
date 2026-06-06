@@ -12,6 +12,7 @@ export const AppProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
   const [isOwner, setIsOwner] = useState(false);
+  const [isHeadAdmin, setIsHeadAdmin] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [loginMode, setLoginMode] = useState("login");
   const [pickupDate, setPickupDate] = useState("");
@@ -24,7 +25,10 @@ export const AppProvider = ({ children }) => {
       const { data } = await axios.get("/api/user/data");
       if (data.success) {
         setUser(data.user);
-        setIsOwner(data.user.role === "owner");
+        setIsHeadAdmin(data.user.role === "head_admin");
+        setIsOwner(
+          data.user.role === "owner" && data.user.approvalStatus === "approved"
+        );
       } else {
         navigate("/");
       }
@@ -48,6 +52,7 @@ export const AppProvider = ({ children }) => {
     setToken(null);
     setUser(null);
     setIsOwner(false);
+    setIsHeadAdmin(false);
 
     axios.defaults.headers.common["Authorization"] = "";
 
@@ -96,6 +101,8 @@ export const AppProvider = ({ children }) => {
     setToken,
     isOwner,
     setIsOwner,
+    isHeadAdmin,
+    setIsHeadAdmin,
     fetchUser,
     showLogin,
     setShowLogin,
