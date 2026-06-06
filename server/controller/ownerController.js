@@ -26,33 +26,33 @@ export const addCar = async (req, res) => {
     const imageFile = req.files && req.files["image"] ? req.files["image"][0] : null;
     const subImageFiles = req.files && req.files["subImages"] ? req.files["subImages"] : [];
 
-    if (!imageFile) {
-      return res.json({ success: false, message: "Main image is required" });
+    let image = "";
+    if (imageFile) {
+      // Upload main image to ImageKit
+      const fileBuffer = fs.readFileSync(imageFile.path);
+      const response = await imageKit.upload({
+        file: fileBuffer,
+        fileName: imageFile.originalname,
+        folder: "/cars",
+      });
+
+      // Optimize via ImageKit URL
+      const optimizedImageUrl = imageKit.url({
+        path: response.filePath,
+        transformation: [
+          { width: "1280" },
+          { quality: "auto" },
+          { format: "webp" },
+        ],
+      });
+
+      image = optimizedImageUrl;
     }
-
-    // Upload main image to ImageKit
-    const fileBuffer = fs.readFileSync(imageFile.path);
-    const response = await imageKit.upload({
-      file: fileBuffer,
-      fileName: imageFile.originalname,
-      folder: "/cars",
-    });
-
-    // Optimize via ImageKit URL
-    const optimizedImageUrl = imageKit.url({
-      path: response.filePath,
-      transformation: [
-        { width: "1280" },
-        { quality: "auto" },
-        { format: "webp" },
-      ],
-    });
-
-    const image = optimizedImageUrl;
 
     // Upload sub-images to ImageKit
     const subImages = [];
     for (const file of subImageFiles) {
+      if (!file) continue;
       const subFileBuffer = fs.readFileSync(file.path);
       const subResponse = await imageKit.upload({
         file: subFileBuffer,
