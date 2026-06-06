@@ -3,9 +3,13 @@ import { useAppContext } from "../context/AppContext";
 import toast from "react-hot-toast";
 import { motion } from "motion/react";
 
-const Login = () => {
+const Login = ({ defaultState = "login" }) => {
   const { setShowLogin, axios, setToken, navigate, loginMode } = useAppContext();
-  const [state, setState] = React.useState(loginMode || "login");
+  const [state, setState] = React.useState(defaultState);
+
+  React.useEffect(() => {
+    setState(defaultState);
+  }, [defaultState]);
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -33,8 +37,7 @@ const Login = () => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      onClick={() => setShowLogin(false)}
-      className="fixed inset-0 z-[100] overflow-y-auto bg-slate-900/40 backdrop-blur-md flex justify-center p-4 md:p-6 items-start"
+      className="min-h-screen bg-gray-50 flex justify-center py-24 px-4 md:px-6 items-center"
     >
       <motion.div
         initial={{ scale: 0.95, y: 20 }}
@@ -96,16 +99,6 @@ const Login = () => {
 
         {/* Right Panel - Form */}
         <div className="col-span-1 md:col-span-7 flex flex-col justify-center p-8 sm:p-12 relative bg-white">
-          {/* Close button */}
-          <button 
-            onClick={() => setShowLogin(false)}
-            className="absolute top-4 right-4 p-2 rounded-full text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors z-30 cursor-pointer"
-            aria-label="Close modal"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
 
           <div className="w-full max-w-md mx-auto space-y-6">
             <div className="space-y-2">
@@ -232,7 +225,7 @@ const Login = () => {
                 <p className="text-sm text-gray-500">
                   Already have an account?{" "}
                   <span
-                    onClick={() => setState("login")}
+                    onClick={() => navigate("/login")}
                     className="text-blue-600 font-semibold cursor-pointer hover:underline transition-all"
                   >
                     Sign in
@@ -242,7 +235,7 @@ const Login = () => {
                 <p className="text-sm text-gray-500">
                   Don't have an account?{" "}
                   <span
-                    onClick={() => setState("register")}
+                    onClick={() => navigate("/signup")}
                     className="text-blue-600 font-semibold cursor-pointer hover:underline transition-all"
                   >
                     Sign up

@@ -80,7 +80,7 @@ const Navbar = () => {
             )}
             {!user && (
               <button
-                onClick={() => setShowLogin(true)}
+                onClick={() => navigate("/login")}
                 className="relative px-5 py-2.5 font-semibold text-[15px] text-gray-600 transition-all duration-300 rounded-full hover:text-white border border-gray-200 hover:border-transparent group overflow-hidden hidden sm:flex items-center justify-center cursor-pointer"
               >
                 <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-gray-900 to-gray-800 -translate-x-full group-hover:translate-x-0 transition-transform duration-300 rounded-full -z-10"></span>
@@ -89,7 +89,7 @@ const Navbar = () => {
             )}
             <button
               onClick={() => {
-                user ? logOut() : setShowLogin(true);
+                user ? logOut() : navigate("/signup");
               }}
               className="cursor-pointer w-full sm:w-auto px-6 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 transition-all duration-300 text-white font-semibold rounded-full relative overflow-hidden flex items-center justify-center gap-0 hover:gap-2 shadow-[0_4px_15px_rgba(30,120,255,0.3)] hover:shadow-[0_8px_25px_rgba(30,120,255,0.5)] hover:scale-105 group"
             >

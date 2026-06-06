@@ -7,6 +7,7 @@ const Cars = lazy(() => import("../pages/Cars"));
 const CarDetails = lazy(() => import("../pages/CarDetails"));
 const MyBookings = lazy(() => import("../pages/MyBookings"));
 const PaymentSuccess = lazy(() => import("../pages/PaymentSuccess"));
+const Login = lazy(() => import("../components/Login"));
 
 const PublicRoutes = () => (
   <Suspense fallback={<div>Loading...</div>}>
@@ -16,6 +17,8 @@ const PublicRoutes = () => (
       <Route path="/car-details/:id" element={<CarDetails />} />
       <Route path="/my-bookings" element={<MyBookings />} />
       <Route path="/success" element={<PaymentSuccess />} />
+      <Route path="/login" element={<Login defaultState="login" />} />
+      <Route path="/signup" element={<Login defaultState="register" />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   </Suspense>
