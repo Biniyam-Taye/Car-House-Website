@@ -38,6 +38,7 @@ const AddCar = () => {
     bank_price: "",
     bank_info: "",
     sale_price: "",
+    contact_phone: "",
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -116,6 +117,7 @@ const AddCar = () => {
           bank_price: "",
           bank_info: "",
           sale_price: "",
+          contact_phone: "",
         });
         if (fetchCars) {
           fetchCars();
@@ -527,6 +529,18 @@ const AddCar = () => {
               value={car.bank_info}
               onChange={(e) => setCar({ ...car, bank_info: e.target.value })}
             />
+          </div>
+
+          <div className="flex flex-col w-full">
+            <label>Contact Phone (WhatsApp / Telegram)</label>
+            <input
+              type="text"
+              placeholder="e.g. +251972655885"
+              className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none focus:border-primary transition-all"
+              value={car.contact_phone}
+              onChange={(e) => setCar({ ...car, contact_phone: e.target.value })}
+            />
+            <p className="text-xs text-gray-400 mt-1">This number will be shown as a WhatsApp, Telegram, and call icon on the car details page.</p>
           </div>
         </div>
 

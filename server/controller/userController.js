@@ -78,7 +78,7 @@ export const getUserData = async (req, res) => {
 //Get all cars for the front end
 export const getCars = async (req, res) => {
   try {
-    const cars = await Car.find({ isAvaliable: true });
+    const cars = await Car.find({ isAvaliable: true }).populate("owner", "name email image");
     res.json({ success: true, cars });
   } catch (error) {
     console.log(error.message);

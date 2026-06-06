@@ -16,6 +16,7 @@ const PaymentSuccess = () => {
       const car = searchParams.get("car");
       const pickupDate = searchParams.get("pickupDate");
       const returnDate = searchParams.get("returnDate");
+      const purchaseType = searchParams.get("purchaseType") || "sale";
 
       if (!sessionId || !car) {
         setLoading(false);
@@ -28,15 +29,20 @@ const PaymentSuccess = () => {
       try {
         const { data } = await axios.post("/api/booking/create", {
           car,
-          pickupDate,
-          returnDate,
+          ...(pickupDate && { pickupDate }),
+          ...(returnDate && { returnDate }),
+          purchaseType,
         });
 
         if (data.success) {
-          toast.success("Payment successful! Booking confirmed.");
-          setTimeout(() => navigate("/my-bookings"), 2000);
+          toast.success(
+            purchaseType === "sale"
+              ? "Payment successful! Your purchase order has been confirmed."
+              : "Payment successful! Booking confirmed."
+          );
+          setTimeout(() => navigate("/my-bookings"), 2500);
         } else {
-          toast.error(data.message || "Failed to finalize booking.");
+          toast.error(data.message || "Failed to finalize your order.");
           setLoading(false);
         }
       } catch (error) {

@@ -40,91 +40,108 @@ export const checkAvailiabilityofCar = async (req, res) => {
     res.json({ success: false, message: error.message });
   }
 };
-//API to create booking
-
+//API to create booking / purchase
 export const createBooking = async (req, res) => {
   try {
     const { _id } = req.user;
-    const { car, pickupDate, returnDate } = req.body;
+    const { car, pickupDate, returnDate, purchaseType } = req.body;
+    const isSale = purchaseType === "sale" || (!pickupDate && !returnDate);
 
-    const isAvaliable = await checkAvailiability(car, pickupDate, returnDate);
-    if (!isAvaliable) {
-      return res.json({ success: false, message: "Car is not available" });
-    }
     const carData = await Car.findById(car);
     if (!carData) {
       return res.json({ success: false, message: "Car not found" });
     }
     if (carData.owner.toString() === _id.toString()) {
-      return res.json({ success: false, message: "You cannot book your own car" });
+      return res.json({ success: false, message: "You cannot purchase your own car" });
+    }
+    if (!carData.isAvaliable) {
+      return res.json({ success: false, message: "This car is no longer available" });
     }
 
-    //calculate price based on pickupdate an returndate
-    const picked = new Date(pickupDate);
-    const returned = new Date(returnDate);
-    const noOfDays = Math.ceil((returned - picked) / (1000 * 60 * 60 * 24));
-    const price = carData.pricePerDay * noOfDays;
+    let price;
+    if (isSale) {
+      price = carData.sale_price || carData.cash_price || 0;
+    } else {
+      const isAvaliable = await checkAvailiability(car, pickupDate, returnDate);
+      if (!isAvaliable) {
+        return res.json({ success: false, message: "Car is not available for those dates" });
+      }
+      const picked = new Date(pickupDate);
+      const returned = new Date(returnDate);
+      const noOfDays = Math.ceil((returned - picked) / (1000 * 60 * 60 * 24));
+      price = carData.pricePerDay * noOfDays;
+    }
 
     await booking.create({
       car,
       owner: carData.owner,
       user: _id,
-      pickupDate,
-      returnDate,
+      pickupDate: isSale ? undefined : pickupDate,
+      returnDate: isSale ? undefined : returnDate,
+      purchaseType: isSale ? "sale" : "rental",
       price,
     });
 
-    res.json({ success: true, message: "Booking Created" });
+    // Mark car as sold / unavailable after sale purchase
+    if (isSale) {
+      carData.isAvaliable = false;
+      await carData.save();
+    }
+
+    res.json({ success: true, message: isSale ? "Purchase Order Created" : "Booking Created" });
   } catch (error) {
     console.log(error.message);
     res.json({ success: false, message: error.message });
   }
 };
 
-//API to create Stripe checkout session
+//API to create Stripe checkout session for car purchase
 export const createCheckoutSession = async (req, res) => {
   try {
     const { _id } = req.user;
-    const { car, pickupDate, returnDate } = req.body;
+    const { car } = req.body;
 
-    const isAvaliable = await checkAvailiability(car, pickupDate, returnDate);
-    if (!isAvaliable) {
-      return res.json({ success: false, message: "Car is not available" });
-    }
     const carData = await Car.findById(car);
     if (!carData) {
       return res.json({ success: false, message: "Car not found" });
     }
+    if (!carData.isAvaliable) {
+      return res.json({ success: false, message: "This car is no longer available" });
+    }
     if (carData.owner.toString() === _id.toString()) {
-      return res.json({ success: false, message: "You cannot book your own car" });
+      return res.json({ success: false, message: "You cannot purchase your own car" });
     }
 
-    const picked = new Date(pickupDate);
-    const returned = new Date(returnDate);
-    const noOfDays = Math.ceil((returned - picked) / (1000 * 60 * 60 * 24));
-    const price = carData.pricePerDay * noOfDays;
+    // Use sale_price, fallback to cash_price, then pricePerDay
+    const priceETB = carData.sale_price || carData.cash_price || carData.pricePerDay || 0;
+    // Convert ETB to USD (approximate; Stripe requires a supported currency)
+    // We use USD for international Mastercard/Visa payments
+    // 1 USD ≈ 57 ETB (adjust as needed)
+    const ETB_TO_USD = 57;
+    const priceUSD = Math.max(1, Math.round(priceETB / ETB_TO_USD));
 
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_dummy');
-
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
     const origin = req.headers.origin || "http://localhost:5173";
 
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
+      payment_method_types: ["card"],
       line_items: [
         {
           price_data: {
-            currency: 'usd',
+            currency: "usd",
             product_data: {
-              name: `${carData.brand} ${carData.model} Booking`,
-              description: `From ${pickupDate} to ${returnDate}`,
+              name: `${carData.brand} ${carData.model}`,
+              description: carData.description ||
+                `${carData.year || ""} ${carData.category || ""} — ${carData.condition || "Used"} | ${carData.fuel_type || ""}`.trim(),
+              images: carData.image ? [carData.image] : [],
             },
-            unit_amount: price * 100, // Stripe uses cents
+            unit_amount: priceUSD * 100, // Stripe uses cents
           },
           quantity: 1,
         },
       ],
-      mode: 'payment',
-      success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}&car=${car}&pickupDate=${pickupDate}&returnDate=${returnDate}`,
+      mode: "payment",
+      success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}&car=${car}&purchaseType=sale`,
       cancel_url: `${origin}/car-details/${car}`,
     });
 
