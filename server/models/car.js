@@ -36,6 +36,8 @@ const carSchema = new mongoose.Schema(
     bank_price: { type: Number },
     bank_info: { type: String },
     sale_price: { type: Number },
+    // Multiple Sub Images
+    subImages: { type: [String], default: [] },
   },
   { timestamps: true }
 );
