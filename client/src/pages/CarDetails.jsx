@@ -149,19 +149,119 @@ const CarDetails = () => {
           <div>
             <h1 className="text-xl font-medium mb-3">Features</h1>
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              {[
-                "360 Camera",
-                "bluetooth",
-                "GPS",
-                "Heated Seates",
-                "Rear View Mirror",
-              ].map((item) => (
+              {(car.features && car.features.length > 0
+                ? car.features
+                : [
+                    "360 Camera",
+                    "Bluetooth",
+                    "GPS",
+                    "Heated Seats",
+                    "Rear View Mirror",
+                  ]
+              ).map((item) => (
                 <li key={item} className="flex items-center text-gray-500">
                   <img src={assets.check_icon} alt="" className="h-4 mr-2" />
                   {item}
                 </li>
               ))}
             </ul>
+          </div>
+
+          {/* Specifications Sheet */}
+          <div className="mt-8 border border-borderColor rounded-xl p-5 bg-white">
+            <h2 className="text-xl font-semibold mb-4 text-gray-800">Specifications</h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-y-4 gap-x-8 text-sm">
+              <div>
+                <p className="text-gray-400">Brand</p>
+                <p className="font-semibold text-gray-700">{car.brand}</p>
+              </div>
+              <div>
+                <p className="text-gray-400">Model</p>
+                <p className="font-semibold text-gray-700">{car.model}</p>
+              </div>
+              {car.generation && (
+                <div>
+                  <p className="text-gray-400">Generation</p>
+                  <p className="font-semibold text-gray-700">{car.generation}</p>
+                </div>
+              )}
+              {car.trim && (
+                <div>
+                  <p className="text-gray-400">Trim</p>
+                  <p className="font-semibold text-gray-700">{car.trim}</p>
+                </div>
+              )}
+              <div>
+                <p className="text-gray-400">Year</p>
+                <p className="font-semibold text-gray-700">{car.year}</p>
+              </div>
+              {car.condition && (
+                <div>
+                  <p className="text-gray-400">Condition</p>
+                  <p className="font-semibold text-gray-700">{car.condition}</p>
+                </div>
+              )}
+              {car.color && (
+                <div>
+                  <p className="text-gray-400">Color</p>
+                  <p className="font-semibold text-gray-700">{car.color}</p>
+                </div>
+              )}
+              {car.mileage && (
+                <div>
+                  <p className="text-gray-400">Mileage</p>
+                  <p className="font-semibold text-gray-700">{car.mileage}</p>
+                </div>
+              )}
+              {car.plate_no && (
+                <div>
+                  <p className="text-gray-400">Plate No.</p>
+                  <p className="font-semibold text-gray-700">{car.plate_no}</p>
+                </div>
+              )}
+              {car.engine && (
+                <div>
+                  <p className="text-gray-400">Engine / Motor</p>
+                  <p className="font-semibold text-gray-700">{car.engine}</p>
+                </div>
+              )}
+              {car.battery_capacity && (
+                <div>
+                  <p className="text-gray-400">Battery Capacity</p>
+                  <p className="font-semibold text-gray-700">{car.battery_capacity}</p>
+                </div>
+              )}
+              {car.range && (
+                <div>
+                  <p className="text-gray-400">Range</p>
+                  <p className="font-semibold text-gray-700">{car.range}</p>
+                </div>
+              )}
+              {car.drive_type && (
+                <div>
+                  <p className="text-gray-400">Drive Type</p>
+                  <p className="font-semibold text-gray-700">{car.drive_type}</p>
+                </div>
+              )}
+              {car.top_speed && (
+                <div>
+                  <p className="text-gray-400">Top Speed</p>
+                  <p className="font-semibold text-gray-700">{car.top_speed}</p>
+                </div>
+              )}
+              {car.fuel_consumption && (
+                <div>
+                  <p className="text-gray-400">Fuel Consumption</p>
+                  <p className="font-semibold text-gray-700">{car.fuel_consumption}</p>
+                </div>
+              )}
+              {car.dimensions && (
+                <div className="col-span-2">
+                  <p className="text-gray-400">Dimensions (L/W/H/GC)</p>
+                  <p className="font-semibold text-gray-700">{car.dimensions}</p>
+                </div>
+              )}
+            </div>
           </div>
         </motion.div>
         {/*Right booking form*/}
