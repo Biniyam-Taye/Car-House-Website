@@ -51,13 +51,25 @@ const CarDetails = () => {
   return car ? (
     <div className="px-6 md:px-16 lg:px-24 xl:px-32 mt-16 pb-20">
       {/* Back button */}
-      <button
+      <motion.button
         onClick={() => navigate(-1)}
+        whileHover={{ x: -5 }}
+        whileTap={{ scale: 0.95 }}
         className="flex items-center gap-2 mb-6 text-gray-500 hover:text-gray-900 transition-colors"
       >
-        <img src={assets.arrow_icon} alt="" className="rotate-180 opacity-65" />
+        <motion.img
+          src={assets.arrow_icon}
+          alt=""
+          className="rotate-180 opacity-65"
+          whileHover={{
+            rotate: -180,
+            scale: 1.2,
+            opacity: 1
+          }}
+          transition={{ duration: 0.3 }}
+        />
         Back to all cars
-      </button>
+      </motion.button>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
         {/* ─── LEFT: Images + Details ─── */}
@@ -81,27 +93,40 @@ const CarDetails = () => {
           {/* Thumbnail Gallery */}
           {car.subImages && car.subImages.length > 0 && (
             <div className="flex gap-3 overflow-x-auto py-2 mb-6 mt-3 scrollbar-hide">
-              <img
+              <motion.img
                 src={car.image}
                 alt="main"
                 onClick={() => setActiveImage(car.image)}
-                className={`w-24 h-16 object-cover rounded-lg cursor-pointer border-2 transition-all shrink-0 ${
-                  activeImage === car.image
-                    ? "border-primary scale-105"
-                    : "border-transparent opacity-70 hover:opacity-100"
-                }`}
+                whileHover={{
+                  scale: 1.1,
+                  rotate: 2,
+                  boxShadow: "0 10px 30px rgba(0,0,0,0.2)"
+                }}
+                whileTap={{ scale: 0.95 }}
+                className={`w-24 h-16 object-cover rounded-lg cursor-pointer border-2 transition-all shrink-0 ${activeImage === car.image
+                  ? "border-primary scale-105"
+                  : "border-transparent opacity-70 hover:opacity-100"
+                  }`}
               />
               {car.subImages.map((img, idx) => (
-                <img
+                <motion.img
                   key={idx}
                   src={img}
                   alt={`view-${idx}`}
                   onClick={() => setActiveImage(img)}
-                  className={`w-24 h-16 object-cover rounded-lg cursor-pointer border-2 transition-all shrink-0 ${
-                    activeImage === img
-                      ? "border-primary scale-105"
-                      : "border-transparent opacity-70 hover:opacity-100"
-                  }`}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: idx * 0.05 }}
+                  whileHover={{
+                    scale: 1.1,
+                    rotate: 2,
+                    boxShadow: "0 10px 30px rgba(0,0,0,0.2)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`w-24 h-16 object-cover rounded-lg cursor-pointer border-2 transition-all shrink-0 ${activeImage === img
+                    ? "border-primary scale-105"
+                    : "border-transparent opacity-70 hover:opacity-100"
+                    }`}
                 />
               ))}
             </div>
@@ -128,74 +153,193 @@ const CarDetails = () => {
             {/* Quick Specs */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               {[
-                { icon: assets.users_icon, text: `${car.seating_capacity || "—"} Seats` },
-                { icon: assets.fuel_icon, text: car.fuel_type || "—" },
-                { icon: assets.car_icon, text: car.transmission || "—" },
-                { icon: assets.location_icon, text: car.location || "—" },
-              ].map(({ icon, text }) => (
+                { icon: assets.users_icon, text: `${car.seating_capacity || "—"} Seats`, color: "from-blue-500 to-cyan-500" },
+                { icon: assets.fuel_icon, text: car.fuel_type || "—", color: "from-green-500 to-emerald-500" },
+                { icon: assets.car_icon, text: car.transmission || "—", color: "from-purple-500 to-pink-500" },
+                { icon: assets.location_icon, text: car.location || "—", color: "from-orange-500 to-red-500" },
+              ].map(({ icon, text, color }, index) => (
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4 }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
                   key={text}
-                  className="flex flex-col items-center bg-light p-4 rounded-lg"
+                  whileHover={{
+                    scale: 1.1,
+                    y: -5,
+                    boxShadow: "0 10px 30px rgba(0,0,0,0.15)"
+                  }}
+                  className="flex flex-col items-center bg-gradient-to-br from-white to-gray-50 p-4 rounded-xl border border-gray-200 cursor-pointer relative overflow-hidden group"
                 >
-                  <img src={icon} alt="" className="h-5 mb-2" />
-                  {text}
+                  <motion.div
+                    className={`absolute inset-0 bg-gradient-to-br ${color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}
+                  />
+                  <motion.img
+                    src={icon}
+                    alt=""
+                    className="h-5 mb-2 relative z-10"
+                    whileHover={{
+                      rotate: [0, -10, 10, -10, 0],
+                      scale: 1.3
+                    }}
+                    transition={{ duration: 0.5 }}
+                  />
+                  <motion.span
+                    className="relative z-10 font-semibold text-gray-700"
+                    whileHover={{
+                      color: color.split(' ')[1].replace('to-', '')
+                    }}
+                  >
+                    {text}
+                  </motion.span>
                 </motion.div>
               ))}
             </div>
 
             {/* Description */}
             {car.description && (
-              <div>
-                <h2 className="text-xl font-medium mb-3">Description</h2>
-                <p className="text-gray-500">{car.description}</p>
-              </div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                whileHover={{
+                  scale: 1.02,
+                  boxShadow: "0 20px 40px rgba(0,0,0,0.1)"
+                }}
+                className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-white via-blue-50 to-purple-50 border border-gray-200 p-6 cursor-pointer group"
+              >
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                />
+                <motion.div
+                  className="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                />
+                <motion.div
+                  className="absolute -bottom-10 -left-10 w-32 h-32 bg-gradient-to-br from-pink-400/20 to-orange-400/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                />
+                <div className="relative z-10">
+                  <motion.h2
+                    className="text-xl font-medium mb-3 text-gray-800"
+                    whileHover={{
+                      scale: 1.05,
+                      color: "#6366f1"
+                    }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    Description
+                  </motion.h2>
+                  <motion.p
+                    className="text-gray-600 leading-relaxed"
+                    whileHover={{
+                      letterSpacing: "0.02em"
+                    }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {car.description}
+                  </motion.p>
+                </div>
+              </motion.div>
             )}
 
             {/* Features */}
             {car.features && car.features.length > 0 && (
-              <div>
-                <h2 className="text-xl font-medium mb-3">Features</h2>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {car.features.map((item) => (
-                    <li key={item} className="flex items-center text-gray-500">
-                      <img src={assets.check_icon} alt="" className="h-4 mr-2" />
-                      {item}
-                    </li>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <motion.h2
+                  className="text-xl font-medium mb-3 text-gray-800"
+                  whileHover={{
+                    scale: 1.05,
+                    color: "#6366f1"
+                  }}
+                  transition={{ duration: 0.3 }}
+                >
+                  Features
+                </motion.h2>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {car.features.map((item, index) => (
+                    <motion.li
+                      key={item}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.3, delay: index * 0.05 }}
+                      whileHover={{
+                        scale: 1.05,
+                        x: 5,
+                        backgroundColor: "rgba(99, 102, 241, 0.1)"
+                      }}
+                      className="flex items-center text-gray-600 px-4 py-2 rounded-lg cursor-pointer transition-colors"
+                    >
+                      <motion.img
+                        src={assets.check_icon}
+                        alt=""
+                        className="h-4 mr-3"
+                        whileHover={{
+                          rotate: [0, -15, 15, -15, 0],
+                          scale: 1.3
+                        }}
+                        transition={{ duration: 0.4 }}
+                      />
+                      <motion.span
+                        whileHover={{
+                          color: "#6366f1",
+                          fontWeight: 600
+                        }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        {item}
+                      </motion.span>
+                    </motion.li>
                   ))}
                 </ul>
-              </div>
+              </motion.div>
             )}
 
             {/* Specifications */}
-            <div className="border border-borderColor rounded-xl p-5 bg-white">
-              <h2 className="text-xl font-semibold mb-4 text-gray-800">Specifications</h2>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              whileHover={{
+                boxShadow: "0 10px 40px rgba(0,0,0,0.1)"
+              }}
+              className="border border-borderColor rounded-xl p-5 bg-white transition-shadow"
+            >
+              <motion.h2
+                className="text-xl font-semibold mb-4 text-gray-800"
+                whileHover={{
+                  scale: 1.05,
+                  color: "#6366f1"
+                }}
+                transition={{ duration: 0.3 }}
+              >
+                Specifications
+              </motion.h2>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-y-4 gap-x-8 text-sm">
-                {car.brand && <div><p className="text-gray-400">Brand</p><p className="font-semibold text-gray-700">{car.brand}</p></div>}
-                {car.model && <div><p className="text-gray-400">Model</p><p className="font-semibold text-gray-700">{car.model}</p></div>}
-                {car.generation && <div><p className="text-gray-400">Generation</p><p className="font-semibold text-gray-700">{car.generation}</p></div>}
-                {car.trim && <div><p className="text-gray-400">Trim</p><p className="font-semibold text-gray-700">{car.trim}</p></div>}
-                {car.year && <div><p className="text-gray-400">Year</p><p className="font-semibold text-gray-700">{car.year}</p></div>}
-                {car.condition && <div><p className="text-gray-400">Condition</p><p className="font-semibold text-gray-700">{car.condition}</p></div>}
-                {car.color && <div><p className="text-gray-400">Color</p><p className="font-semibold text-gray-700">{car.color}</p></div>}
-                {car.mileage && <div><p className="text-gray-400">Mileage</p><p className="font-semibold text-gray-700">{car.mileage}</p></div>}
-                {car.plate_no && <div><p className="text-gray-400">Plate No.</p><p className="font-semibold text-gray-700">{car.plate_no}</p></div>}
-                {car.engine && <div><p className="text-gray-400">Engine / Motor</p><p className="font-semibold text-gray-700">{car.engine}</p></div>}
-                {car.battery_capacity && <div><p className="text-gray-400">Battery Capacity</p><p className="font-semibold text-gray-700">{car.battery_capacity}</p></div>}
-                {car.range && <div><p className="text-gray-400">Range</p><p className="font-semibold text-gray-700">{car.range}</p></div>}
-                {car.drive_type && <div><p className="text-gray-400">Drive Type</p><p className="font-semibold text-gray-700">{car.drive_type}</p></div>}
-                {car.top_speed && <div><p className="text-gray-400">Top Speed</p><p className="font-semibold text-gray-700">{car.top_speed}</p></div>}
-                {car.fuel_consumption && <div><p className="text-gray-400">Fuel Consumption</p><p className="font-semibold text-gray-700">{car.fuel_consumption}</p></div>}
+                {car.brand && <motion.div whileHover={{ x: 5, backgroundColor: "rgba(99, 102, 241, 0.05)" }} className="px-2 py-1 rounded-lg transition-colors cursor-pointer"><p className="text-gray-400">Brand</p><p className="font-semibold text-gray-700">{car.brand}</p></motion.div>}
+                {car.model && <motion.div whileHover={{ x: 5, backgroundColor: "rgba(99, 102, 241, 0.05)" }} className="px-2 py-1 rounded-lg transition-colors cursor-pointer"><p className="text-gray-400">Model</p><p className="font-semibold text-gray-700">{car.model}</p></motion.div>}
+                {car.generation && <motion.div whileHover={{ x: 5, backgroundColor: "rgba(99, 102, 241, 0.05)" }} className="px-2 py-1 rounded-lg transition-colors cursor-pointer"><p className="text-gray-400">Generation</p><p className="font-semibold text-gray-700">{car.generation}</p></motion.div>}
+                {car.trim && <motion.div whileHover={{ x: 5, backgroundColor: "rgba(99, 102, 241, 0.05)" }} className="px-2 py-1 rounded-lg transition-colors cursor-pointer"><p className="text-gray-400">Trim</p><p className="font-semibold text-gray-700">{car.trim}</p></motion.div>}
+                {car.year && <motion.div whileHover={{ x: 5, backgroundColor: "rgba(99, 102, 241, 0.05)" }} className="px-2 py-1 rounded-lg transition-colors cursor-pointer"><p className="text-gray-400">Year</p><p className="font-semibold text-gray-700">{car.year}</p></motion.div>}
+                {car.condition && <motion.div whileHover={{ x: 5, backgroundColor: "rgba(99, 102, 241, 0.05)" }} className="px-2 py-1 rounded-lg transition-colors cursor-pointer"><p className="text-gray-400">Condition</p><p className="font-semibold text-gray-700">{car.condition}</p></motion.div>}
+                {car.color && <motion.div whileHover={{ x: 5, backgroundColor: "rgba(99, 102, 241, 0.05)" }} className="px-2 py-1 rounded-lg transition-colors cursor-pointer"><p className="text-gray-400">Color</p><p className="font-semibold text-gray-700">{car.color}</p></motion.div>}
+                {car.mileage && <motion.div whileHover={{ x: 5, backgroundColor: "rgba(99, 102, 241, 0.05)" }} className="px-2 py-1 rounded-lg transition-colors cursor-pointer"><p className="text-gray-400">Mileage</p><p className="font-semibold text-gray-700">{car.mileage}</p></motion.div>}
+                {car.plate_no && <motion.div whileHover={{ x: 5, backgroundColor: "rgba(99, 102, 241, 0.05)" }} className="px-2 py-1 rounded-lg transition-colors cursor-pointer"><p className="text-gray-400">Plate No.</p><p className="font-semibold text-gray-700">{car.plate_no}</p></motion.div>}
+                {car.engine && <motion.div whileHover={{ x: 5, backgroundColor: "rgba(99, 102, 241, 0.05)" }} className="px-2 py-1 rounded-lg transition-colors cursor-pointer"><p className="text-gray-400">Engine / Motor</p><p className="font-semibold text-gray-700">{car.engine}</p></motion.div>}
+                {car.battery_capacity && <motion.div whileHover={{ x: 5, backgroundColor: "rgba(99, 102, 241, 0.05)" }} className="px-2 py-1 rounded-lg transition-colors cursor-pointer"><p className="text-gray-400">Battery Capacity</p><p className="font-semibold text-gray-700">{car.battery_capacity}</p></motion.div>}
+                {car.range && <motion.div whileHover={{ x: 5, backgroundColor: "rgba(99, 102, 241, 0.05)" }} className="px-2 py-1 rounded-lg transition-colors cursor-pointer"><p className="text-gray-400">Range</p><p className="font-semibold text-gray-700">{car.range}</p></motion.div>}
+                {car.drive_type && <motion.div whileHover={{ x: 5, backgroundColor: "rgba(99, 102, 241, 0.05)" }} className="px-2 py-1 rounded-lg transition-colors cursor-pointer"><p className="text-gray-400">Drive Type</p><p className="font-semibold text-gray-700">{car.drive_type}</p></motion.div>}
+                {car.top_speed && <motion.div whileHover={{ x: 5, backgroundColor: "rgba(99, 102, 241, 0.05)" }} className="px-2 py-1 rounded-lg transition-colors cursor-pointer"><p className="text-gray-400">Top Speed</p><p className="font-semibold text-gray-700">{car.top_speed}</p></motion.div>}
+                {car.fuel_consumption && <motion.div whileHover={{ x: 5, backgroundColor: "rgba(99, 102, 241, 0.05)" }} className="px-2 py-1 rounded-lg transition-colors cursor-pointer"><p className="text-gray-400">Fuel Consumption</p><p className="font-semibold text-gray-700">{car.fuel_consumption}</p></motion.div>}
                 {car.dimensions && (
-                  <div className="col-span-2">
+                  <motion.div whileHover={{ x: 5, backgroundColor: "rgba(99, 102, 241, 0.05)" }} className="col-span-2 px-2 py-1 rounded-lg transition-colors cursor-pointer">
                     <p className="text-gray-400">Dimensions (L/W/H/GC)</p>
                     <p className="font-semibold text-gray-700">{car.dimensions}</p>
-                  </div>
+                  </motion.div>
                 )}
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         </motion.div>
 
@@ -315,66 +459,131 @@ const CarDetails = () => {
 
             {/* ── Contact Seller Icons ── */}
             <div>
-              <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-3 text-center">
+              <motion.p
+                className="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-3 text-center"
+                whileHover={{
+                  scale: 1.1,
+                  color: "#6366f1"
+                }}
+                transition={{ duration: 0.3 }}
+              >
                 Contact Seller
-              </p>
+              </motion.p>
               <div className="flex items-center justify-center gap-4">
                 {/* WhatsApp */}
                 {phone && (
-                  <a
+                  <motion.a
                     href={`https://wa.me/${phone.replace(/\D/g, "")}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     title="WhatsApp"
-                    className="flex items-center justify-center w-11 h-11 rounded-full bg-green-50 hover:bg-green-100 border border-green-200 text-green-600 transition-all hover:scale-110 active:scale-95 shadow-sm"
+                    whileHover={{
+                      scale: 1.2,
+                      rotate: [0, -10, 10, -10, 0],
+                      boxShadow: "0 10px 25px rgba(34, 197, 94, 0.4)"
+                    }}
+                    whileTap={{ scale: 0.95 }}
+                    className="flex items-center justify-center w-11 h-11 rounded-full bg-green-50 hover:bg-green-100 border border-green-200 text-green-600 transition-all shadow-sm"
                   >
                     {/* WhatsApp SVG */}
-                    <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                    <motion.svg
+                      className="h-5 w-5"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      whileHover={{
+                        scale: 1.3
+                      }}
+                      transition={{ duration: 0.2 }}
+                    >
                       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                    </svg>
-                  </a>
+                    </motion.svg>
+                  </motion.a>
                 )}
 
                 {/* Telegram */}
                 {phone && (
-                  <a
+                  <motion.a
                     href={`https://t.me/${phone.replace(/\D/g, "")}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     title="Telegram"
-                    className="flex items-center justify-center w-11 h-11 rounded-full bg-sky-50 hover:bg-sky-100 border border-sky-200 text-sky-500 transition-all hover:scale-110 active:scale-95 shadow-sm"
+                    whileHover={{
+                      scale: 1.2,
+                      rotate: [0, 10, -10, 10, 0],
+                      boxShadow: "0 10px 25px rgba(14, 165, 233, 0.4)"
+                    }}
+                    whileTap={{ scale: 0.95 }}
+                    className="flex items-center justify-center w-11 h-11 rounded-full bg-sky-50 hover:bg-sky-100 border border-sky-200 text-sky-500 transition-all shadow-sm"
                   >
                     {/* Telegram SVG */}
-                    <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                    <motion.svg
+                      className="h-5 w-5"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      whileHover={{
+                        scale: 1.3
+                      }}
+                      transition={{ duration: 0.2 }}
+                    >
                       <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
-                    </svg>
-                  </a>
+                    </motion.svg>
+                  </motion.a>
                 )}
 
                 {/* Phone */}
                 {phone && (
-                  <a
+                  <motion.a
                     href={`tel:${phone}`}
                     title="Call Seller"
-                    className="flex items-center justify-center w-11 h-11 rounded-full bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 text-indigo-600 transition-all hover:scale-110 active:scale-95 shadow-sm"
+                    whileHover={{
+                      scale: 1.2,
+                      rotate: [0, -15, 15, -15, 0],
+                      boxShadow: "0 10px 25px rgba(99, 102, 241, 0.4)"
+                    }}
+                    whileTap={{ scale: 0.95 }}
+                    className="flex items-center justify-center w-11 h-11 rounded-full bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 text-indigo-600 transition-all shadow-sm"
                   >
-                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <motion.svg
+                      className="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      whileHover={{
+                        scale: 1.3
+                      }}
+                      transition={{ duration: 0.2 }}
+                    >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                    </svg>
-                  </a>
+                    </motion.svg>
+                  </motion.a>
                 )}
 
                 {/* Email */}
                 {ownerEmail && (
-                  <a
+                  <motion.a
                     href={`mailto:${ownerEmail}`}
                     title="Email Seller"
-                    className="flex items-center justify-center w-11 h-11 rounded-full bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-500 transition-all hover:scale-110 active:scale-95 shadow-sm"
+                    whileHover={{
+                      scale: 1.2,
+                      rotate: [0, 10, -10, 10, 0],
+                      boxShadow: "0 10px 25px rgba(244, 63, 94, 0.4)"
+                    }}
+                    whileTap={{ scale: 0.95 }}
+                    className="flex items-center justify-center w-11 h-11 rounded-full bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-500 transition-all shadow-sm"
                   >
-                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <motion.svg
+                      className="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      whileHover={{
+                        scale: 1.3
+                      }}
+                      transition={{ duration: 0.2 }}
+                    >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                  </a>
+                    </motion.svg>
+                  </motion.a>
                 )}
 
                 {/* Fallback if no contact info */}
