@@ -8,23 +8,23 @@ const Dashboard = () => {
   const { axios, isOwner, currency } = useAppContext();
   const [data, setData] = useState({
     totalCars: 0,
-    totalBookings: 0,
-    pendingBookings: 0,
-    completeBooking: 0,
-    recentBookings: [],
+    totalOrders: 0,
+    pendingOrders: 0,
+    completeOrder: 0,
+    recentOrders: [],
     monthlyRevenue: 0,
   });
 
   const dashboardCards = [
     { title: "Total Cars", value: data.totalCars, icon: assets.carIconColored },
     {
-      title: "Total Bookings",
-      value: data.totalBookings,
+      title: "Total Orders",
+      value: data.totalOrders,
       icon: assets.listIconColored,
     },
     {
       title: "Pending",
-      value: data.pendingBookings,
+      value: data.pendingOrders,
       icon: assets.cautionIconColored,
     },
     { title: "Confirmed", value: data.totalCars, icon: assets.listIconColored },
@@ -52,7 +52,7 @@ const Dashboard = () => {
     <div className="pt-4 pt-10 md:px-10 flex-1">
       <Title
         title="Admin Dashboard"
-        subTitle="Monitor overall platform performance including total cars, bookings, revenue,
+        subTitle="Monitor overall platform performance including total cars, orders, revenue,
       and recent activities"
       />
       <div
@@ -79,14 +79,14 @@ const Dashboard = () => {
         ))}
       </div>
       <div className="flex flex-wrap items-start gap-6 mb-8 w-full">
-        {/*recent bookings*/}
+        {/*recent orders*/}
         <div
           className="p-4 md:p-6 border border-borderColor rounded-md max-w-lg
         w-full"
         >
-          <h1 className="text-lg font-medium">Recengt Bookings</h1>
-          <p className="text-gray-500">Latest Customer Bookings</p>
-          {data.recentBookings.map((booking, index) => (
+          <h1 className="text-lg font-medium">Recent Orders</h1>
+          <p className="text-gray-500">Latest Customer Orders</p>
+          {data.recentOrders.map((order, index) => (
             <div key={index} className="mt-4 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <div
@@ -101,24 +101,24 @@ const Dashboard = () => {
                 </div>
                 <div>
                   <p>
-                    {booking.car.brand}
-                    {booking.car.model}
+                    {order.car.brand}
+                    {order.car.model}
                   </p>
                   <p className="text-sm text-gray-500">
-                    {booking.createdAt.split("T")[0]}
+                    {order.createdAt.split("T")[0]}
                   </p>
                 </div>
               </div>
               <div className="flex items-center gap-2 font-medium">
                 <p className="text-sm text-gray-500 ">
                   {currency}
-                  {booking.price}
+                  {order.price}
                 </p>
                 <p
                   className="px-3 py-0.5 border border-borderColor rounded-full
              text-sm"
                 >
-                  {booking.status}
+                  {order.status}
                 </p>
               </div>
             </div>

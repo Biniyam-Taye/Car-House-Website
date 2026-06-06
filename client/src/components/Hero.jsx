@@ -12,11 +12,11 @@ const Hero = () => {
     e.preventDefault();
     navigate(
       "/cars?pickupLocation=" +
-        pickupLocation +
-        "&pickupDate=" +
-        pickupDate +
-        "&returnDate=" +
-        returnDate
+      pickupLocation +
+      "&pickupDate=" +
+      pickupDate +
+      "&returnDate=" +
+      returnDate
     );
   };
   return (
@@ -42,9 +42,9 @@ const Hero = () => {
           <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
         </span>
         <span className="tracking-wide flex items-center gap-1.5">
-            <svg className="w-4 h-4 text-yellow-500 shrink-0" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-            Special Offer: Save <span className="text-blue-600 font-extrabold">15% off</span> on premium cars! Code: <span className="font-bold text-gray-900 bg-gray-100 border border-gray-200 px-2 py-0.5 rounded">DRIVE15</span>
-          </span>
+          <svg className="w-4 h-4 text-yellow-500 shrink-0" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+          Special Offer: Save <span className="text-blue-600 font-extrabold">15% off</span> on premium cars! Code: <span className="font-bold text-gray-900 bg-gray-100 border border-gray-200 px-2 py-0.5 rounded">DRIVE15</span>
+        </span>
       </motion.div>
 
       {/* Hero Header Text & Badges */}
@@ -56,18 +56,18 @@ const Hero = () => {
           className="px-4 py-1.5 bg-blue-50 rounded-full border border-blue-100 flex items-center gap-1.5 shadow-sm"
         >
           <span className="text-[11px] font-extrabold text-blue-600 uppercase tracking-widest flex items-center gap-1.5">
-            <svg className="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            <svg className="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
             The Ultimate Drive Experience
           </span>
         </motion.div>
-        
+
         <motion.h1
           initial={{ y: 40, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.7, delay: 0.2 }}
           className="text-4xl md:text-6xl font-extrabold tracking-tight max-w-3xl leading-[1.15] text-gray-900"
         >
-          Luxury Cars on Rent for{" "}
+          Luxury Cars for Sale for{" "}
           <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
             Your Premium Journeys
           </span>
@@ -92,7 +92,7 @@ const Hero = () => {
         className="flex flex-col lg:flex-row items-center justify-between p-4 rounded-[30px] lg:rounded-full w-full max-w-5xl bg-white/95 backdrop-blur-sm shadow-[0_15px_45px_rgba(0,0,0,0.06)] border border-gray-150 gap-6 lg:gap-2 z-10"
       >
         <div className="flex flex-col lg:flex-row items-stretch justify-between w-full divide-y lg:divide-y-0 lg:divide-x divide-gray-100 gap-4 lg:gap-0 lg:px-4">
-          
+
           {/* Pickup Location Block */}
           <div className="flex items-center gap-3.5 px-4 py-2 lg:py-0 w-full lg:w-1/3 hover:bg-gray-50/50 rounded-2xl lg:rounded-none transition-colors cursor-pointer group">
             <div className="p-2.5 bg-blue-50 rounded-full text-blue-600 transition-transform group-hover:scale-110">
@@ -102,7 +102,7 @@ const Hero = () => {
               </svg>
             </div>
             <div className="flex flex-col items-start w-full">
-              <label className="text-[10px] font-extrabold tracking-widest text-gray-400 uppercase">Pickup Location</label>
+              <label className="text-[10px] font-extrabold tracking-widest text-gray-400 uppercase">Location</label>
               <select
                 required
                 value={pickupLocation}
@@ -127,7 +127,7 @@ const Hero = () => {
               </svg>
             </div>
             <div className="flex flex-col items-start w-full">
-              <label htmlFor="pickup-date" className="text-[10px] font-extrabold tracking-widest text-gray-400 uppercase">Pickup Date</label>
+              <label htmlFor="pickup-date" className="text-[10px] font-extrabold tracking-widest text-gray-400 uppercase">Available From</label>
               <input
                 type="date"
                 id="pickup-date"
@@ -148,7 +148,7 @@ const Hero = () => {
               </svg>
             </div>
             <div className="flex flex-col items-start w-full">
-              <label htmlFor="return-date" className="text-[10px] font-extrabold tracking-widest text-gray-400 uppercase">Return Date</label>
+              <label htmlFor="return-date" className="text-[10px] font-extrabold tracking-widest text-gray-400 uppercase">Available Until</label>
               <input
                 type="date"
                 id="return-date"

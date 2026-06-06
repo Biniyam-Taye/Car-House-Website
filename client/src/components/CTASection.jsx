@@ -68,7 +68,7 @@ const CTASection = () => {
             </span>
           </h2>
           <p className="text-gray-500 text-sm md:text-base leading-relaxed mb-6 max-w-lg">
-            Join thousands of drivers who experience premium car rentals with zero stress. Sign up in seconds — completely hassle-free.
+            Join thousands of buyers who experience premium car purchases with zero stress. Sign up in seconds — completely hassle-free.
           </p>
 
           {/* Perks inline */}

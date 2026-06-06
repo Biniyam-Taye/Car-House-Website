@@ -3,28 +3,28 @@ import Title from "../../components/Owner/Title";
 import { useAppContext } from "../../context/AppContext";
 import toast from "react-hot-toast";
 
-const ManageBookings = () => {
+const ManageOrders = () => {
   const { currency, user, axios } = useAppContext();
 
-  const [bookings, setBookings] = useState([]);
+  const [orders, setOrders] = useState([]);
 
-  const fetchOwnerBookings = async () => {
+  const fetchOwnerOrders = async () => {
     try {
       const { data } = await axios.get("/api/booking/owner");
-      data.success ? setBookings(data.bookings) : toast.error(data.message);
+      data.success ? setOrders(data.bookings) : toast.error(data.message);
     } catch (error) {
       toast.error(error.message);
     }
   };
-  const changeBookingStatus = async (bookingId, status) => {
+  const changeOrderStatus = async (orderId, status) => {
     try {
       const { data } = await axios.post("/api/booking/change-status", {
-        bookingId,
+        orderId,
         status,
       });
       if (data.success) {
         toast.success(data.message);
-        fetchOwnerBookings();
+        fetchOwnerOrders();
       } else {
         toast.error(data.message);
       }
@@ -34,14 +34,14 @@ const ManageBookings = () => {
   };
 
   useEffect(() => {
-    user && fetchOwnerBookings();
+    user && fetchOwnerOrders();
   }, [user]);
   return (
     <div className="px-4 pt-10 md:px-10 w-full">
       <Title
-        title="Manage Bookings"
-        subTitle="Track all customer bookings,approve
-      or cancel requests,and manage booking status. "
+        title="Manage Orders"
+        subTitle="Track all customer orders,approve
+      or cancel requests,and manage order status. "
       />
       <div className="max-w-3xl w-full rounded-md overflow-hidden border border-borderColor mt-6">
         <table className="w-full border-collapse text-left text-sm text-gray-600">
@@ -55,29 +55,29 @@ const ManageBookings = () => {
             </tr>
           </thead>
           <tbody>
-            {bookings.map((booking, index) => (
+            {orders.map((order, index) => (
               <tr
                 key={index}
                 className="border-t border-borderColor text-gray-500"
               >
                 <td className="p-3 flex items-center gap-3">
                   <img
-                    src={booking.car.image}
+                    src={order.car.image}
                     alt=""
                     className=" h-12 w-12
             aspect-square rounded-md max-md:hidden"
                   />
                   <p className="font-medium max-md:hidden">
-                    {booking.car.brand} {booking.car.model}
+                    {order.car.brand} {order.car.model}
                   </p>
                 </td>
                 <td className="p-3 max-md:hidden">
-                  {booking.pickupDate.split("T")[0]} to{" "}
-                  {booking.returnDate.split("T")[0]}
+                  {order.pickupDate.split("T")[0]} to{" "}
+                  {order.returnDate.split("T")[0]}
                 </td>
                 <td className="p-3">
                   {currency}
-                  {booking.price}
+                  {order.price}
                 </td>
                 <td className="p-3 max-md:hidden">
                   <span className="bg-gray-100 px-3 py-1 rounded-full text-xs">
@@ -85,11 +85,11 @@ const ManageBookings = () => {
                   </span>
                 </td>
                 <td className="p-3">
-                  {booking.status === "pending" ? (
+                  {order.status === "pending" ? (
                     <select
-                      value={booking.status}
+                      value={order.status}
                       onChange={(e) =>
-                        changeBookingStatus(booking._id, e.target.value)
+                        changeOrderStatus(order._id, e.target.value)
                       }
                       className="px-2 py-1.5 mt-1 text-gray-500
             border border-borderColor rounded-md outline-none"
@@ -101,25 +101,24 @@ const ManageBookings = () => {
                   ) : (
                     <span
                       className={`px-3 py-1 rounded-full text-xs font-semibold 
-              ${
-                booking.status === "confirmed"
-                  ? "bg-green-100 text-green-500"
-                  : "bg-red-100 text-red-500"
-              }`}
+              ${order.status === "confirmed"
+                          ? "bg-green-100 text-green-500"
+                          : "bg-red-100 text-red-500"
+                        }`}
                     >
-                      {booking.status}
+                      {order.status}
                     </span>
                   )}
                   <button
                     onClick={async () => {
-                      if (window.confirm("Are you sure you want to delete this booking?")) {
+                      if (window.confirm("Are you sure you want to delete this order?")) {
                         try {
                           const { data } = await axios.post("/api/booking/delete", {
-                            bookingId: booking._id,
+                            bookingId: order._id,
                           });
                           if (data.success) {
-                            toast.success("Booking deleted successfully");
-                            fetchOwnerBookings();
+                            toast.success("Order deleted successfully");
+                            fetchOwnerOrders();
                           } else {
                             toast.error(data.message);
                           }
@@ -142,4 +141,4 @@ const ManageBookings = () => {
   );
 };
 
-export default ManageBookings;
+export default ManageOrders;

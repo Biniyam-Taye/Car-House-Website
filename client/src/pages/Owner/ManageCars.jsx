@@ -64,7 +64,7 @@ const ManageCars = () => {
       <Title
         title="Manage Cars"
         subTitle="View all listed cars, update their
-      details, or remove them from the booking platform "
+      details, or remove them from the sales platform "
       />
       <div className="max-w-3xl w-full rounded-md overflow-hidden border border-borderColor mt-6">
         <table className="w-full border-collapse text-left text-sm text-gray-600">
@@ -104,11 +104,10 @@ const ManageCars = () => {
                 </td>
                 <td className="p-3 max-md:hidden">
                   <span
-                    className={`p-3 py-1 rounded-full text-xs ${
-                      car.isAvaliable
+                    className={`p-3 py-1 rounded-full text-xs ${car.isAvaliable
                         ? "bg-green-100 text-green-500"
                         : "bg-red-100 text-red-500"
-                    }`}
+                      }`}
                   >
                     {car.isAvaliable ? "Availiable" : "Unavailiable"}
                   </span>

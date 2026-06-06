@@ -17,7 +17,7 @@ const UserTestimonials = () => {
     },
     {
       name: "Jhon Smith",
-      tagline: "Frequent Renter",
+      tagline: "Frequent Buyer",
       text: "Lorem ipsum dolour sit a met, connecter adipescent elite Seed effector nil era, a Commode EU lorem. Lorem ipsum dolour sit a met, connecter adipescent elite Seed effector nil era.",
       avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150&h=150",
       bgColor: "bg-[#1b6cfc]",

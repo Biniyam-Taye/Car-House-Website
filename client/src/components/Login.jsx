@@ -27,12 +27,12 @@ const Login = ({ defaultState = "login" }) => {
         state === "login"
           ? { email, password }
           : {
-              name,
-              email,
-              password,
-              role,
-              ...(role === "owner" && { phone, businessName, location, bio }),
-            };
+            name,
+            email,
+            password,
+            role,
+            ...(role === "owner" && { phone, businessName, location, bio }),
+          };
       const { data } = await axios.post(`/api/user/${state === "login" ? "login" : "register"}`, payload);
       if (data.success) {
         if (data.pendingApproval) {
@@ -82,9 +82,9 @@ const Login = ({ defaultState = "login" }) => {
         {/* Left Panel - Image and taglines */}
         <div className="hidden md:flex md:col-span-5 relative flex-col justify-between p-10 text-white bg-slate-950 overflow-hidden">
           <div className="absolute inset-0 z-0">
-            <img 
-              src="/images/sports.jpg" 
-              alt="Luxury Sports Car" 
+            <img
+              src="/images/sports.jpg"
+              alt="Luxury Sports Car"
               className="w-full h-full object-cover object-center opacity-60 scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-b from-blue-900/40 via-slate-950/70 to-slate-950/90 z-10" />
@@ -101,7 +101,7 @@ const Login = ({ defaultState = "login" }) => {
             {/* Content Text */}
             <div className="space-y-4 mb-8">
               <h3 className="text-3xl font-extrabold leading-tight tracking-tight">
-                Rent Your <span className="text-blue-400">Dream Ride</span> In Seconds.
+                Buy Your <span className="text-blue-400">Dream Ride</span> In Seconds.
               </h3>
               <p className="text-gray-300 text-sm leading-relaxed">
                 Explore premium vehicles, unlock elite member perks, and get on the road with unmatched ease and style.
@@ -132,7 +132,7 @@ const Login = ({ defaultState = "login" }) => {
 
         {/* Right Panel - Form */}
         <div className="col-span-1 md:col-span-7 flex flex-col justify-center p-8 sm:p-12 relative bg-white">
-          <button 
+          <button
             onClick={() => navigate("/")}
             className="absolute top-6 right-6 md:right-auto md:left-6 flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors cursor-pointer"
           >
@@ -148,8 +148,8 @@ const Login = ({ defaultState = "login" }) => {
                 {state === "register" ? "Create your Account" : "Welcome Back"}
               </h2>
               <p className="text-sm text-gray-500">
-                {state === "register" 
-                  ? "Rent or list your cars with GearShift today" 
+                {state === "register"
+                  ? "Rent or list your cars with GearShift today"
                   : "Sign in to access your garage and bookings"}
               </p>
             </div>
@@ -172,37 +172,35 @@ const Login = ({ defaultState = "login" }) => {
                   <div className="space-y-1">
                     <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">I want to:</label>
                     <div className="grid grid-cols-2 gap-3">
-                      <label 
-                        className={`flex items-center justify-center gap-2 p-2.5 border rounded-xl cursor-pointer text-sm font-medium transition-all ${
-                          role === "user" 
-                            ? "border-blue-600 bg-blue-50/50 text-blue-700 ring-1 ring-blue-600 font-semibold" 
-                            : "border-gray-200 hover:border-gray-300 text-gray-600"
-                        }`}
+                      <label
+                        className={`flex items-center justify-center gap-2 p-2.5 border rounded-xl cursor-pointer text-sm font-medium transition-all ${role === "user"
+                          ? "border-blue-600 bg-blue-50/50 text-blue-700 ring-1 ring-blue-600 font-semibold"
+                          : "border-gray-200 hover:border-gray-300 text-gray-600"
+                          }`}
                       >
-                        <input 
-                          type="radio" 
-                          name="role" 
-                          value="user" 
-                          checked={role === "user"} 
-                          onChange={(e) => setRole(e.target.value)} 
-                          className="sr-only" 
+                        <input
+                          type="radio"
+                          name="role"
+                          value="user"
+                          checked={role === "user"}
+                          onChange={(e) => setRole(e.target.value)}
+                          className="sr-only"
                         />
                         Rent Cars
                       </label>
-                      <label 
-                        className={`flex items-center justify-center gap-2 p-2.5 border rounded-xl cursor-pointer text-sm font-medium transition-all ${
-                          role === "owner" 
-                            ? "border-blue-600 bg-blue-50/50 text-blue-700 ring-1 ring-blue-600 font-semibold" 
-                            : "border-gray-200 hover:border-gray-300 text-gray-600"
-                        }`}
+                      <label
+                        className={`flex items-center justify-center gap-2 p-2.5 border rounded-xl cursor-pointer text-sm font-medium transition-all ${role === "owner"
+                          ? "border-blue-600 bg-blue-50/50 text-blue-700 ring-1 ring-blue-600 font-semibold"
+                          : "border-gray-200 hover:border-gray-300 text-gray-600"
+                          }`}
                       >
-                        <input 
-                          type="radio" 
-                          name="role" 
-                          value="owner" 
-                          checked={role === "owner"} 
-                          onChange={(e) => setRole(e.target.value)} 
-                          className="sr-only" 
+                        <input
+                          type="radio"
+                          name="role"
+                          value="owner"
+                          checked={role === "owner"}
+                          onChange={(e) => setRole(e.target.value)}
+                          className="sr-only"
                         />
                         List Cars
                       </label>
@@ -230,7 +228,7 @@ const Login = ({ defaultState = "login" }) => {
                         <input
                           onChange={(e) => setBusinessName(e.target.value)}
                           value={businessName}
-                          placeholder="Your car rental business"
+                          placeholder="Your car sales business"
                           className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 outline-none transition-all"
                           type="text"
                           required
@@ -290,18 +288,18 @@ const Login = ({ defaultState = "login" }) => {
               {state === "register" && (
                 <div className="flex items-center">
                   <label className="flex items-center gap-2.5 cursor-pointer text-xs text-gray-500 select-none">
-                    <input 
-                      type="checkbox" 
-                      required 
-                      className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer accent-blue-600" 
+                    <input
+                      type="checkbox"
+                      required
+                      className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer accent-blue-600"
                     />
                     <span>I accept the <span className="underline hover:text-blue-600 transition-colors font-medium">Terms & Conditions</span></span>
                   </label>
                 </div>
               )}
 
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 className="w-full py-2.5 px-4 bg-slate-900 hover:bg-slate-800 active:scale-[0.99] text-white font-medium rounded-xl flex items-center justify-center gap-2 shadow-sm hover:shadow transition-all cursor-pointer mt-4"
               >
                 <span>{state === "register" ? "Join us" : "Sign in"}</span>

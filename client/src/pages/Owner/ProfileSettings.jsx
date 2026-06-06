@@ -85,7 +85,7 @@ const ProfileSettings = () => {
                   image
                     ? URL.createObjectURL(image)
                     : user?.image ||
-                      "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=100"
+                    "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=100"
                 }
                 alt="Profile"
                 className="w-24 h-24 rounded-full object-cover border-2 border-gray-100"
@@ -170,7 +170,7 @@ const ProfileSettings = () => {
               onChange={(e) => handleChange("bio", e.target.value)}
               rows={4}
               className="w-full px-4 py-2.5 border border-gray-200 rounded-xl outline-none focus:border-blue-500 resize-none"
-              placeholder="Tell renters about your business and experience..."
+              placeholder="Tell buyers about your business and experience..."
             />
           </div>
 

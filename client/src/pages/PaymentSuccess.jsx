@@ -8,10 +8,10 @@ const PaymentSuccess = () => {
   const navigate = useNavigate();
   const { axios } = useAppContext();
   const [loading, setLoading] = useState(true);
-  const hasBooked = useRef(false);
+  const hasPurchased = useRef(false);
 
   useEffect(() => {
-    const finalizeBooking = async () => {
+    const finalizePurchase = async () => {
       const sessionId = searchParams.get("session_id");
       const car = searchParams.get("car");
       const pickupDate = searchParams.get("pickupDate");
@@ -23,8 +23,8 @@ const PaymentSuccess = () => {
         return;
       }
 
-      if (hasBooked.current) return;
-      hasBooked.current = true; // Prevent duplicate API calls on strict mode
+      if (hasPurchased.current) return;
+      hasPurchased.current = true; // Prevent duplicate API calls on strict mode
 
       try {
         const { data } = await axios.post("/api/booking/create", {
@@ -38,7 +38,7 @@ const PaymentSuccess = () => {
           toast.success(
             purchaseType === "sale"
               ? "Payment successful! Your purchase order has been confirmed."
-              : "Payment successful! Booking confirmed."
+              : "Payment successful! Order confirmed."
           );
           setTimeout(() => navigate("/my-bookings"), 2500);
         } else {
@@ -51,7 +51,7 @@ const PaymentSuccess = () => {
       }
     };
 
-    finalizeBooking();
+    finalizePurchase();
   }, [searchParams, axios, navigate]);
 
   return (
@@ -65,9 +65,9 @@ const PaymentSuccess = () => {
       ) : (
         <div className="text-center">
           <h2 className="text-2xl font-semibold text-red-500">Payment Issue</h2>
-          <p className="text-gray-500 mt-2">There was an error finalizing your booking.</p>
-          <button 
-            onClick={() => navigate("/")} 
+          <p className="text-gray-500 mt-2">There was an error finalizing your order.</p>
+          <button
+            onClick={() => navigate("/")}
             className="mt-6 bg-primary hover:bg-primary-dull text-white px-6 py-2 rounded-lg cursor-pointer"
           >
             Return Home

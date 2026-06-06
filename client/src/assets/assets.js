@@ -91,23 +91,23 @@ export const assets = {
 export const menuLinks = [
     { name: "Home", path: "/" },
     { name: "Cars", path: "/cars" },
-    { name: "My Bookings", path: "/my-bookings" },
+    { name: "My Orders", path: "/my-bookings" },
 ]
 
 export const ownerMenuLinks = [
     { name: "Dashboard", path: "/owner", icon: dashboardIcon, coloredIcon: dashboardIconColored },
     { name: "Add car", path: "/owner/add-car", icon: addIcon, coloredIcon: addIconColored },
     { name: "Manage Cars", path: "/owner/manage-cars", icon: carIcon, coloredIcon: carIconColored },
-    { name: "Manage Bookings", path: "/owner/manage-bookings", icon: listIcon, coloredIcon: listIconColored },
+    { name: "Manage Orders", path: "/owner/manage-bookings", icon: listIcon, coloredIcon: listIconColored },
     { name: "Profile", path: "/owner/profile", icon: users_icon, coloredIcon: users_icon },
 ]
 
 export const dummyUserData = {
-  "_id": "6847f7cab3d8daecdb517095",
-  "name": "GreatStack",
-  "email": "admin@example.com",
-  "role": "owner",
-  "image": user_profile,
+    "_id": "6847f7cab3d8daecdb517095",
+    "name": "GreatStack",
+    "email": "admin@example.com",
+    "role": "owner",
+    "image": user_profile,
 }
 
 export const dummyCarData = [
@@ -181,7 +181,7 @@ export const dummyCarData = [
     }
 ];
 
-export const dummyMyBookingsData = [
+export const dummyMyOrdersData = [
     {
         "_id": "68482bcc98eb9722b7751f70",
         "car": dummyCarData[0],
@@ -230,12 +230,12 @@ export const dummyMyBookingsData = [
 
 export const dummyDashboardData = {
     "totalCars": 4,
-    "totalBookings": 2,
-    "pendingBookings": 0,
-    "completedBookings": 2,
-    "recentBookings": [
-        dummyMyBookingsData[0],
-        dummyMyBookingsData[1]
+    "totalOrders": 2,
+    "pendingOrders": 0,
+    "completedOrders": 2,
+    "recentOrders": [
+        dummyMyOrdersData[0],
+        dummyMyOrdersData[1]
     ],
     "monthlyRevenue": 840
 }

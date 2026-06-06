@@ -50,9 +50,9 @@ const AddCar = () => {
     try {
       const featuresArray = car.featuresInput
         ? car.featuresInput
-            .split(/[\n,]+/)
-            .map((f) => f.trim())
-            .filter((f) => f.length > 0)
+          .split(/[\n,]+/)
+          .map((f) => f.trim())
+          .filter((f) => f.length > 0)
         : [];
 
       const carData = {
@@ -136,7 +136,7 @@ const AddCar = () => {
     <div className="px-4 py-10 md:px-10 flex-1">
       <Title
         title="Add new car"
-        subTitle="Fill in details to list a new car for booking or sale, including pricing, availability, and technical specifications."
+        subTitle="Fill in details to list a new car for sale, including pricing, availability, and technical specifications."
       />
       <form
         onSubmit={onSubmitHundler}
@@ -145,7 +145,7 @@ const AddCar = () => {
         {/* Media Block */}
         <div className="flex flex-col gap-4 p-5 border border-borderColor rounded-lg bg-white/50">
           <h3 className="font-semibold text-gray-800 text-base border-b border-borderColor pb-2">Media</h3>
-          
+
           {/* Main Card Image */}
           <div className="flex flex-col gap-2">
             <p className="font-semibold text-gray-700">Main Card Image (Required)</p>
@@ -231,7 +231,7 @@ const AddCar = () => {
               <input
                 type="text"
                 placeholder="e.g. BYD, Nissan, Toyota"
-          
+
                 className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none focus:border-primary transition-all"
                 value={car.brand}
                 onChange={(e) => setCar({ ...car, brand: e.target.value })}
@@ -242,7 +242,7 @@ const AddCar = () => {
               <input
                 type="text"
                 placeholder="e.g. Song Plus Smart, Patrol"
-          
+
                 className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none focus:border-primary transition-all"
                 value={car.model}
                 onChange={(e) => setCar({ ...car, model: e.target.value })}
@@ -253,7 +253,7 @@ const AddCar = () => {
               <input
                 type="text"
                 placeholder="e.g. 2025/4 or 2018"
-          
+
                 className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none focus:border-primary transition-all"
                 value={car.year}
                 onChange={(e) => setCar({ ...car, year: e.target.value })}
@@ -288,7 +288,7 @@ const AddCar = () => {
                 onChange={(e) => setCar({ ...car, category: e.target.value })}
                 className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none bg-white focus:border-primary transition-all"
                 value={car.category}
-                
+
               >
                 <option value="">Select a category</option>
                 <option value="Sedan">Sedan</option>
@@ -350,7 +350,7 @@ const AddCar = () => {
               <input
                 type="text"
                 placeholder="e.g. Addis Ababa, New York"
-                
+
                 className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none focus:border-primary transition-all"
                 value={car.location}
                 onChange={(e) => setCar({ ...car, location: e.target.value })}
@@ -380,7 +380,7 @@ const AddCar = () => {
                 onChange={(e) => setCar({ ...car, transmission: e.target.value })}
                 className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none bg-white focus:border-primary transition-all"
                 value={car.transmission}
-                
+
               >
                 <option value="">Select Transmission</option>
                 <option value="Automatic">Automatic</option>
@@ -394,7 +394,7 @@ const AddCar = () => {
                 onChange={(e) => setCar({ ...car, fuel_type: e.target.value })}
                 value={car.fuel_type}
                 className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none bg-white focus:border-primary transition-all"
-                
+
               >
                 <option value="">Select Fuel Type</option>
                 <option value="Petrol">Petrol</option>
@@ -488,11 +488,11 @@ const AddCar = () => {
           <h3 className="font-semibold text-gray-800 text-base border-b border-borderColor pb-2">Pricing & Financing</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="flex flex-col w-full">
-              <label>Daily Price (Rental, {currency})</label>
+              <label>Daily Price (Sales, {currency})</label>
               <input
                 type="number"
                 placeholder="e.g. 150"
-                
+
                 className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none focus:border-primary transition-all"
                 value={car.pricePerDay}
                 onChange={(e) => setCar({ ...car, pricePerDay: e.target.value })}
@@ -552,7 +552,7 @@ const AddCar = () => {
             <textarea
               rows={4}
               placeholder="eg. A luxury SUV with powerful engine..."
-              
+
               className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none focus:border-primary transition-all"
               value={car.description}
               onChange={(e) => setCar({ ...car, description: e.target.value })}
