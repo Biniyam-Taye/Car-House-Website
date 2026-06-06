@@ -8,6 +8,7 @@ const AddCar = () => {
   const { axios, currency, fetchCars } = useAppContext();
 
   const [image, setImage] = useState(null);
+  const [subImages, setSubImages] = useState([]);
   const [car, setCar] = useState({
     brand: "",
     model: "",
@@ -75,6 +76,9 @@ const AddCar = () => {
 
       const formData = new FormData();
       formData.append("image", image);
+      subImages.forEach((file) => {
+        formData.append("subImages", file);
+      });
       formData.append("carData", JSON.stringify(carData));
 
       const { data } = await axios.post("/api/owner/add-car", formData);
@@ -82,6 +86,7 @@ const AddCar = () => {
       if (data.success) {
         toast.success(data.message);
         setImage(null);
+        setSubImages([]);
         setCar({
           brand: "",
           model: "",
@@ -136,25 +141,82 @@ const AddCar = () => {
         className="flex flex-col gap-6 text-gray-500 text-sm mt-6 max-w-4xl"
       >
         {/* Media Block */}
-        <div className="flex flex-col gap-3 p-5 border border-borderColor rounded-lg bg-white/50">
-          <h3 className="font-semibold text-gray-800 text-base">Media</h3>
-          <div className="flex items-center gap-4 w-full">
-            <label htmlFor="car-image">
-              <img
-                src={image ? URL.createObjectURL(image) : assets.upload_icon}
-                alt=""
-                className="h-16 w-16 object-cover rounded cursor-pointer border border-dashed border-gray-300 p-1"
-              />
-              <input
-                type="file"
-                id="car-image"
-                accept="image/*"
-                hidden
-                onChange={(e) => setImage(e.target.files[0])}
-                required
-              />
-            </label>
-            <p className="text-sm text-gray-400">Upload a picture of your car (Required)</p>
+        <div className="flex flex-col gap-4 p-5 border border-borderColor rounded-lg bg-white/50">
+          <h3 className="font-semibold text-gray-800 text-base border-b border-borderColor pb-2">Media</h3>
+          
+          {/* Main Card Image */}
+          <div className="flex flex-col gap-2">
+            <p className="font-semibold text-gray-700">Main Card Image (Required)</p>
+            <div className="flex items-center gap-4 w-full">
+              <label htmlFor="car-image">
+                <img
+                  src={image ? URL.createObjectURL(image) : assets.upload_icon}
+                  alt=""
+                  className="h-16 w-16 object-cover rounded cursor-pointer border border-dashed border-gray-300 p-1"
+                />
+                <input
+                  type="file"
+                  id="car-image"
+                  accept="image/*"
+                  hidden
+                  onChange={(e) => setImage(e.target.files[0])}
+                  required
+                />
+              </label>
+              <p className="text-xs text-gray-400">This image will be used as the main display card image.</p>
+            </div>
+          </div>
+
+          {/* Sub Images (Inside/Outside views) */}
+          <div className="flex flex-col gap-2 border-t border-borderColor pt-4 mt-2">
+            <p className="font-semibold text-gray-700">Detail Views (Inside, Outside, Side Views)</p>
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center gap-4">
+                <label htmlFor="sub-images" className="flex items-center gap-2 px-3 py-1.5 border border-borderColor rounded-md cursor-pointer hover:bg-gray-50 transition-colors">
+                  <img src={assets.upload_icon} className="h-5 w-5" alt="" />
+                  <span>Upload Views</span>
+                  <input
+                    type="file"
+                    id="sub-images"
+                    accept="image/*"
+                    multiple
+                    hidden
+                    onChange={(e) => {
+                      const filesArray = Array.from(e.target.files);
+                      setSubImages((prev) => [...prev, ...filesArray]);
+                    }}
+                  />
+                </label>
+                <p className="text-xs text-gray-400">Add multiple images of the vehicle's interior and exterior.</p>
+              </div>
+
+              {/* Preview Grid */}
+              {subImages.length > 0 && (
+                <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-3 mt-2">
+                  {subImages.map((file, idx) => (
+                    <div key={idx} className="relative group aspect-square">
+                      <img
+                        src={URL.createObjectURL(file)}
+                        alt={`sub-preview-${idx}`}
+                        className="w-full h-full object-cover rounded-md border border-borderColor p-0.5"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSubImages((prev) => prev.filter((_, i) => i !== idx));
+                        }}
+                        className="absolute -top-1.5 -right-1.5 bg-red-500 text-white rounded-full p-0.5 shadow hover:bg-red-600 transition-colors cursor-pointer"
+                        title="Remove image"
+                      >
+                        <svg xmlns="http://www.w3.org/2050/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
