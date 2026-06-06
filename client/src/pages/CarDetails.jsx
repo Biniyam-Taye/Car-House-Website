@@ -15,6 +15,7 @@ const CarDetails = () => {
 
   const navigate = useNavigate();
   const [car, setCar] = useState(null);
+  const [activeImage, setActiveImage] = useState("");
   const currency = import.meta.env.VITE_CURRENCY;
 
   const handleSubmit = async (e) => {
@@ -44,7 +45,11 @@ const CarDetails = () => {
   };
 
   useEffect(() => {
-    setCar(cars.find((car) => car._id === id));
+    const foundCar = cars.find((car) => car._id === id);
+    setCar(foundCar);
+    if (foundCar) {
+      setActiveImage(foundCar.image);
+    }
   }, [cars, id]);
   return car ? (
     <div className="px-6 md:px-16 lg:px-24 xl:px-32 mt-16">
@@ -66,13 +71,37 @@ const CarDetails = () => {
         >
           <motion.img
             initial={{ opacity: 0, scale: 0.98 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
-            src={car.image}
+            src={activeImage || car.image}
             alt=""
-            className="w-full h-auto md:ma-h-100 object-cover
-          rounded-xl mb-6 shadow-md"
+            className="w-full h-auto md:max-h-120 object-cover rounded-xl shadow-md"
           />
+
+          {/* Thumbnails Gallery */}
+          {car.subImages && car.subImages.length > 0 && (
+            <div className="flex gap-3 overflow-x-auto py-2 mb-6 mt-3 scrollbar-hide">
+              <img
+                src={car.image}
+                alt="main"
+                onClick={() => setActiveImage(car.image)}
+                className={`w-24 h-16 object-cover rounded-lg cursor-pointer border-2 transition-all shrink-0 ${
+                  activeImage === car.image ? "border-primary scale-105" : "border-transparent opacity-70 hover:opacity-100"
+                }`}
+              />
+              {car.subImages.map((img, idx) => (
+                <img
+                  key={idx}
+                  src={img}
+                  alt={`sub-${idx}`}
+                  onClick={() => setActiveImage(img)}
+                  className={`w-24 h-16 object-cover rounded-lg cursor-pointer border-2 transition-all shrink-0 ${
+                    activeImage === img ? "border-primary scale-105" : "border-transparent opacity-70 hover:opacity-100"
+                  }`}
+                />
+              ))}
+            </div>
+          )}
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -81,8 +110,7 @@ const CarDetails = () => {
           >
             <div>
               <h1 className="text-3xl font-bold ">
-                {car.brand}
-                {car.model}
+                {car.brand} {car.model}
               </h1>
               <p className="text-gray-500 text-lg">
                 {car.category} • {car.year}
@@ -156,6 +184,30 @@ const CarDetails = () => {
               per day
             </span>
           </p>
+
+          {/* Sale / Financing Details */}
+          {(car.sale_price || car.bank_price) && (
+            <div className="mt-4 p-4 bg-gray-50 rounded-xl border border-borderColor flex flex-col gap-2 text-sm">
+              {car.sale_price && (
+                <div className="flex justify-between items-center">
+                  <span className="font-semibold text-gray-600">Cash / Outright Sale:</span>
+                  <span className="text-lg font-bold text-gray-900">{car.sale_price.toLocaleString()} ETB</span>
+                </div>
+              )}
+              {car.bank_price && (
+                <div className="flex justify-between items-center border-t border-gray-200/60 pt-2">
+                  <span className="font-semibold text-gray-600">Bank Price:</span>
+                  <span className="text-lg font-bold text-gray-900">{car.bank_price.toLocaleString()} ETB</span>
+                </div>
+              )}
+              {car.bank_info && (
+                <div className="text-xs text-blue-600 font-medium bg-blue-50/50 p-2 rounded-lg mt-1">
+                  ℹ️ {car.bank_info}
+                </div>
+              )}
+            </div>
+          )}
+
           <hr className="border-borderColor my-6" />
           <div>
             <label htmlFor="pickup-date">pickup-date</label>
