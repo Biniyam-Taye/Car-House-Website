@@ -9,16 +9,18 @@ import ScrollToTop from "../components/ScrollToTop";
 const LayoutWrapper = () => {
   const location = useLocation();
   const isOwnerPath = location.pathname.startsWith("/owner");
+  const isAuthPath = location.pathname === "/login" || location.pathname === "/signup";
+  const hideHeaderFooter = isOwnerPath || isAuthPath;
 
   return (
     <>
       <ScrollToTop />
       {/* Navbar displayed only on public pages */}
-      {!isOwnerPath && <Navbar />}
+      {!hideHeaderFooter && <Navbar />}
       {/* Render appropriate route tree */}
       {isOwnerPath ? <OwnerRoutes /> : <PublicRoutes />}
       {/* Footer displayed only on public pages */}
-      {!isOwnerPath && <Footer />}
+      {!hideHeaderFooter && <Footer />}
     </>
   );
 };
