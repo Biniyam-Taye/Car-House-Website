@@ -21,25 +21,16 @@ export const addCar = async (req, res) => {
   try {
     const { _id } = req.user;
     let car = JSON.parse(req.body.carData);
-    const imageFile = req.file;
+    
+    // Multer upload.fields puts files in req.files
+    const imageFile = req.files && req.files["image"] ? req.files["image"][0] : null;
+    const subImageFiles = req.files && req.files["subImages"] ? req.files["subImages"] : [];
 
-    // if (!imageFile) {
-    //   return res
-    //     .status(400)
-    //     .json({ success: false, message: "No image uploaded" });
-    // }
+    if (!imageFile) {
+      return res.json({ success: false, message: "Main image is required" });
+    }
 
-    // // ✅ Convert buffer to base64 (for ImageKit upload)
-    // const base64File = imageFile.buffer.toString("base64");
-
-    // // ✅ Upload image to ImageKit
-    // const response = await imageKit.upload({
-    //   file: base64File,
-    //   fileName: imageFile.originalname, // fixed spelling
-    //   folder: "/cars",
-    // });
-
-    //Upload image to imagekit
+    // Upload main image to ImageKit
     const fileBuffer = fs.readFileSync(imageFile.path);
     const response = await imageKit.upload({
       file: fileBuffer,
@@ -47,19 +38,40 @@ export const addCar = async (req, res) => {
       folder: "/cars",
     });
 
-    // ✅ Optimize via ImageKit URL
+    // Optimize via ImageKit URL
     const optimizedImageUrl = imageKit.url({
       path: response.filePath,
       transformation: [
-        { width: "1280" }, //width resizing
-        { quality: "auto" }, //auto compartion
-        { format: "webp" }, // convert to modern format
+        { width: "1280" },
+        { quality: "auto" },
+        { format: "webp" },
       ],
     });
 
-    // ✅ Save car info
     const image = optimizedImageUrl;
-    await Car.create({ ...car, owner: _id, image });
+
+    // Upload sub-images to ImageKit
+    const subImages = [];
+    for (const file of subImageFiles) {
+      const subFileBuffer = fs.readFileSync(file.path);
+      const subResponse = await imageKit.upload({
+        file: subFileBuffer,
+        fileName: file.originalname,
+        folder: "/cars",
+      });
+      const optimizedSubUrl = imageKit.url({
+        path: subResponse.filePath,
+        transformation: [
+          { width: "1280" },
+          { quality: "auto" },
+          { format: "webp" },
+        ],
+      });
+      subImages.push(optimizedSubUrl);
+    }
+
+    // Save car info including sub-images
+    await Car.create({ ...car, owner: _id, image, subImages });
 
     res.json({ success: true, message: "Car Added Successfully" });
   } catch (error) {
