@@ -2,6 +2,7 @@ import React from "react";
 import { useAppContext } from "../context/AppContext";
 import toast from "react-hot-toast";
 import { motion } from "motion/react";
+import { Link } from "react-router-dom";
 
 const Login = ({ defaultState = "login" }) => {
   const { setShowLogin, axios, setToken, navigate, loginMode } = useAppContext();
@@ -60,9 +61,9 @@ const Login = ({ defaultState = "login" }) => {
           <div className="relative z-20 flex flex-col justify-between h-full">
             {/* Brand/Logo */}
             <div className="flex items-center gap-2">
-              <span className="text-xl font-bold tracking-wider bg-gradient-to-r from-blue-400 to-indigo-300 bg-clip-text text-transparent">
+              <Link to="/" className="text-xl font-bold tracking-wider bg-gradient-to-r from-blue-400 to-indigo-300 bg-clip-text text-transparent cursor-pointer hover:opacity-80 transition-opacity">
                 GEARSHIFT
-              </span>
+              </Link>
             </div>
 
             {/* Content Text */}
@@ -99,6 +100,15 @@ const Login = ({ defaultState = "login" }) => {
 
         {/* Right Panel - Form */}
         <div className="col-span-1 md:col-span-7 flex flex-col justify-center p-8 sm:p-12 relative bg-white">
+          <button 
+            onClick={() => navigate("/")}
+            className="absolute top-6 right-6 md:right-auto md:left-6 flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors cursor-pointer"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            <span className="hidden sm:inline">Back</span>
+          </button>
 
           <div className="w-full max-w-md mx-auto space-y-6">
             <div className="space-y-2">
