@@ -33,7 +33,7 @@ const Navbar = () => {
             className="h-9 md:h-10 cursor-pointer"
           />
           <span className="text-xl font-extrabold text-gray-900 hidden sm:block tracking-tight transition-all duration-500 bg-gradient-to-r from-gray-900 via-blue-600 to-indigo-600 bg-[size:200%] bg-clip-text group-hover:text-transparent group-hover:bg-right">
-            HotelDemo
+            DriveLux
           </span>
         </Link>
 

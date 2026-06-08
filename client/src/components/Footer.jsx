@@ -15,17 +15,17 @@ const Footer = () => {
         {/* Left Section */}
         <div className="w-full lg:w-1/3 pr-0 lg:pr-8">
           <div className="flex items-center gap-2.5 mb-5">
-            <motion.img 
+            <motion.img
               whileHover={{ scale: 1.1, rotate: -8 }}
               transition={{ type: "spring", stiffness: 300 }}
-              src={assets.logo} 
-              alt="logo" 
-              className="h-9 md:h-11" 
+              src={assets.logo}
+              alt="logo"
+              className="h-9 md:h-11"
             />
-            <span className="text-xl font-extrabold text-gray-900 tracking-tight">HotelDemo</span>
+            <span className="text-xl font-extrabold text-gray-900 tracking-tight">DriveLux</span>
           </div>
           <p className="mb-6 leading-relaxed text-gray-500 font-normal">
-            Book your perfect stay with us. We offer seamless hotel reservations, trusted listings, and the best prices to make your travel experience smooth, comfortable, and memorable.
+            Rent your perfect car with us. We offer seamless car rentals, trusted listings, and the best prices to make your journey smooth, comfortable, and memorable.
           </p>
           <div className="flex items-center gap-3">
             <a href="#" className="w-9 h-9 flex items-center justify-center bg-white rounded-full border border-gray-200 shadow-sm hover:border-pink-300 hover:bg-pink-50/50 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-md">
