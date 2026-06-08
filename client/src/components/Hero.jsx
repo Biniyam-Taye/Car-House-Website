@@ -100,8 +100,8 @@ const Hero = () => {
         </span>
       </motion.div>
 
-      {/* Hero Header Text & Badges - Wrapped in a frosted glass box for readability against the video */}
-      <div className="relative z-10 flex flex-col items-center gap-4 mt-4 bg-white/70 backdrop-blur-md border border-white/50 shadow-[0_8px_30px_rgba(0,0,0,0.05)] rounded-[2.5rem] p-8 md:px-12 max-w-4xl mx-auto">
+      {/* Hero Header Text & Badges - Wrapped in a slight, highly transparent frosted card */}
+      <div className="relative z-10 flex flex-col items-center gap-4 mt-4 max-w-4xl mx-auto px-8 py-10 bg-white/10 backdrop-blur-[4px] border border-white/20 shadow-2xl rounded-3xl">
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -118,7 +118,7 @@ const Hero = () => {
           initial={{ y: 40, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="text-4xl md:text-6xl font-extrabold tracking-tight max-w-3xl leading-[1.15] text-gray-900"
+          className="text-5xl md:text-7xl font-lora font-black tracking-tight max-w-4xl leading-[1.1] text-gray-900 drop-shadow-xl"
         >
           <motion.span
             animate={{ y: [-2, 2, -2], rotate: [-0.5, 0.5, -0.5] }}
@@ -135,7 +135,7 @@ const Hero = () => {
                 animate={{ y: 0, opacity: 1, scale: 1, rotateX: 0 }}
                 exit={{ y: -30, opacity: 0, scale: 0.95, rotateX: -40 }}
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                className={`inline-block bg-gradient-to-r ${rotatingPhrases[textIndex].gradient} bg-clip-text text-transparent`}
+                className={`inline-block bg-gradient-to-r ${rotatingPhrases[textIndex].gradient} bg-clip-text text-transparent drop-shadow-xl`}
                 style={{ perspective: 600 }}
               >
                 {rotatingPhrases[textIndex].text}
@@ -148,7 +148,7 @@ const Hero = () => {
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="text-gray-500 text-sm md:text-base max-w-xl leading-relaxed mt-2"
+          className="text-gray-900 font-bold text-sm md:text-lg max-w-xl leading-relaxed mt-2 drop-shadow-md"
         >
           Choose from a fleet of elite, high-performance vehicles. Experience unparalleled comfort, speed, and safety at flat-rate transparent prices.
         </motion.p>
