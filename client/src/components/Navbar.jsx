@@ -14,6 +14,7 @@ const Navbar = () => {
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 640);
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const handleResize = () => {
@@ -103,6 +104,14 @@ const Navbar = () => {
             <input
               type="text"
               placeholder="Search"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  navigate(`/cars?search=${encodeURIComponent(searchQuery)}`);
+                  setOpen(false);
+                }
+              }}
               className="w-full bg-transparent outline-none placeholder-gray-400 font-medium"
             />
           </div>
