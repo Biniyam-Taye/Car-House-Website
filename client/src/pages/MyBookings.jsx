@@ -5,7 +5,7 @@ import { useAppContext } from "../context/AppContext";
 import toast from "react-hot-toast";
 import { motion } from "motion/react";
 
-const MyOrders = () => {
+const MyBookings = () => {
   const { axios, user, currency } = useAppContext();
 
   const [orders, setOrders] = useState([]);
@@ -48,7 +48,7 @@ const MyOrders = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1, duration: 0.4 }}
-              key={booking._id}
+              key={order._id}
               className="grid grid-cols-1 md:grid-cols-4 gap-6
             p-6 border border-borderColor rounded-lg mt-5 first:mt-12"
             >
@@ -78,12 +78,12 @@ const MyOrders = () => {
                     Order #{index + 1}
                   </p>
                   <p
-                    className={`px-3 py-1 text-xs rounded-full ${booking.status === "confirmed"
+                    className={`px-3 py-1 text-xs rounded-full ${order.status === "confirmed"
                       ? "bg-green-400/15 text-green-600 "
                       : "bg-red-400/15 text-red-600"
                       }`}
                   >
-                    {booking.status}
+                    {order.status}
                   </p>
                 </div>
                 <div className="flex items-start gap-2 mt-3">
