@@ -41,7 +41,69 @@ import car_image2 from "./car_image2.png"
 import car_image3 from "./car_image3.png"
 import car_image4 from "./car_image4.png"
 
-export const cityList = ['New York', 'Los Angeles', 'Houston', 'Chicago']
+export const cityList = [
+    // USA
+    'New York, USA',
+    'Los Angeles, USA',
+    'Houston, USA',
+    'Chicago, USA',
+    'Phoenix, USA',
+    'Philadelphia, USA',
+    'San Antonio, USA',
+    'San Diego, USA',
+    'Dallas, USA',
+    'San Jose, USA',
+    // Canada
+    'Toronto, Canada',
+    'Vancouver, Canada',
+    'Montreal, Canada',
+    'Calgary, Canada',
+    'Edmonton, Canada',
+    // UK
+    'London, UK',
+    'Manchester, UK',
+    'Birmingham, UK',
+    'Leeds, UK',
+    'Glasgow, UK',
+    // Europe
+    'Paris, France',
+    'Berlin, Germany',
+    'Madrid, Spain',
+    'Rome, Italy',
+    'Amsterdam, Netherlands',
+    'Zurich, Switzerland',
+    'Vienna, Austria',
+    'Prague, Czech Republic',
+    'Stockholm, Sweden',
+    'Dublin, Ireland',
+    // Asia
+    'Tokyo, Japan',
+    'Beijing, China',
+    'Shanghai, China',
+    'Hong Kong, China',
+    'Singapore, Singapore',
+    'Bangkok, Thailand',
+    'Dubai, UAE',
+    'Kuala Lumpur, Malaysia',
+    'Seoul, South Korea',
+    'Mumbai, India',
+    'Delhi, India',
+    'Bangalore, India',
+    // Australia
+    'Sydney, Australia',
+    'Melbourne, Australia',
+    'Brisbane, Australia',
+    'Perth, Australia',
+    // Middle East
+    'Dubai, UAE',
+    'Abu Dhabi, UAE',
+    'Riyadh, Saudi Arabia',
+    'Doha, Qatar',
+    // Mexico
+    'Mexico City, Mexico',
+    'Cancun, Mexico',
+    'Guadalajara, Mexico'
+]
 
 export const assets = {
     logo,

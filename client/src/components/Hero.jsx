@@ -1,13 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { assets, cityList } from "../assets/assets";
 import { useAppContext } from "../context/AppContext";
 import { motion } from "motion/react";
 
 const Hero = () => {
   const [pickupLocation, setPickupLocation] = useState("");
+  const [locationSearch, setLocationSearch] = useState("");
+  const [showLocationDropdown, setShowLocationDropdown] = useState(false);
+  const locationRef = useRef(null);
 
   const { pickupDate, setPickupDate, navigate, returnDate, setReturnDate } =
     useAppContext();
+
+  const filteredCities = cityList.filter((city) =>
+    city.toLowerCase().includes(locationSearch.toLowerCase())
+  );
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (locationRef.current && !locationRef.current.contains(event.target)) {
+        setShowLocationDropdown(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const handleSearch = (e) => {
     e.preventDefault();
     navigate(
@@ -94,7 +114,7 @@ const Hero = () => {
         <div className="flex flex-col lg:flex-row items-stretch justify-between w-full divide-y lg:divide-y-0 lg:divide-x divide-gray-100 gap-4 lg:gap-0 lg:px-4">
 
           {/* Pickup Location Block */}
-          <div className="flex items-center gap-3.5 px-4 py-2 lg:py-0 w-full lg:w-1/3 hover:bg-gray-50/50 rounded-2xl lg:rounded-none transition-colors cursor-pointer group">
+          <div ref={locationRef} className="flex items-center gap-3.5 px-4 py-2 lg:py-0 w-full lg:w-1/3 hover:bg-gray-50/50 rounded-2xl lg:rounded-none transition-colors cursor-pointer group relative">
             <div className="p-2.5 bg-blue-50 rounded-full text-blue-600 transition-transform group-hover:scale-110">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
@@ -103,19 +123,49 @@ const Hero = () => {
             </div>
             <div className="flex flex-col items-start w-full">
               <label className="text-[10px] font-extrabold tracking-widest text-gray-400 uppercase">Location</label>
-              <select
-                required
-                value={pickupLocation}
-                onChange={(e) => setPickupLocation(e.target.value)}
-                className="w-full bg-transparent border-none outline-none font-bold text-gray-800 text-[14px] cursor-pointer appearance-none"
-              >
-                <option value="">Select Location</option>
-                {cityList.map((city) => (
-                  <option key={city} value={city}>
-                    {city}
-                  </option>
-                ))}
-              </select>
+              <div className="relative w-full">
+                <input
+                  required
+                  type="text"
+                  placeholder="Search or select..."
+                  value={pickupLocation || locationSearch}
+                  onChange={(e) => {
+                    setLocationSearch(e.target.value);
+                    if (!e.target.value) setPickupLocation("");
+                  }}
+                  onFocus={() => setShowLocationDropdown(true)}
+                  className="w-full bg-transparent border-none outline-none font-bold text-gray-800 text-[14px] cursor-pointer"
+                />
+                {showLocationDropdown && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute top-full left-0 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto"
+                  >
+                    {filteredCities.length > 0 ? (
+                      filteredCities.map((city) => (
+                        <button
+                          key={city}
+                          type="button"
+                          onClick={() => {
+                            setPickupLocation(city);
+                            setLocationSearch("");
+                            setShowLocationDropdown(false);
+                          }}
+                          className="w-full text-left px-4 py-2.5 hover:bg-blue-50 transition-colors text-gray-700 font-medium text-[14px] border-b border-gray-100 last:border-b-0"
+                        >
+                          {city}
+                        </button>
+                      ))
+                    ) : (
+                      <div className="px-4 py-3 text-center text-gray-500 text-[14px]">
+                        No locations found
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+              </div>
             </div>
           </div>
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { assets, menuLinks } from "../assets/assets";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
@@ -9,9 +9,17 @@ const Navbar = () => {
   const { setShowLogin, user, logOut, isOwner, isHeadAdmin } =
     useAppContext();
 
-
   const [open, setOpen] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 640);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 640);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
 
   return (
@@ -32,31 +40,60 @@ const Navbar = () => {
             alt="logo"
             className="h-12 md:h-14 cursor-pointer"
           />
-          <span className="text-xl font-extrabold text-gray-900 hidden sm:block tracking-tight transition-all duration-500 bg-gradient-to-r from-gray-900 via-blue-600 to-indigo-600 bg-[size:200%] bg-clip-text group-hover:text-transparent group-hover:bg-right">
+          <span className="text-lg sm:text-xl font-extrabold text-gray-900 tracking-tight transition-all duration-500 bg-gradient-to-r from-gray-900 via-blue-600 to-indigo-600 bg-[size:200%] bg-clip-text group-hover:text-transparent group-hover:bg-right">
             DriveLux
           </span>
         </Link>
 
         {/* Menu Links & Search */}
-        <div
+        <motion.div
+          initial={false}
+          animate={isDesktop || open ? { opacity: 1, pointerEvents: "auto" } : { opacity: 0, pointerEvents: "none" }}
+          transition={{ duration: 0.2 }}
           className={`absolute top-20 right-0 h-screen w-full sm:h-auto sm:w-auto sm:static
             flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 p-6
-            sm:p-0 rounded-3xl sm:rounded-none shadow-2xl sm:shadow-none bg-white sm:bg-transparent
+            sm:p-0 rounded-3xl sm:rounded-none sm:shadow-none bg-white sm:bg-transparent
             transform transition-transform duration-300
             ${open ? "translate-x-0" : "translate-x-full"} sm:translate-x-0`}
+          style={{
+            background: open ? "linear-gradient(135deg, #ffffff 0%, #f8faff 100%)" : "transparent",
+            boxShadow: open ? "0 20px 60px rgba(0, 0, 0, 0.15)" : "none",
+            backdropFilter: open ? "blur(10px)" : "none"
+          }}
         >
+          {/* Mobile Header with Logo */}
+          <div className="sm:hidden w-full flex items-center justify-between mb-6 pb-6 border-b border-gray-200">
+            <motion.img
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.1 }}
+              src={assets.logo}
+              alt="logo"
+              className="h-10 w-10"
+            />
+            <span className="text-lg font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">DriveLux</span>
+          </div>
+
           {/* Navigation Links */}
-          {menuLinks.map((link, index) => (
-            <Link
-              key={index}
-              to={link.path}
-              className="relative px-5 py-2.5 font-semibold text-[15px] text-gray-600 transition-all duration-300 hover:text-white rounded-full group flex items-center justify-center"
-              onClick={() => setOpen(false)} // Close menu on click (mobile)
-            >
-              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-blue-600 to-indigo-600 opacity-0 scale-50 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 rounded-full shadow-[0_6px_20px_rgba(37,99,235,0.35)]"></span>
-              <span className="relative z-10">{link.name}</span>
-            </Link>
-          ))}
+          <div className="w-full sm:w-auto flex flex-col sm:flex-row gap-2 sm:gap-4">
+            {menuLinks.map((link, index) => (
+              <motion.div
+                key={index}
+                initial={isDesktop ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                animate={open || isDesktop ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                transition={{ delay: index * 0.05 }}
+              >
+                <Link
+                  to={link.path}
+                  className="relative px-5 py-3 font-semibold text-[15px] text-gray-600 transition-all duration-300 hover:text-white rounded-xl group flex items-center justify-center w-full sm:w-auto active:scale-95"
+                  onClick={() => setOpen(false)}
+                >
+                  <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-blue-500 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></span>
+                  <span className="relative z-10 transition-all">{link.name}</span>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
 
           {/* Search Input (Desktop Only) */}
           <div className="hidden lg:flex items-center text-sm gap-2 border border-gray-200 px-4 py-2 rounded-full max-w-xs hover:border-blue-400 hover:shadow-md transition-all duration-300">
@@ -69,37 +106,48 @@ const Navbar = () => {
           </div>
 
           {/* Dashboard & Login Buttons */}
-          <div className="flex max-sm:flex-col items-start sm:items-center gap-4 w-full sm:w-auto">
+          <div className="flex max-sm:flex-col sm:items-center gap-4 w-full sm:w-auto">
             {isHeadAdmin && (
-              <button
+              <motion.button
+                initial={isDesktop ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                animate={open || isDesktop ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                transition={{ delay: 0.2 }}
                 onClick={() => navigate("/admin")}
-                className="font-medium text-gray-700 hover:text-blue-600 transition-colors px-3 py-1.5 rounded-full hover:bg-gray-50"
+                className="w-full sm:w-auto font-medium text-gray-700 hover:text-blue-600 transition-all px-4 py-2.5 rounded-lg hover:bg-blue-50 active:scale-95 duration-300"
               >
                 Head Admin
-              </button>
+              </motion.button>
             )}
             {isOwner && (
-              <button
+              <motion.button
+                initial={isDesktop ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                animate={open || isDesktop ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                transition={{ delay: 0.25 }}
                 onClick={() => navigate("/owner")}
-                className="font-medium text-gray-700 hover:text-blue-600 transition-colors px-3 py-1.5 rounded-full hover:bg-gray-50"
+                className="w-full sm:w-auto font-medium text-gray-700 hover:text-blue-600 transition-all px-4 py-2.5 rounded-lg hover:bg-blue-50 active:scale-95 duration-300"
               >
                 Dashboard
-              </button>
+              </motion.button>
             )}
             {!user && (
-              <button
+              <motion.button
+                initial={isDesktop ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                animate={open || isDesktop ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                transition={{ delay: 0.3 }}
                 onClick={() => navigate("/login")}
-                className="relative px-5 py-2.5 font-semibold text-[15px] text-gray-600 transition-all duration-300 rounded-full hover:text-white border border-gray-200 hover:border-transparent group overflow-hidden hidden sm:flex items-center justify-center cursor-pointer"
+                className="w-full sm:w-auto relative px-6 py-2.5 font-semibold text-[15px] text-gray-700 transition-all duration-300 rounded-lg border border-gray-300 hover:border-blue-600 group overflow-hidden hidden sm:flex items-center justify-center cursor-pointer hover:bg-blue-50"
               >
-                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-gray-900 to-gray-800 -translate-x-full group-hover:translate-x-0 transition-transform duration-300 rounded-full -z-10"></span>
                 <span className="relative z-10">Login</span>
-              </button>
+              </motion.button>
             )}
-            <button
+            <motion.button
+              initial={isDesktop ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+              animate={open || isDesktop ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+              transition={{ delay: 0.35 }}
               onClick={() => {
                 user ? logOut() : navigate("/signup");
               }}
-              className="cursor-pointer w-full sm:w-auto px-6 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 transition-all duration-300 text-white font-semibold rounded-full relative overflow-hidden flex items-center justify-center gap-0 hover:gap-2 shadow-[0_4px_15px_rgba(30,120,255,0.3)] hover:shadow-[0_8px_25px_rgba(30,120,255,0.5)] hover:scale-105 group"
+              className="cursor-pointer w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 transition-all duration-300 text-white font-semibold rounded-lg relative overflow-hidden flex items-center justify-center gap-0 hover:gap-2 shadow-[0_4px_15px_rgba(30,120,255,0.3)] hover:shadow-[0_8px_25px_rgba(30,120,255,0.5)] hover:scale-105 active:scale-95 group"
             >
               <span className="relative z-10 transition-all duration-300">{user ? "Logout" : "Sign Up"}</span>
               <span className="w-0 group-hover:w-4 overflow-hidden transition-all duration-300 flex items-center">
@@ -107,22 +155,26 @@ const Navbar = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                 </svg>
               </span>
-            </button>
+            </motion.button>
           </div>
-        </div>
+        </motion.div>
 
         {/* Mobile Menu Toggle */}
-        <button
-          className="sm:hidden cursor-pointer z-50 p-2 rounded-full hover:bg-gray-100 transition-colors"
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          className="sm:hidden cursor-pointer z-50 p-2.5 rounded-lg hover:bg-blue-50 transition-colors duration-300"
           aria-label="Menu"
           onClick={() => setOpen(!open)}
         >
-          <img
+          <motion.img
+            animate={{ rotate: open ? 90 : 0 }}
+            transition={{ duration: 0.3 }}
             src={open ? assets.close_icon : assets.menu_icon}
             alt="menu"
             className="h-6 w-6"
           />
-        </button>
+        </motion.button>
       </motion.div>
     </div>
   );
