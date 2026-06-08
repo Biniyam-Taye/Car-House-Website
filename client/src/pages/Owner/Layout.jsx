@@ -26,8 +26,10 @@ const Layout = () => {
       <NavbarOwn sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
       <div className="flex flex-1 overflow-hidden">
-        {/* Desktop Sidebar */}
-        <Sidebar onNavigate={() => setSidebarOpen(false)} />
+        {/* Desktop Sidebar - hidden on mobile */}
+        <div className="hidden md:block">
+          <Sidebar onNavigate={() => setSidebarOpen(false)} />
+        </div>
 
         {/* Mobile Sidebar Overlay */}
         {sidebarOpen && (
