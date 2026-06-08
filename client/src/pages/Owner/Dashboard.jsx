@@ -153,13 +153,8 @@ const Dashboard = () => {
           </div>
         </motion.div>
       </div>
-            {currency}
-            {data.monthlyRevenue || 0}
-          </div>
-          <p className="text-xs text-gray-500 mt-4">All transactions included</p>
-        </div>
-      </div>
-    </div>
+
+    </div >
   );
 };
 

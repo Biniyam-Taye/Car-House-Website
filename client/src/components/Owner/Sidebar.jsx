@@ -37,7 +37,7 @@ const Sidebar = () => {
               image
                 ? URL.createObjectURL(image)
                 : user?.image ||
-                  "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=50"
+                "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=50"
             }
             alt=""
             className="h-9 md:h-14 w-9 md:w-14 rounded-full mx-auto"
@@ -73,11 +73,10 @@ const Sidebar = () => {
             key={index}
             to={link.path}
             className={`relative flex items-center
-    gap-2 w-full py-3 pl-4 first:mt-6 ${
-      link.path === location.pathname
-        ? "bg-primary/10 text-primary"
-        : "text-gray-600"
-    }`}
+    gap-2 w-full py-3 pl-4 first:mt-6 ${link.path === location.pathname
+                ? "bg-primary/10 text-primary"
+                : "text-gray-600"
+              }`}
           >
             <img
               src={

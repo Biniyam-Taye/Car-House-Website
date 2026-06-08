@@ -24,7 +24,7 @@ const Layout = () => {
   return (
     <div className="flex flex-col h-screen">
       <NavbarOwn />
-      
+
       {/* Mobile Sidebar Toggle Button */}
       <motion.button
         whileHover={{ scale: 1.1 }}

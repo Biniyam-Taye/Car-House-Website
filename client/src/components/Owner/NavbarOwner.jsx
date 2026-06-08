@@ -20,13 +20,13 @@ const NavbarOwner = () => {
         <img src={assets.logo} alt="" className="h-10 md:h-12" />
         <span className="text-lg md:text-xl font-bold text-gray-900 hidden sm:block">DriveLux</span>
       </Link>
-      
+
       <div className="flex items-center gap-3 md:gap-6">
         <div className="text-center">
           <p className="text-sm md:text-base font-semibold text-gray-900">Welcome, {user?.name || "Owner"}</p>
           <p className="text-xs text-gray-500">{user?.email || ""}</p>
         </div>
-        
+
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
