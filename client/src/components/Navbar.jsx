@@ -30,7 +30,7 @@ const Navbar = () => {
             transition={{ type: "spring", stiffness: 200, damping: 12 }}
             src={assets.logo}
             alt="logo"
-            className="h-9 md:h-10 cursor-pointer"
+            className="h-12 md:h-14 cursor-pointer"
           />
           <span className="text-xl font-extrabold text-gray-900 hidden sm:block tracking-tight transition-all duration-500 bg-gradient-to-r from-gray-900 via-blue-600 to-indigo-600 bg-[size:200%] bg-clip-text group-hover:text-transparent group-hover:bg-right">
             DriveLux

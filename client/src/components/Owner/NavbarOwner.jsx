@@ -10,7 +10,7 @@ const NavbarOwner = () => {
     text-gray-500 border-b border-borderColor relative transition-all"
     >
       <Link to="/">
-        <img src={assets.logo} alt="" className="h-10" />
+        <img src={assets.logo} alt="" className="h-14" />
       </Link>
       <p>Wellcome, {user?.name || "owner"}</p>
     </div>

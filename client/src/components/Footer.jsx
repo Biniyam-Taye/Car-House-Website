@@ -20,7 +20,7 @@ const Footer = () => {
               transition={{ type: "spring", stiffness: 300 }}
               src={assets.logo}
               alt="logo"
-              className="h-9 md:h-11"
+              className="h-12 md:h-14"
             />
             <span className="text-xl font-extrabold text-gray-900 tracking-tight">DriveLux</span>
           </div>
