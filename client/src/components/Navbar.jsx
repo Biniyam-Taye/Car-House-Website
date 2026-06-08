@@ -56,9 +56,9 @@ const Navbar = () => {
             transform transition-transform duration-300
             ${open ? "translate-x-0" : "translate-x-full"} sm:translate-x-0`}
           style={{
-            background: open ? "linear-gradient(135deg, #ffffff 0%, #f8faff 100%)" : "transparent",
-            boxShadow: open ? "0 20px 60px rgba(0, 0, 0, 0.15)" : "none",
-            backdropFilter: open ? "blur(10px)" : "none"
+            background: open && !isDesktop ? "linear-gradient(135deg, #ffffff 0%, #f8faff 100%)" : "transparent",
+            boxShadow: open && !isDesktop ? "0 20px 60px rgba(0, 0, 0, 0.15)" : "none",
+            backdropFilter: open && !isDesktop ? "blur(10px)" : "none"
           }}
         >
           {/* Mobile Header with Logo */}
