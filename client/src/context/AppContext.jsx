@@ -79,7 +79,7 @@ export const AppProvider = ({ children }) => {
           if (localStorage.getItem("token")) {
             logOut();
           }
-          return new Promise(() => {});
+          return new Promise(() => { });
         }
         return Promise.reject(error);
       }
