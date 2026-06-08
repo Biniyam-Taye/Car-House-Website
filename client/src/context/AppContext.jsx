@@ -59,8 +59,6 @@ export const AppProvider = ({ children }) => {
     setIsHeadAdmin(false);
 
     axios.defaults.headers.common["Authorization"] = "";
-
-    toast.success("You have been logged out");
   };
 
   //useEffect to retrive the token from local storage
