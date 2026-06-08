@@ -3,11 +3,13 @@ import { assets, ownerMenuLinks } from "../../assets/assets";
 import { NavLink, useLocation } from "react-router-dom";
 import { useAppContext } from "../../context/AppContext";
 import toast from "react-hot-toast";
+import LogoutConfirmModal from "../LogoutConfirmModal";
 
 const Sidebar = ({ onNavigate }) => {
   const { user, axios, fetchUser, logOut, navigate } = useAppContext();
   const location = useLocation();
   const [image, setImage] = useState("");
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
   const updateImage = async () => {
     try {
@@ -192,12 +194,7 @@ const Sidebar = ({ onNavigate }) => {
         {/* Mobile Sidebar Footer / Logout */}
         <div className="p-4 border-t border-borderColor bg-gray-50/50">
           <button
-            onClick={() => {
-              onNavigate && onNavigate();
-              logOut();
-              toast.success("Logged out successfully");
-              navigate("/");
-            }}
+            onClick={() => setShowLogoutConfirm(true)}
             className="flex items-center gap-3 w-full py-3 px-4 rounded-xl text-red-600 hover:bg-red-50 transition-colors font-medium cursor-pointer"
           >
             <svg className="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -206,6 +203,18 @@ const Sidebar = ({ onNavigate }) => {
             <span>Logout</span>
           </button>
         </div>
+
+        <LogoutConfirmModal
+          isOpen={showLogoutConfirm}
+          onConfirm={() => {
+            setShowLogoutConfirm(false);
+            onNavigate && onNavigate();
+            logOut();
+            toast.success("Logged out successfully");
+            navigate("/");
+          }}
+          onCancel={() => setShowLogoutConfirm(false)}
+        />
       </div>
     </div>
   );

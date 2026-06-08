@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { assets } from "../../assets/assets";
 import { Link } from "react-router-dom";
 import { useAppContext } from "../../context/AppContext";
 import { motion } from "motion/react";
 import toast from "react-hot-toast";
+import LogoutConfirmModal from "../LogoutConfirmModal";
 
 const NavbarOwner = ({ sidebarOpen, setSidebarOpen }) => {
   const { user, logOut, navigate } = useAppContext();
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
-  const handleLogout = () => {
+  const confirmLogout = () => {
+    setShowLogoutConfirm(false);
     logOut();
     toast.success("Logged out successfully");
     navigate("/");
@@ -49,12 +52,18 @@ const NavbarOwner = ({ sidebarOpen, setSidebarOpen }) => {
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          onClick={handleLogout}
+          onClick={() => setShowLogoutConfirm(true)}
           className="px-4 md:px-6 py-2 md:py-2.5 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold rounded-lg transition-all duration-300 shadow-md hover:shadow-lg text-sm md:text-base"
         >
           Logout
         </motion.button>
       </div>
+
+      <LogoutConfirmModal
+        isOpen={showLogoutConfirm}
+        onConfirm={confirmLogout}
+        onCancel={() => setShowLogoutConfirm(false)}
+      />
     </div>
   );
 };

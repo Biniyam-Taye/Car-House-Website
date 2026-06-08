@@ -4,12 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import toast from "react-hot-toast";
 import { motion } from "motion/react";
+import LogoutConfirmModal from "./LogoutConfirmModal";
 
 const Navbar = () => {
   const { setShowLogin, user, logOut, isOwner, isHeadAdmin } =
     useAppContext();
 
   const [open, setOpen] = useState(false);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 640);
   const navigate = useNavigate();
 
@@ -145,7 +147,7 @@ const Navbar = () => {
               animate={open || isDesktop ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
               transition={{ delay: 0.35 }}
               onClick={() => {
-                user ? logOut() : navigate("/signup");
+                user ? setShowLogoutConfirm(true) : navigate("/signup");
               }}
               className="cursor-pointer w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 transition-all duration-300 text-white font-semibold rounded-lg relative overflow-hidden flex items-center justify-center gap-0 hover:gap-2 shadow-[0_4px_15px_rgba(30,120,255,0.3)] hover:shadow-[0_8px_25px_rgba(30,120,255,0.5)] hover:scale-105 active:scale-95 group"
             >
@@ -176,6 +178,16 @@ const Navbar = () => {
           />
         </motion.button>
       </motion.div>
+
+      <LogoutConfirmModal
+        isOpen={showLogoutConfirm}
+        onConfirm={() => {
+          setShowLogoutConfirm(false);
+          logOut();
+          toast.success("Logged out successfully");
+        }}
+        onCancel={() => setShowLogoutConfirm(false)}
+      />
     </div>
   );
 };
