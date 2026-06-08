@@ -23,21 +23,11 @@ const Layout = () => {
 
   return (
     <div className="flex flex-col h-screen">
-      <NavbarOwn />
-
-      {/* Mobile Sidebar Toggle Button */}
-      <motion.button
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={() => setSidebarOpen(!sidebarOpen)}
-        className="md:hidden fixed bottom-6 right-6 z-40 p-3 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-all"
-      >
-        <img src={sidebarOpen ? assets.close_icon : assets.menu_icon} alt="menu" className="w-6 h-6" />
-      </motion.button>
+      <NavbarOwn sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
       <div className="flex flex-1 overflow-hidden">
         {/* Desktop Sidebar */}
-        <Sidebar />
+        <Sidebar onNavigate={() => setSidebarOpen(false)} />
 
         {/* Mobile Sidebar Overlay */}
         {sidebarOpen && (
@@ -45,7 +35,7 @@ const Layout = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 md:hidden z-30"
+            className="fixed inset-0 bg-black/40 md:hidden z-40"
             onClick={() => setSidebarOpen(false)}
           />
         )}
@@ -54,10 +44,10 @@ const Layout = () => {
         <motion.div
           initial={{ x: "-100%" }}
           animate={{ x: sidebarOpen ? 0 : "-100%" }}
-          transition={{ duration: 0.3 }}
-          className="fixed left-0 top-0 h-full w-60 bg-white border-r border-borderColor z-40 md:hidden shadow-lg overflow-y-auto mt-16"
+          transition={{ duration: 0.3, type: "tween" }}
+          className="fixed left-0 top-0 h-screen w-72 bg-white border-r border-borderColor z-50 shadow-2xl overflow-y-auto md:hidden"
         >
-          <Sidebar />
+          <Sidebar onNavigate={() => setSidebarOpen(false)} />
         </motion.div>
 
         {/* Main Content */}
