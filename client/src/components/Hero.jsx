@@ -104,7 +104,13 @@ const Hero = () => {
           transition={{ duration: 0.7, delay: 0.2 }}
           className="text-4xl md:text-6xl font-extrabold tracking-tight max-w-3xl leading-[1.15] text-gray-900"
         >
-          Luxury Cars for Sale for{" "}
+          <motion.span
+            animate={{ y: [-2, 2, -2], rotate: [-0.5, 0.5, -0.5] }}
+            transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+            className="inline-block origin-center"
+          >
+            Luxury Cars for Sale for
+          </motion.span>{" "}
           <span className="inline-block relative">
             <AnimatePresence mode="wait">
               <motion.span
