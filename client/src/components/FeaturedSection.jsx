@@ -32,22 +32,34 @@ const FeaturedSection = () => {
         className="w-full max-w-5xl grid grid-cols-2 md:grid-cols-4 gap-4 mb-12"
       >
         {[
-          { value: "100+", label: "Premium Vehicles", color: "text-blue-600", bg: "bg-blue-50", border: "border-blue-100", icon: <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg> },
-          { value: "50+", label: "City Locations", color: "text-indigo-600", bg: "bg-indigo-50", border: "border-indigo-100", icon: <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> },
-          { value: "10K+", label: "Happy Customers", color: "text-purple-600", bg: "bg-purple-50", border: "border-purple-100", icon: <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg> },
-          { value: "4.9/5", label: "Average Rating", color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-100", icon: <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg> },
+          { value: "100+", label: "Premium Vehicles", color: "group-hover:text-blue-500", gradient: "from-blue-500 to-cyan-400", shadow: "group-hover:shadow-blue-500/20", icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg> },
+          { value: "50+", label: "City Locations", color: "group-hover:text-indigo-500", gradient: "from-indigo-500 to-purple-500", shadow: "group-hover:shadow-indigo-500/20", icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> },
+          { value: "10K+", label: "Happy Customers", color: "group-hover:text-fuchsia-500", gradient: "from-fuchsia-500 to-pink-500", shadow: "group-hover:shadow-fuchsia-500/20", icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg> },
+          { value: "4.9/5", label: "Average Rating", color: "group-hover:text-emerald-500", gradient: "from-emerald-500 to-teal-400", shadow: "group-hover:shadow-emerald-500/20", icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg> },
         ].map((stat, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 * i }}
-            whileHover={{ y: -4, scale: 1.02 }}
-            className={`flex flex-col items-center gap-1 py-5 px-4 rounded-2xl ${stat.bg} border ${stat.border} cursor-default transition-all duration-300 shadow-sm hover:shadow-md`}
+            className={`relative flex flex-col items-center justify-center gap-2 py-5 px-4 rounded-[1.5rem] bg-white border border-gray-100 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-xl ${stat.shadow} hover:-translate-y-1.5 cursor-pointer group overflow-hidden transition-all duration-500`}
           >
-            <span className={stat.color}>{stat.icon}</span>
-            <span className={`text-2xl md:text-3xl font-extrabold ${stat.color}`}>{stat.value}</span>
-            <span className="text-xs md:text-sm text-gray-500 font-medium text-center">{stat.label}</span>
+            {/* Hover Sweep */}
+            <div className={`absolute inset-0 opacity-0 group-hover:opacity-[0.03] transition-opacity duration-500 bg-gradient-to-br ${stat.gradient}`}></div>
+            
+            {/* Animated glowing border line on top */}
+            <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-0 h-1 bg-gradient-to-r ${stat.gradient} group-hover:w-full transition-all duration-500 ease-out`}></div>
+            
+            <div className={`w-10 h-10 rounded-xl flex items-center justify-center bg-gray-50 text-gray-400 group-hover:scale-110 group-hover:bg-white group-hover:shadow-sm transition-all duration-500 z-10`}>
+                <span className={`transition-colors duration-500 ${stat.color}`}>
+                  {stat.icon}
+                </span>
+            </div>
+
+            <span className={`text-2xl md:text-3xl font-black text-gray-900 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r ${stat.gradient} transition-all duration-300 z-10 tracking-tight`}>
+              {stat.value}
+            </span>
+            <span className="text-[10px] md:text-xs text-gray-400 group-hover:text-gray-600 font-bold tracking-widest uppercase z-10 transition-colors duration-300">{stat.label}</span>
           </motion.div>
         ))}
       </motion.div>

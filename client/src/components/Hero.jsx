@@ -98,51 +98,51 @@ const Hero = () => {
           {/* Cards Container */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
             {/* Card 1 */}
-            <div className="bg-[#2c2c2e] text-white rounded-[1.5rem] p-5 flex flex-col justify-between h-[170px] relative overflow-hidden group shadow-md hover:-translate-y-2 hover:shadow-2xl transition-all duration-500 cursor-pointer">
-              <div className="absolute inset-0 bg-gradient-to-br from-orange-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"></div>
-              <div className="relative z-10 flex justify-between items-start">
-                <div className="w-8 h-8 bg-white/20 group-hover:bg-white backdrop-blur-md rounded-full flex items-center justify-center text-white group-hover:text-pink-600 shadow-sm transition-colors duration-500">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            <div className="bg-white rounded-[1.5rem] p-5 flex flex-col justify-between h-[170px] group shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] border border-gray-100 transition-all duration-500 hover:-translate-y-2 relative overflow-hidden cursor-pointer">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/5 rounded-bl-full -z-10 group-hover:scale-150 transition-transform duration-700 ease-out"></div>
+              <div className="flex justify-between items-start z-10">
+                <div className="w-10 h-10 bg-orange-50 text-orange-500 rounded-2xl flex items-center justify-center group-hover:bg-orange-500 group-hover:text-white transition-colors duration-500 shadow-sm">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                 </div>
-                <div className="w-7 h-7 bg-[#f5a25d] group-hover:bg-white rounded-full flex items-center justify-center text-white group-hover:text-orange-500 shadow-sm transition-colors duration-500">
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 19L19 5m0 0v10m0-10H9"></path></svg>
+                <div className="w-7 h-7 rounded-full flex items-center justify-center text-gray-400 group-hover:text-orange-500 group-hover:bg-orange-50 transition-all duration-300 transform group-hover:rotate-45">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 19L19 5m0 0v10m0-10H9"></path></svg>
                 </div>
               </div>
-              <div className="relative z-10">
-                <h3 className="font-bold text-[14px] mb-1">Unmatched Reliability</h3>
-                <p className="text-gray-400 group-hover:text-white/90 text-[10px] leading-relaxed transition-colors duration-500">
+              <div className="z-10">
+                <h3 className="font-bold text-gray-900 text-[14px] mb-1 group-hover:text-orange-500 transition-colors duration-300">Unmatched Reliability</h3>
+                <p className="text-gray-500 text-[10px] leading-relaxed">
                   Our vehicles deliver maximum performance, ensuring you get the absolute best value for your investment.
                 </p>
               </div>
             </div>
 
             {/* Card 2 */}
-            <div className="bg-[#2c2c2e] text-white rounded-[1.5rem] p-5 flex flex-col justify-between h-[170px] relative overflow-hidden group shadow-md hover:-translate-y-2 hover:shadow-2xl transition-all duration-500 cursor-pointer">
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-400 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"></div>
-              <div className="relative z-10 flex justify-between items-start">
-                <div className="w-8 h-8 bg-white/20 group-hover:bg-white backdrop-blur-md rounded-full flex items-center justify-center text-white group-hover:text-emerald-600 shadow-sm transition-colors duration-500">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <div className="bg-white rounded-[1.5rem] p-5 flex flex-col justify-between h-[170px] group shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] border border-gray-100 transition-all duration-500 hover:-translate-y-2 relative overflow-hidden cursor-pointer">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-bl-full -z-10 group-hover:scale-150 transition-transform duration-700 ease-out"></div>
+              <div className="flex justify-between items-start z-10">
+                <div className="w-10 h-10 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-white transition-colors duration-500 shadow-sm">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 </div>
               </div>
-              <div className="relative z-10">
-                <h3 className="font-bold text-[14px] mb-1">Eco-Friendly Options</h3>
-                <p className="text-gray-400 group-hover:text-white/90 text-[10px] leading-relaxed transition-colors duration-500">
+              <div className="z-10">
+                <h3 className="font-bold text-gray-900 text-[14px] mb-1 group-hover:text-emerald-500 transition-colors duration-300">Eco-Friendly Options</h3>
+                <p className="text-gray-500 text-[10px] leading-relaxed">
                   Explore our premium selection of hybrid and electric vehicles, offering sustainable driving without compromise.
                 </p>
               </div>
             </div>
 
             {/* Card 3 */}
-            <div className="bg-[#2c2c2e] text-white rounded-[1.5rem] p-5 flex flex-col justify-between h-[170px] relative overflow-hidden group shadow-md hover:-translate-y-2 hover:shadow-2xl transition-all duration-500 cursor-pointer">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"></div>
-              <div className="relative z-10 flex justify-between items-start">
-                <div className="w-8 h-8 bg-white/20 group-hover:bg-white backdrop-blur-md rounded-full flex items-center justify-center text-white group-hover:text-indigo-600 shadow-sm transition-colors duration-500">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+            <div className="bg-white rounded-[1.5rem] p-5 flex flex-col justify-between h-[170px] group shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] border border-gray-100 transition-all duration-500 hover:-translate-y-2 relative overflow-hidden cursor-pointer">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-bl-full -z-10 group-hover:scale-150 transition-transform duration-700 ease-out"></div>
+              <div className="flex justify-between items-start z-10">
+                <div className="w-10 h-10 bg-blue-50 text-blue-500 rounded-2xl flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-colors duration-500 shadow-sm">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
                 </div>
               </div>
-              <div className="relative z-10">
-                <h3 className="font-bold text-[14px] mb-1">Cutting-Edge Tech</h3>
-                <p className="text-gray-400 group-hover:text-white/90 text-[10px] leading-relaxed transition-colors duration-500">
+              <div className="z-10">
+                <h3 className="font-bold text-gray-900 text-[14px] mb-1 group-hover:text-blue-500 transition-colors duration-300">Cutting-Edge Tech</h3>
+                <p className="text-gray-500 text-[10px] leading-relaxed">
                   Experience the latest in automotive innovation, from advanced safety features to state-of-the-art infotainment.
                 </p>
               </div>
