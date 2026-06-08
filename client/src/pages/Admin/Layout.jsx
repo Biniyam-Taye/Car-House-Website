@@ -1,16 +1,21 @@
 import React, { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useAppContext } from "../../context/AppContext";
+import Loader from "../../components/Loader";
 
 const AdminLayout = () => {
-  const { isHeadAdmin, user } = useAppContext();
+  const { isHeadAdmin, user, userLoading } = useAppContext();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user && !isHeadAdmin) {
+    if (!userLoading && user && !isHeadAdmin) {
       navigate("/");
     }
-  }, [isHeadAdmin, user, navigate]);
+  }, [isHeadAdmin, user, navigate, userLoading]);
+
+  if (userLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">

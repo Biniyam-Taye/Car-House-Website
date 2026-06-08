@@ -18,10 +18,12 @@ export const AppProvider = ({ children }) => {
   const [pickupDate, setPickupDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
   const [cars, setCars] = useState([]);
+  const [userLoading, setUserLoading] = useState(false);
 
   //Function to fetch the user data
   const fetchUser = async () => {
     try {
+      setUserLoading(true);
       const { data } = await axios.get("/api/user/data");
       if (data.success) {
         setUser(data.user);
@@ -34,6 +36,8 @@ export const AppProvider = ({ children }) => {
       }
     } catch (error) {
       toast.error(error.message);
+    } finally {
+      setUserLoading(false);
     }
   };
   //function to fetch all cars from the server
@@ -116,6 +120,7 @@ export const AppProvider = ({ children }) => {
     setPickupDate,
     returnDate,
     setReturnDate,
+    userLoading,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

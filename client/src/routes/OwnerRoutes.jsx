@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import NotFoundPage from "../components/NotFoundPage";
 import Layout from "../pages/Owner/Layout";
+import Loader from "../components/Loader";
 
 // Lazy loaded owner pages
 const Dashboard = lazy(() => import("../pages/Owner/Dashboard"));
@@ -11,7 +12,7 @@ const ManageOrders = lazy(() => import("../pages/Owner/ManageBookings"));
 const ProfileSettings = lazy(() => import("../pages/Owner/ProfileSettings"));
 
 const OwnerRoutes = () => (
-  <Suspense fallback={<div>Loading...</div>}>
+  <Suspense fallback={<Loader />}>
     <Routes>
       <Route path="/owner" element={<Layout />}>
         <Route index element={<Dashboard />} />
