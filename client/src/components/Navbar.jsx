@@ -15,6 +15,7 @@ const Navbar = () => {
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 640);
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -24,6 +25,14 @@ const Navbar = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
 
   return (
     <div className={`px-6 md:px-12 pt-6 z-50 fixed w-full top-0 left-0 transition-all duration-300 pointer-events-auto`}>
@@ -31,8 +40,12 @@ const Navbar = () => {
         initial={{ y: -120, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
-        className="flex items-center justify-between px-6 md:px-10 py-5 mx-auto w-full max-w-[98%]
-          text-gray-600 bg-white/90 backdrop-blur-md relative transition-all rounded-[40px] shadow-[0_10px_35px_rgba(0,0,0,0.06)] border-[2.5px] border-gray-200"
+        className={`flex items-center justify-between px-6 md:px-10 py-4 mx-auto w-full max-w-[98%]
+          relative transition-all duration-500 rounded-full border
+          ${scrolled 
+            ? 'bg-white/60 backdrop-blur-2xl shadow-[0_4px_30px_rgba(0,0,0,0.06)] border-white/40' 
+            : 'bg-white/95 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.08)] border-gray-100'
+          }`}
       >
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2.5 group">
@@ -88,22 +101,22 @@ const Navbar = () => {
               >
                 <Link
                   to={link.path}
-                  className="relative px-5 py-3 font-semibold text-[15px] text-gray-600 transition-all duration-300 hover:text-white rounded-xl group flex items-center justify-center w-full sm:w-auto active:scale-95"
+                  className="relative px-5 py-2.5 font-semibold text-[14px] text-gray-500 transition-all duration-300 hover:text-white rounded-full group flex items-center justify-center w-full sm:w-auto active:scale-95"
                   onClick={() => setOpen(false)}
                 >
-                  <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-blue-500 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></span>
-                  <span className="relative z-10 transition-all">{link.name}</span>
+                  <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-blue-500 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></span>
+                  <span className="relative z-10 transition-all group-hover:tracking-wide">{link.name}</span>
                 </Link>
               </motion.div>
             ))}
           </div>
 
           {/* Search Input (Desktop Only) */}
-          <div className="hidden lg:flex items-center text-sm gap-2 border border-gray-200 px-4 py-2 rounded-full max-w-xs hover:border-blue-400 hover:shadow-md transition-all duration-300">
-            <img src={assets.search_icon} alt="search" className="w-4 h-4 opacity-50" />
+          <div className="hidden lg:flex items-center text-sm gap-2 border border-gray-200/60 px-4 py-2 rounded-full max-w-xs hover:border-blue-400 hover:shadow-md transition-all duration-300">
+            <img src={assets.search_icon} alt="search" className="w-4 h-4 opacity-40" />
             <input
               type="text"
-              placeholder="Search"
+              placeholder="Search..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={(e) => {
@@ -112,7 +125,7 @@ const Navbar = () => {
                   setOpen(false);
                 }
               }}
-              className="w-full bg-transparent outline-none placeholder-gray-400 font-medium"
+              className="w-full bg-transparent outline-none placeholder-gray-400 font-medium text-gray-600"
             />
           </div>
 
@@ -146,7 +159,7 @@ const Navbar = () => {
                 animate={open || isDesktop ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                 transition={{ delay: 0.3 }}
                 onClick={() => navigate("/login")}
-                className="btn-water-fill w-full sm:w-auto relative px-6 py-2.5 font-semibold text-[15px] text-gray-700 transition-all duration-300 rounded-lg border border-gray-300 group overflow-hidden hidden sm:flex items-center justify-center cursor-pointer"
+                className="btn-water-fill w-full sm:w-auto relative px-6 py-2.5 font-medium text-[14px] text-gray-600 transition-all duration-300 rounded-full border border-gray-200 group overflow-hidden hidden sm:flex items-center justify-center cursor-pointer hover:border-blue-400"
               >
                 <span className="relative z-10">Login</span>
               </motion.button>
@@ -158,7 +171,7 @@ const Navbar = () => {
               onClick={() => {
                 user ? setShowLogoutConfirm(true) : navigate("/signup");
               }}
-              className="btn-shimmer btn-spotlight cursor-pointer w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 transition-all duration-300 text-white font-semibold rounded-lg relative overflow-hidden flex items-center justify-center gap-0 hover:gap-2 shadow-[0_4px_15px_rgba(30,120,255,0.3)] hover:shadow-[0_10px_30px_rgba(30,120,255,0.5)] hover:scale-105 active:scale-95 group"
+              className="btn-shimmer btn-spotlight cursor-pointer w-full sm:w-auto px-7 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 transition-all duration-300 text-white font-semibold text-[14px] rounded-full relative overflow-hidden flex items-center justify-center gap-0 hover:gap-2 shadow-[0_4px_20px_rgba(30,120,255,0.3)] hover:shadow-[0_10px_30px_rgba(30,120,255,0.5)] hover:scale-105 active:scale-95 group"
             >
               <span className="relative z-10 transition-all duration-300">{user ? "Logout" : "Sign Up"}</span>
               <span className="w-0 group-hover:w-4 overflow-hidden transition-all duration-300 flex items-center">
