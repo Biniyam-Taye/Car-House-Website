@@ -123,19 +123,19 @@ const FeaturedSection = () => {
         className="flex flex-col sm:flex-row items-center gap-4 mt-14"
       >
         <motion.button
-          whileHover={{ scale: 1.04 }}
-          whileTap={{ scale: 0.97 }}
+          whileHover={{ scale: 1.06 }}
+          whileTap={{ scale: 0.95 }}
           onClick={() => { navigate("/cars"); scrollTo(0, 0); }}
-          className="flex items-center justify-center gap-2 px-8 py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-full cursor-pointer shadow-md hover:shadow-lg transition-all duration-300"
+          className="btn-shimmer btn-lift-glow flex items-center justify-center gap-2 px-8 py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-full cursor-pointer shadow-md transition-all duration-300"
         >
           Explore All Cars
-          <img src={assets.arrow_icon} alt="arrow" className="brightness-300 w-4 h-4" />
+          <img src={assets.arrow_icon} alt="arrow" className="brightness-300 w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
         </motion.button>
         <motion.button
-          whileHover={{ scale: 1.04 }}
-          whileTap={{ scale: 0.97 }}
+          whileHover={{ scale: 1.06 }}
+          whileTap={{ scale: 0.95 }}
           onClick={() => { navigate("/cars"); scrollTo(0, 0); }}
-          className="flex items-center justify-center gap-2 px-8 py-3.5 bg-white text-gray-700 font-semibold rounded-full cursor-pointer border-2 border-gray-200 hover:border-blue-300 hover:text-blue-600 transition-all duration-300"
+          className="btn-border-trace flex items-center justify-center gap-2 px-8 py-3.5 bg-white text-gray-700 font-semibold rounded-full cursor-pointer border-2 border-gray-200 hover:text-blue-600 transition-all duration-300"
         >
           View Pricing
         </motion.button>

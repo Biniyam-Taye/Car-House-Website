@@ -137,7 +137,7 @@ const Navbar = () => {
                 animate={open || isDesktop ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                 transition={{ delay: 0.3 }}
                 onClick={() => navigate("/login")}
-                className="w-full sm:w-auto relative px-6 py-2.5 font-semibold text-[15px] text-gray-700 transition-all duration-300 rounded-lg border border-gray-300 hover:border-blue-600 group overflow-hidden hidden sm:flex items-center justify-center cursor-pointer hover:bg-blue-50"
+                className="btn-border-trace w-full sm:w-auto relative px-6 py-2.5 font-semibold text-[15px] text-gray-700 transition-all duration-300 rounded-lg border border-gray-300 hover:text-blue-600 group overflow-hidden hidden sm:flex items-center justify-center cursor-pointer"
               >
                 <span className="relative z-10">Login</span>
               </motion.button>
@@ -149,7 +149,7 @@ const Navbar = () => {
               onClick={() => {
                 user ? setShowLogoutConfirm(true) : navigate("/signup");
               }}
-              className="cursor-pointer w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 transition-all duration-300 text-white font-semibold rounded-lg relative overflow-hidden flex items-center justify-center gap-0 hover:gap-2 shadow-[0_4px_15px_rgba(30,120,255,0.3)] hover:shadow-[0_8px_25px_rgba(30,120,255,0.5)] hover:scale-105 active:scale-95 group"
+              className="btn-shimmer btn-spotlight cursor-pointer w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 transition-all duration-300 text-white font-semibold rounded-lg relative overflow-hidden flex items-center justify-center gap-0 hover:gap-2 shadow-[0_4px_15px_rgba(30,120,255,0.3)] hover:shadow-[0_10px_30px_rgba(30,120,255,0.5)] hover:scale-105 active:scale-95 group"
             >
               <span className="relative z-10 transition-all duration-300">{user ? "Logout" : "Sign Up"}</span>
               <span className="w-0 group-hover:w-4 overflow-hidden transition-all duration-300 flex items-center">

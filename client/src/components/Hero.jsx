@@ -215,9 +215,9 @@ const Hero = () => {
 
         {/* Search Button */}
         <motion.button
-          whileHover={{ scale: 1.03 }}
-          whileTap={{ scale: 0.97 }}
-          className="flex items-center justify-center gap-2 px-8 py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-full cursor-pointer shadow-md hover:shadow-lg transition-all duration-300 w-full lg:w-auto shrink-0"
+          whileHover={{ scale: 1.05, y: -2 }}
+          whileTap={{ scale: 0.95 }}
+          className="btn-shimmer btn-spotlight flex items-center justify-center gap-2 px-8 py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-full cursor-pointer shadow-md hover:shadow-[0_12px_30px_rgba(59,130,246,0.4)] transition-all duration-300 w-full lg:w-auto shrink-0"
         >
           <img
             src={assets.search_icon}

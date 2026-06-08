@@ -101,7 +101,7 @@ const CTASection = () => {
               if (user) { navigate("/cars"); scrollTo(0, 0); }
               else { setShowLogin(true); }
             }}
-            className="relative group w-full sm:w-auto lg:w-52 px-8 py-3.5 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-sm shadow-[0_6px_24px_rgba(59,130,246,0.3)] hover:shadow-[0_10px_32px_rgba(59,130,246,0.45)] transition-all duration-300 overflow-hidden cursor-pointer"
+            className="btn-pulse relative group w-full sm:w-auto lg:w-52 px-8 py-3.5 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-sm shadow-[0_6px_24px_rgba(59,130,246,0.3)] hover:shadow-[0_14px_40px_rgba(59,130,246,0.5)] transition-all duration-300 overflow-hidden cursor-pointer"
           >
             <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out" />
             <span className="relative flex items-center justify-center gap-2">
@@ -117,7 +117,7 @@ const CTASection = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.97 }}
             onClick={() => { navigate("/cars"); scrollTo(0, 0); }}
-            className="w-full sm:w-auto lg:w-52 px-8 py-3.5 rounded-full bg-white border-2 border-gray-200 text-gray-700 font-semibold text-sm hover:border-blue-300 hover:text-blue-600 hover:bg-blue-50 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+            className="btn-border-trace w-full sm:w-auto lg:w-52 px-8 py-3.5 rounded-full bg-white border-2 border-gray-200 text-gray-700 font-semibold text-sm hover:text-blue-600 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
           >
             <svg className="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
