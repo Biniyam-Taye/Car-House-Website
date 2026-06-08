@@ -1,325 +1,127 @@
-import React, { useState, useEffect, useRef } from "react";
-import { assets, cityList } from "../assets/assets";
-import { useAppContext } from "../context/AppContext";
-import { motion, AnimatePresence } from "motion/react";
-
-const rotatingPhrases = [
-  { text: "Your Premium Journeys", gradient: "from-blue-600 via-indigo-600 to-purple-600" },
-  { text: "Every Adventure Ahead", gradient: "from-emerald-500 via-teal-500 to-cyan-500" },
-  { text: "Unforgettable Drives", gradient: "from-orange-500 via-rose-500 to-pink-600" },
-  { text: "Ultimate Road Freedom", gradient: "from-violet-600 via-fuchsia-500 to-pink-500" },
-  { text: "A Luxurious Experience", gradient: "from-amber-500 via-yellow-500 to-lime-500" },
-];
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
-  const [pickupLocation, setPickupLocation] = useState("");
-  const [textIndex, setTextIndex] = useState(0);
-  const [locationSearch, setLocationSearch] = useState("");
-  const [showLocationDropdown, setShowLocationDropdown] = useState(false);
-  const locationRef = useRef(null);
+  const navigate = useNavigate();
 
-  // Rotate hero heading phrases
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTextIndex((prev) => (prev + 1) % rotatingPhrases.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const { pickupDate, setPickupDate, navigate, returnDate, setReturnDate } =
-    useAppContext();
-
-  const filteredCities = cityList.filter((city) =>
-    city.toLowerCase().includes(locationSearch.toLowerCase())
-  );
-
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (locationRef.current && !locationRef.current.contains(event.target)) {
-        setShowLocationDropdown(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    navigate(
-      "/cars?pickupLocation=" +
-      pickupLocation +
-      "&pickupDate=" +
-      pickupDate +
-      "&returnDate=" +
-      returnDate
-    );
-  };
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
-      className="min-h-screen flex flex-col items-center justify-center gap-12 pt-28 pb-12 px-6 bg-light text-center relative overflow-hidden"
-    >
-      {/* Background Video Container (Restricted to top half to avoid overlapping the car image) */}
-      <div className="absolute top-0 left-0 w-full h-[65%] lg:h-[70%] z-0 overflow-hidden bg-gray-900">
+    <div className="bg-white min-h-screen pt-24 pb-12 px-4 md:px-8 max-w-[1600px] mx-auto flex flex-col font-outfit">
+      
+      {/* Main Hero Image/Video Area */}
+      <div className="relative w-full h-[75vh] min-h-[600px] rounded-[2.5rem] bg-gray-900 overflow-hidden shadow-sm">
+        {/* Background Video */}
         <video
           autoPlay={true}
           loop={true}
           muted={true}
           playsInline={true}
-          className="w-full h-full object-cover opacity-100 pointer-events-none"
+          className="absolute inset-0 w-full h-full object-cover opacity-90 pointer-events-none"
         >
           <source src="/hero-bg.mp4" type="video/mp4" />
         </video>
 
-        {/* Fade the very bottom edge into the white background so there is no harsh cut */}
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-light pointer-events-none"></div>
-      </div>
+        {/* Overlay gradient for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent pointer-events-none"></div>
 
-      {/* Dynamic Background Glowing Blobs */}
-      <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-blue-400/20 rounded-full blur-[120px] z-0 pointer-events-none mix-blend-screen"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-400/20 rounded-full blur-[140px] z-0 pointer-events-none mix-blend-screen"></div>
-
-      {/* Floating Announcement Bar (Covers Navbar space when hidden at the top) */}
-      <motion.div
-        initial={{ y: -30, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.3 }}
-        className="absolute top-8 left-1/2 -translate-x-1/2 hidden md:flex items-center gap-3 px-5 py-2.5 bg-white/80 backdrop-blur-sm rounded-full border border-gray-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.02)] text-xs text-gray-600 font-semibold z-10"
-      >
-        <span className="flex h-2.5 w-2.5 relative">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-        </span>
-        <span className="tracking-wide flex items-center gap-1.5">
-          <svg className="w-4 h-4 text-yellow-500 shrink-0" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-          Special Offer: Save <span className="text-blue-600 font-extrabold">15% off</span> on premium cars! Code: <span className="font-bold text-gray-900 bg-gray-100 border border-gray-200 px-2 py-0.5 rounded">DRIVE15</span>
-        </span>
-      </motion.div>
-
-      {/* Hero Header Text & Badges - Wrapped in a slight, highly transparent frosted card */}
-      <div className="relative z-10 flex flex-col items-center gap-4 mt-4 max-w-4xl mx-auto px-8 py-10 bg-white/10 backdrop-blur-[4px] border border-white/20 shadow-2xl rounded-3xl">
-        <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="px-4 py-1.5 bg-blue-50 rounded-full border border-blue-100 flex items-center gap-1.5 shadow-sm"
-        >
-          <span className="text-[11px] font-extrabold text-blue-600 uppercase tracking-widest flex items-center gap-1.5">
-            <svg className="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-            The Ultimate Drive Experience
-          </span>
-        </motion.div>
-
-        <motion.h1
-          initial={{ y: 40, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="text-5xl md:text-7xl font-lora font-black tracking-tight max-w-4xl leading-[1.1] text-gray-900 drop-shadow-xl"
-        >
-          <motion.span
-            animate={{ y: [-2, 2, -2], rotate: [-0.5, 0.5, -0.5] }}
-            transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-            className="inline-block origin-center"
-          >
-            Luxury Cars for Sale for
-          </motion.span>{" "}
-          <span className="inline-block relative">
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={textIndex}
-                initial={{ y: 30, opacity: 0, scale: 0.95, rotateX: 40 }}
-                animate={{ y: 0, opacity: 1, scale: 1, rotateX: 0 }}
-                exit={{ y: -30, opacity: 0, scale: 0.95, rotateX: -40 }}
-                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                className={`inline-block bg-gradient-to-r ${rotatingPhrases[textIndex].gradient} bg-clip-text text-transparent drop-shadow-xl`}
-                style={{ perspective: 600 }}
-              >
-                {rotatingPhrases[textIndex].text}
-              </motion.span>
-            </AnimatePresence>
-          </span>
-        </motion.h1>
-
-        <motion.p
-          initial={{ y: 30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          className="text-gray-900 font-bold text-sm md:text-lg max-w-xl leading-relaxed mt-2 drop-shadow-md"
-        >
-          Choose from a fleet of elite, high-performance vehicles. Experience unparalleled comfort, speed, and safety at flat-rate transparent prices.
-        </motion.p>
-      </div>
-
-      {/* Content Rich Search Widget Bar */}
-      <motion.form
-        initial={{ y: 40, opacity: 0, scale: 0.98 }}
-        animate={{ y: 0, opacity: 1, scale: 1 }}
-        transition={{ duration: 0.6, delay: 0.4 }}
-        onSubmit={handleSearch}
-        className="flex flex-col lg:flex-row items-center justify-between p-4 rounded-[30px] lg:rounded-full w-full max-w-5xl bg-white/95 backdrop-blur-sm shadow-[0_15px_45px_rgba(0,0,0,0.06)] border border-gray-150 gap-6 lg:gap-2 z-10"
-      >
-        <div className="flex flex-col lg:flex-row items-stretch justify-between w-full divide-y lg:divide-y-0 lg:divide-x divide-gray-100 gap-4 lg:gap-0 lg:px-4">
-
-          {/* Pickup Location Block */}
-          <div ref={locationRef} className="flex items-center gap-3.5 px-4 py-2 lg:py-0 w-full lg:w-1/3 hover:bg-gray-50/50 rounded-2xl lg:rounded-none transition-colors cursor-pointer group relative">
-            <div className="p-2.5 bg-blue-50 rounded-full text-blue-600 transition-transform group-hover:scale-110">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-              </svg>
+        {/* Hero Text Content */}
+        <div className="absolute top-0 left-0 w-full h-full p-8 md:p-14 flex flex-col z-10 pointer-events-none">
+          <div className="max-w-3xl mt-4 md:mt-8 pointer-events-auto">
+            <div className="inline-flex items-center px-4 py-2 bg-white/20 backdrop-blur-md rounded-full text-white text-xs font-semibold tracking-wider mb-6 border border-white/30 shadow-sm">
+              Premium Fleet
             </div>
-            <div className="flex flex-col items-start w-full">
-              <label className="text-[10px] font-extrabold tracking-widest text-gray-400 uppercase">Location</label>
-              <div className="relative w-full">
-                <input
-                  required
-                  type="text"
-                  placeholder="Search or select..."
-                  value={pickupLocation || locationSearch}
-                  onChange={(e) => {
-                    setLocationSearch(e.target.value);
-                    if (!e.target.value) setPickupLocation("");
-                  }}
-                  onFocus={() => setShowLocationDropdown(true)}
-                  className="w-full bg-transparent border-none outline-none font-bold text-gray-800 text-[14px] cursor-pointer"
-                />
-                {showLocationDropdown && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="absolute top-full left-0 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto"
-                  >
-                    {filteredCities.length > 0 ? (
-                      filteredCities.map((city) => (
-                        <button
-                          key={city}
-                          type="button"
-                          onClick={() => {
-                            setPickupLocation(city);
-                            setLocationSearch("");
-                            setShowLocationDropdown(false);
-                          }}
-                          className="w-full text-left px-4 py-2.5 hover:bg-blue-50 transition-colors text-gray-700 font-medium text-[14px] border-b border-gray-100 last:border-b-0"
-                        >
-                          {city}
-                        </button>
-                      ))
-                    ) : (
-                      <div className="px-4 py-3 text-center text-gray-500 text-[14px]">
-                        No locations found
-                      </div>
-                    )}
-                  </motion.div>
-                )}
+            
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-medium text-white leading-[1.1] tracking-tight">
+              Powering Your Journey <br />
+              with The Newest <br />
+              luxury cars
+            </h1>
+            
+            <button 
+              onClick={() => navigate('/cars')}
+              className="mt-10 px-8 py-3.5 bg-white text-orange-500 rounded-full font-bold flex items-center gap-3 hover:bg-gray-100 transition-all shadow-lg group cursor-pointer"
+            >
+              Get Product
+              <span className="text-orange-500 group-hover:translate-x-1 transition-transform">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+              </span>
+            </button>
+          </div>
+
+          {/* Right side floating text */}
+          <div className="absolute right-10 top-[40%] text-white text-sm font-medium text-right opacity-90 hidden md:block">
+            Luxury Technology <br /> From DriveLux.
+          </div>
+        </div>
+
+        {/* Bottom Right White Cutout Area */}
+        <div className="absolute bottom-0 right-0 w-full md:w-[85%] lg:w-[65%] h-auto pt-8 pl-8 pb-4 pr-4 md:pb-6 md:pr-6 bg-white rounded-tl-[3rem] z-20 flex flex-col justify-end">
+          {/* Smooth Inverted Curve Effect */}
+          <div className="absolute bottom-0 -left-12 w-12 h-12 bg-transparent rounded-br-[3rem] shadow-[1.5rem_1.5rem_0_0_#ffffff] hidden md:block"></div>
+
+          {/* Cards Container */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
+            {/* Card 1 */}
+            <div className="bg-[#2c2c2e] text-white rounded-[1.5rem] p-5 flex flex-col justify-between h-[170px] relative overflow-hidden group shadow-md hover:-translate-y-2 hover:shadow-2xl transition-all duration-500 cursor-pointer">
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"></div>
+              <div className="relative z-10 flex justify-between items-start">
+                <div className="w-8 h-8 bg-white/20 group-hover:bg-white backdrop-blur-md rounded-full flex items-center justify-center text-white group-hover:text-pink-600 shadow-sm transition-colors duration-500">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                </div>
+                <div className="w-7 h-7 bg-[#f5a25d] group-hover:bg-white rounded-full flex items-center justify-center text-white group-hover:text-orange-500 shadow-sm transition-colors duration-500">
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 19L19 5m0 0v10m0-10H9"></path></svg>
+                </div>
+              </div>
+              <div className="relative z-10">
+                <h3 className="font-bold text-[14px] mb-1">Efficient Performance</h3>
+                <p className="text-gray-400 group-hover:text-white/90 text-[10px] leading-relaxed transition-colors duration-500">
+                  Our luxury cars deliver maximum efficiency, ensuring you get the most out of every journey.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 2 */}
+            <div className="bg-[#2c2c2e] text-white rounded-[1.5rem] p-5 flex flex-col justify-between h-[170px] relative overflow-hidden group shadow-md hover:-translate-y-2 hover:shadow-2xl transition-all duration-500 cursor-pointer">
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-400 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"></div>
+              <div className="relative z-10 flex justify-between items-start">
+                <div className="w-8 h-8 bg-white/20 group-hover:bg-white backdrop-blur-md rounded-full flex items-center justify-center text-white group-hover:text-emerald-600 shadow-sm transition-colors duration-500">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+              </div>
+              <div className="relative z-10">
+                <h3 className="font-bold text-[14px] mb-1">Eco-Friendly Options</h3>
+                <p className="text-gray-400 group-hover:text-white/90 text-[10px] leading-relaxed transition-colors duration-500">
+                  Reduce your carbon footprint and contribute to a greener planet with our hybrid fleet.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 3 */}
+            <div className="bg-[#2c2c2e] text-white rounded-[1.5rem] p-5 flex flex-col justify-between h-[170px] relative overflow-hidden group shadow-md hover:-translate-y-2 hover:shadow-2xl transition-all duration-500 cursor-pointer">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"></div>
+              <div className="relative z-10 flex justify-between items-start">
+                <div className="w-8 h-8 bg-white/20 group-hover:bg-white backdrop-blur-md rounded-full flex items-center justify-center text-white group-hover:text-indigo-600 shadow-sm transition-colors duration-500">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                </div>
+              </div>
+              <div className="relative z-10">
+                <h3 className="font-bold text-[14px] mb-1">Cutting-Edge Tech</h3>
+                <p className="text-gray-400 group-hover:text-white/90 text-[10px] leading-relaxed transition-colors duration-500">
+                  Stay ahead with our innovative vehicle technology designed for modern comfort needs.
+                </p>
               </div>
             </div>
           </div>
-
-          {/* Pickup Date Block */}
-          <div className="flex items-center gap-3.5 px-4 py-2 lg:py-0 w-full lg:w-1/3 hover:bg-gray-50/50 rounded-2xl lg:rounded-none transition-colors cursor-pointer group">
-            <div className="p-2.5 bg-indigo-50 rounded-full text-indigo-600 transition-transform group-hover:scale-110">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-              </svg>
-            </div>
-            <div className="flex flex-col items-start w-full">
-              <label htmlFor="pickup-date" className="text-[10px] font-extrabold tracking-widest text-gray-400 uppercase">Available From</label>
-              <input
-                type="date"
-                id="pickup-date"
-                value={pickupDate}
-                onChange={(e) => setPickupDate(e.target.value)}
-                min={new Date().toISOString().split("T")[0]}
-                className="w-full bg-transparent border-none outline-none font-bold text-gray-800 text-[14px] cursor-pointer"
-                required
-              />
-            </div>
-          </div>
-
-          {/* Return Date Block */}
-          <div className="flex items-center gap-3.5 px-4 py-2 lg:py-0 w-full lg:w-1/3 hover:bg-gray-50/50 rounded-2xl lg:rounded-none transition-colors cursor-pointer group">
-            <div className="p-2.5 bg-purple-50 rounded-full text-purple-600 transition-transform group-hover:scale-110">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-              </svg>
-            </div>
-            <div className="flex flex-col items-start w-full">
-              <label htmlFor="return-date" className="text-[10px] font-extrabold tracking-widest text-gray-400 uppercase">Available Until</label>
-              <input
-                type="date"
-                id="return-date"
-                value={returnDate}
-                onChange={(e) => setReturnDate(e.target.value)}
-                min={new Date().toISOString().split("T")[0]}
-                className="w-full bg-transparent border-none outline-none font-bold text-gray-800 text-[14px] cursor-pointer"
-                required
-              />
-            </div>
-          </div>
-
         </div>
+      </div>
 
-        {/* Search Button */}
-        <motion.button
-          whileHover={{ scale: 1.05, y: -2 }}
-          whileTap={{ scale: 0.95 }}
-          className="btn-shimmer btn-spotlight flex items-center justify-center gap-2 px-8 py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-full cursor-pointer shadow-md hover:shadow-[0_12px_30px_rgba(59,130,246,0.4)] transition-all duration-300 w-full lg:w-auto shrink-0"
-        >
-          <img
-            src={assets.search_icon}
-            alt="search"
-            className="brightness-300 w-4 h-4"
-          />
-          Find Car
-        </motion.button>
-      </motion.form>
+      {/* Bottom Description Text */}
+      <div className="mt-6 md:w-[30%] px-2">
+        <p className="text-gray-500 text-xs leading-relaxed">
+          Our state-of-the-art luxury vehicles and smart booking systems are tailored to meet the needs of both business and leisure travelers.
+        </p>
+      </div>
 
-      {/* Floating Car Wrapper */}
-      <motion.div
-        initial={{ y: 80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.6 }}
-        className="relative z-10 mt-2"
-      >
-        <motion.img
-          animate={{ y: [0, -10, 0] }}
-          transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
-          src={assets.main_car}
-          alt="car"
-          className="max-h-72 drop-shadow-[0_20px_35px_rgba(0,0,0,0.12)] cursor-pointer"
-        />
-      </motion.div>
-
-      {/* Key Highlights / Stats Bar */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.8 }}
-        className="flex flex-wrap items-center justify-center gap-6 md:gap-12 text-xs md:text-sm text-gray-500 mt-2 z-10"
-      >
-        <div className="flex items-center gap-2 bg-white/60 px-4 py-2 rounded-full border border-gray-150 shadow-sm backdrop-blur-sm">
-          <span className="w-2 h-2 rounded-full bg-blue-500"></span>
-          <span className="font-semibold text-gray-700">100+ Premium Fleet</span>
-        </div>
-        <div className="flex items-center gap-2 bg-white/60 px-4 py-2 rounded-full border border-gray-150 shadow-sm backdrop-blur-sm">
-          <span className="w-2 h-2 rounded-full bg-indigo-500"></span>
-          <span className="font-semibold text-gray-700">Flexible Pickups</span>
-        </div>
-        <div className="flex items-center gap-2 bg-white/60 px-4 py-2 rounded-full border border-gray-150 shadow-sm backdrop-blur-sm">
-          <span className="w-2 h-2 rounded-full bg-purple-500"></span>
-          <span className="font-semibold text-gray-700">Transparent Pricing</span>
-        </div>
-        <div className="flex items-center gap-2 bg-white/60 px-4 py-2 rounded-full border border-gray-150 shadow-sm backdrop-blur-sm">
-          <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-          <span className="font-semibold text-gray-700">24/7 Road Support</span>
-        </div>
-      </motion.div>
-    </motion.div>
+    </div>
   );
 };
 
