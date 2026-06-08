@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "motion/react";
+
+const rotatingPhrases = [
+  { text: "luxury sedans", color: "text-orange-400 drop-shadow-[0_0_15px_rgba(251,146,60,0.5)]" },
+  { text: "sports cars", color: "text-emerald-400 drop-shadow-[0_0_15px_rgba(52,211,153,0.5)]" },
+  { text: "premium SUVs", color: "text-blue-400 drop-shadow-[0_0_15px_rgba(96,165,250,0.5)]" },
+  { text: "electric vehicles", color: "text-purple-400 drop-shadow-[0_0_15px_rgba(192,132,252,0.5)]" },
+];
 
 const Hero = () => {
   const navigate = useNavigate();
+  const [textIndex, setTextIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTextIndex((prev) => (prev + 1) % rotatingPhrases.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="bg-white min-h-screen pt-24 pb-12 px-4 md:px-8 max-w-[1600px] mx-auto flex flex-col font-outfit">
@@ -27,29 +43,50 @@ const Hero = () => {
         <div className="absolute top-0 left-0 w-full h-full p-8 md:p-14 flex flex-col z-10 pointer-events-none">
           <div className="max-w-3xl mt-4 md:mt-8 pointer-events-auto">
             <div className="inline-flex items-center px-4 py-2 bg-white/20 backdrop-blur-md rounded-full text-white text-xs font-semibold tracking-wider mb-6 border border-white/30 shadow-sm">
-              Premium Fleet
+              Exclusive Inventory
             </div>
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-medium text-white leading-[1.1] tracking-tight">
-              Powering Your Journey <br />
-              with The Newest <br />
-              luxury cars
+              Find Your Dream Ride <br />
+              from our collection of <br />
+              <span className="inline-block relative min-w-[300px]">
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={textIndex}
+                    initial={{ y: 30, opacity: 0, rotateX: 40 }}
+                    animate={{ y: 0, opacity: 1, rotateX: 0 }}
+                    exit={{ y: -30, opacity: 0, rotateX: -40 }}
+                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                    className={`inline-block font-bold ${rotatingPhrases[textIndex].color}`}
+                    style={{ perspective: 600 }}
+                  >
+                    {rotatingPhrases[textIndex].text}
+                  </motion.span>
+                </AnimatePresence>
+              </span>
             </h1>
             
-            <button 
+            <motion.button 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={() => navigate('/cars')}
-              className="mt-10 px-8 py-3.5 bg-white text-orange-500 rounded-full font-bold flex items-center gap-3 hover:bg-gray-100 transition-all shadow-lg group cursor-pointer"
+              className="mt-10 relative overflow-hidden px-8 py-3.5 bg-white text-orange-500 rounded-full font-bold flex items-center gap-3 shadow-[0_8px_30px_rgba(249,115,22,0.2)] hover:shadow-[0_8px_30px_rgba(249,115,22,0.4)] transition-shadow duration-500 group cursor-pointer border border-transparent"
             >
-              Get Product
-              <span className="text-orange-500 group-hover:translate-x-1 transition-transform">
+              {/* Sweep Background */}
+              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-orange-400 to-orange-600 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] z-0 rounded-full"></span>
+              
+              <span className="relative z-10 group-hover:text-white transition-colors duration-300">
+                View Inventory
+              </span>
+              <span className="relative z-10 text-orange-500 group-hover:text-white group-hover:translate-x-2 transition-all duration-300">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
               </span>
-            </button>
+            </motion.button>
           </div>
 
           {/* Right side floating text */}
           <div className="absolute right-10 top-[40%] text-white text-sm font-medium text-right opacity-90 hidden md:block">
-            Luxury Technology <br /> From DriveLux.
+            Premium Vehicles <br /> For Sale.
           </div>
         </div>
 
@@ -72,9 +109,9 @@ const Hero = () => {
                 </div>
               </div>
               <div className="relative z-10">
-                <h3 className="font-bold text-[14px] mb-1">Efficient Performance</h3>
+                <h3 className="font-bold text-[14px] mb-1">Unmatched Reliability</h3>
                 <p className="text-gray-400 group-hover:text-white/90 text-[10px] leading-relaxed transition-colors duration-500">
-                  Our luxury cars deliver maximum efficiency, ensuring you get the most out of every journey.
+                  Our vehicles deliver maximum performance, ensuring you get the absolute best value for your investment.
                 </p>
               </div>
             </div>
@@ -90,7 +127,7 @@ const Hero = () => {
               <div className="relative z-10">
                 <h3 className="font-bold text-[14px] mb-1">Eco-Friendly Options</h3>
                 <p className="text-gray-400 group-hover:text-white/90 text-[10px] leading-relaxed transition-colors duration-500">
-                  Reduce your carbon footprint and contribute to a greener planet with our hybrid fleet.
+                  Explore our premium selection of hybrid and electric vehicles, offering sustainable driving without compromise.
                 </p>
               </div>
             </div>
@@ -106,7 +143,7 @@ const Hero = () => {
               <div className="relative z-10">
                 <h3 className="font-bold text-[14px] mb-1">Cutting-Edge Tech</h3>
                 <p className="text-gray-400 group-hover:text-white/90 text-[10px] leading-relaxed transition-colors duration-500">
-                  Stay ahead with our innovative vehicle technology designed for modern comfort needs.
+                  Experience the latest in automotive innovation, from advanced safety features to state-of-the-art infotainment.
                 </p>
               </div>
             </div>
@@ -117,7 +154,7 @@ const Hero = () => {
       {/* Bottom Description Text */}
       <div className="mt-6 md:w-[30%] px-2">
         <p className="text-gray-500 text-xs leading-relaxed">
-          Our state-of-the-art luxury vehicles and smart booking systems are tailored to meet the needs of both business and leisure travelers.
+          Our state-of-the-art luxury vehicles and transparent purchasing process are tailored to meet the needs of every discerning buyer.
         </p>
       </div>
 
