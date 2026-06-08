@@ -11,7 +11,7 @@ const CarCard = ({ car }) => {
         navigate(`/car-details/${car._id}`);
         scrollTo(0, 0);
       }}
-      className="group bg-white rounded-[2rem] p-3 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] border border-gray-50 transition-all duration-500 hover:-translate-y-2 cursor-pointer flex flex-col relative overflow-hidden"
+      className="group bg-white rounded-[2rem] p-3 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.2)] border border-gray-200 transition-all duration-500 hover:-translate-y-2 cursor-pointer flex flex-col relative overflow-hidden"
     >
       {/* Cool Hover Glow */}
       <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/5 rounded-bl-full -z-10 group-hover:scale-[2.5] transition-transform duration-700 ease-out"></div>
@@ -38,8 +38,12 @@ const CarCard = ({ car }) => {
             {car.brand} {car.model}
           </h3>
         </div>
-        <p className="text-gray-400 text-xs font-semibold mb-5 tracking-wide">
+        <p className="text-gray-400 text-xs font-semibold mb-2 tracking-wide">
           {car.category} <span className="mx-1 text-gray-300">•</span> {car.year}
+        </p>
+        
+        <p className="text-gray-500 text-[11px] leading-relaxed line-clamp-2 mb-5">
+          {car.description || `Experience the perfect blend of performance, luxury, and advanced technology with this stunning ${car.brand} ${car.model}.`}
         </p>
 
         <div className="grid grid-cols-4 gap-2 mb-6">
@@ -63,9 +67,12 @@ const CarCard = ({ car }) => {
 
         <div className="mt-auto flex justify-between items-end pt-4 border-t border-gray-100/80">
           <div className="flex flex-col">
-            <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider mb-1">Daily Rate</span>
-            <div className="flex items-baseline gap-1">
-              <span className="text-2xl font-black text-gray-900 leading-none">{currency}{car.pricePerDay}</span>
+            <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider mb-1">Sale Price</span>
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-2xl font-black text-gray-900 leading-none">
+                {Number(Math.round((car.sale_price || car.cash_price || car.pricePerDay || 0) / 120)).toLocaleString()}
+              </span>
+              <span className="text-[11px] font-bold text-gray-400 uppercase">$</span>
             </div>
           </div>
 
