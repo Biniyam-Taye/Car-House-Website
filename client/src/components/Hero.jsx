@@ -1,13 +1,30 @@
 import React, { useState, useEffect, useRef } from "react";
 import { assets, cityList } from "../assets/assets";
 import { useAppContext } from "../context/AppContext";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
+
+const rotatingPhrases = [
+  { text: "Your Premium Journeys", gradient: "from-blue-600 via-indigo-600 to-purple-600" },
+  { text: "Every Adventure Ahead", gradient: "from-emerald-500 via-teal-500 to-cyan-500" },
+  { text: "Unforgettable Drives", gradient: "from-orange-500 via-rose-500 to-pink-600" },
+  { text: "Ultimate Road Freedom", gradient: "from-violet-600 via-fuchsia-500 to-pink-500" },
+  { text: "A Luxurious Experience", gradient: "from-amber-500 via-yellow-500 to-lime-500" },
+];
 
 const Hero = () => {
   const [pickupLocation, setPickupLocation] = useState("");
+  const [textIndex, setTextIndex] = useState(0);
   const [locationSearch, setLocationSearch] = useState("");
   const [showLocationDropdown, setShowLocationDropdown] = useState(false);
   const locationRef = useRef(null);
+
+  // Rotate hero heading phrases
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTextIndex((prev) => (prev + 1) % rotatingPhrases.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
   const { pickupDate, setPickupDate, navigate, returnDate, setReturnDate } =
     useAppContext();
@@ -88,8 +105,20 @@ const Hero = () => {
           className="text-4xl md:text-6xl font-extrabold tracking-tight max-w-3xl leading-[1.15] text-gray-900"
         >
           Luxury Cars for Sale for{" "}
-          <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
-            Your Premium Journeys
+          <span className="inline-block relative">
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={textIndex}
+                initial={{ y: 30, opacity: 0, scale: 0.95, rotateX: 40 }}
+                animate={{ y: 0, opacity: 1, scale: 1, rotateX: 0 }}
+                exit={{ y: -30, opacity: 0, scale: 0.95, rotateX: -40 }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className={`inline-block bg-gradient-to-r ${rotatingPhrases[textIndex].gradient} bg-clip-text text-transparent`}
+                style={{ perspective: 600 }}
+              >
+                {rotatingPhrases[textIndex].text}
+              </motion.span>
+            </AnimatePresence>
           </span>
         </motion.h1>
 

@@ -137,7 +137,7 @@ const Navbar = () => {
                 animate={open || isDesktop ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                 transition={{ delay: 0.3 }}
                 onClick={() => navigate("/login")}
-                className="btn-border-trace w-full sm:w-auto relative px-6 py-2.5 font-semibold text-[15px] text-gray-700 transition-all duration-300 rounded-lg border border-gray-300 hover:text-blue-600 group overflow-hidden hidden sm:flex items-center justify-center cursor-pointer"
+                className="btn-water-fill w-full sm:w-auto relative px-6 py-2.5 font-semibold text-[15px] text-gray-700 transition-all duration-300 rounded-lg border border-gray-300 group overflow-hidden hidden sm:flex items-center justify-center cursor-pointer"
               >
                 <span className="relative z-10">Login</span>
               </motion.button>
