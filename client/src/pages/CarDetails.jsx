@@ -23,7 +23,7 @@ const CarDetails = () => {
 
   const handleStripePayment = async () => {
     if (!token) {
-      setShowLogin(true);
+      navigate("/login");
       return;
     }
     if (isOrdering) return;
