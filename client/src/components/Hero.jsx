@@ -63,9 +63,25 @@ const Hero = () => {
       transition={{ duration: 0.8 }}
       className="min-h-screen flex flex-col items-center justify-center gap-12 pt-28 pb-12 px-6 bg-light text-center relative overflow-hidden"
     >
+      {/* Background Video Container (Restricted to top half to avoid overlapping the car image) */}
+      <div className="absolute top-0 left-0 w-full h-[65%] lg:h-[70%] z-0 overflow-hidden bg-gray-900">
+        <video
+          autoPlay={true}
+          loop={true}
+          muted={true}
+          playsInline={true}
+          className="w-full h-full object-cover opacity-100 pointer-events-none"
+        >
+          <source src="/hero-bg.mp4" type="video/mp4" />
+        </video>
+
+        {/* Fade the very bottom edge into the white background so there is no harsh cut */}
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-light pointer-events-none"></div>
+      </div>
+
       {/* Dynamic Background Glowing Blobs */}
-      <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-blue-400/10 rounded-full blur-[120px] -z-10 pointer-events-none"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-400/10 rounded-full blur-[140px] -z-10 pointer-events-none"></div>
+      <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-blue-400/20 rounded-full blur-[120px] z-0 pointer-events-none mix-blend-screen"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-400/20 rounded-full blur-[140px] z-0 pointer-events-none mix-blend-screen"></div>
 
       {/* Floating Announcement Bar (Covers Navbar space when hidden at the top) */}
       <motion.div
@@ -84,8 +100,8 @@ const Hero = () => {
         </span>
       </motion.div>
 
-      {/* Hero Header Text & Badges */}
-      <div className="flex flex-col items-center gap-4 mt-4">
+      {/* Hero Header Text & Badges - Wrapped in a frosted glass box for readability against the video */}
+      <div className="relative z-10 flex flex-col items-center gap-4 mt-4 bg-white/70 backdrop-blur-md border border-white/50 shadow-[0_8px_30px_rgba(0,0,0,0.05)] rounded-[2.5rem] p-8 md:px-12 max-w-4xl mx-auto">
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -268,7 +284,7 @@ const Hero = () => {
         initial={{ y: 80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.6 }}
-        className="relative mt-2"
+        className="relative z-10 mt-2"
       >
         <motion.img
           animate={{ y: [0, -10, 0] }}
