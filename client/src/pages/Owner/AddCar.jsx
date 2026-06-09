@@ -64,9 +64,9 @@ const AddCar = () => {
       const carData = {
         ...car,
         features: featuresArray,
-        year: Number(car.year) || 0,
-        pricePerDay: Number(car.pricePerDay) || 0,
-        seating_capacity: Number(car.seating_capacity) || 0,
+        year: car.year ? Number(car.year) : undefined,
+        pricePerDay: car.pricePerDay ? Number(car.pricePerDay) : undefined,
+        seating_capacity: car.seating_capacity ? Number(car.seating_capacity) : undefined,
         cash_price: car.cash_price ? Number(car.cash_price) : undefined,
         bank_price: car.bank_price ? Number(car.bank_price) : undefined,
         sale_price: car.sale_price ? Number(car.sale_price) : undefined,

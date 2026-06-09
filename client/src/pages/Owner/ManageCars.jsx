@@ -132,9 +132,9 @@ const ManageCars = () => {
       const carData = {
         ...editForm,
         features: featuresArray,
-        year: Number(editForm.year) || 0,
-        pricePerDay: Number(editForm.pricePerDay) || 0,
-        seating_capacity: Number(editForm.seating_capacity) || 0,
+        year: editForm.year ? Number(editForm.year) : undefined,
+        pricePerDay: editForm.pricePerDay ? Number(editForm.pricePerDay) : undefined,
+        seating_capacity: editForm.seating_capacity ? Number(editForm.seating_capacity) : undefined,
         cash_price: editForm.cash_price ? Number(editForm.cash_price) : undefined,
         bank_price: editForm.bank_price ? Number(editForm.bank_price) : undefined,
         sale_price: editForm.sale_price ? Number(editForm.sale_price) : undefined,
