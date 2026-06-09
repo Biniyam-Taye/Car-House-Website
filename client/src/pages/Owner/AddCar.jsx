@@ -39,6 +39,12 @@ const AddCar = () => {
     bank_info: "",
     sale_price: "",
     contact_phone: "",
+    listing_title: "",
+    option_level: "",
+    document_status: "",
+    accessories: "",
+    commission: "",
+    price_type: "",
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -118,6 +124,12 @@ const AddCar = () => {
           bank_info: "",
           sale_price: "",
           contact_phone: "",
+          listing_title: "",
+          option_level: "",
+          document_status: "",
+          accessories: "",
+          commission: "",
+          price_type: "",
         });
         if (fetchCars) {
           fetchCars();
@@ -225,6 +237,30 @@ const AddCar = () => {
         {/* Basic Details Block */}
         <div className="flex flex-col gap-4 p-5 border border-borderColor rounded-lg bg-white/50">
           <h3 className="font-semibold text-gray-800 text-base border-b border-borderColor pb-2">Basic Details</h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="flex flex-col w-full">
+              <label>Listing Title</label>
+              <input
+                type="text"
+                placeholder="e.g. 💥 BYD Leopard 💡 max 💥"
+                className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none focus:border-primary transition-all"
+                value={car.listing_title}
+                onChange={(e) => setCar({ ...car, listing_title: e.target.value })}
+              />
+            </div>
+            <div className="flex flex-col w-full">
+              <label>Option Level</label>
+              <input
+                type="text"
+                placeholder="e.g. Full Option"
+                className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none focus:border-primary transition-all"
+                value={car.option_level}
+                onChange={(e) => setCar({ ...car, option_level: e.target.value })}
+              />
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="flex flex-col w-full">
               <label>Brand / Make</label>
@@ -520,15 +556,29 @@ const AddCar = () => {
             </div>
           </div>
 
-          <div className="flex flex-col w-full">
-            <label>Bank Available & Interest Info</label>
-            <input
-              type="text"
-              placeholder="e.g. 50/50 Bank Available 18% interest"
-              className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none focus:border-primary transition-all"
-              value={car.bank_info}
-              onChange={(e) => setCar({ ...car, bank_info: e.target.value })}
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="flex flex-col w-full">
+              <label>Bank Available & Interest Info</label>
+              <input
+                type="text"
+                placeholder="e.g. 50/50 Bank Available 18% interest"
+                className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none focus:border-primary transition-all"
+                value={car.bank_info}
+                onChange={(e) => setCar({ ...car, bank_info: e.target.value })}
+              />
+            </div>
+            <div className="flex flex-col w-full">
+              <label>Price Type</label>
+              <select
+                className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none bg-white focus:border-primary transition-all"
+                value={car.price_type}
+                onChange={(e) => setCar({ ...car, price_type: e.target.value })}
+              >
+                <option value="">Select Price Type</option>
+                <option value="Fixed">Fixed</option>
+                <option value="Negotiable">Negotiable</option>
+              </select>
+            </div>
           </div>
 
           <div className="flex flex-col w-full">
@@ -568,6 +618,43 @@ const AddCar = () => {
               onChange={(e) => setCar({ ...car, featuresInput: e.target.value })}
             ></textarea>
             <p className="text-xs text-gray-400 mt-1">Separate features with commas or newlines (e.g. Cruise Control, Panoramic Roof)</p>
+          </div>
+        </div>
+
+        {/* Additional Information Block */}
+        <div className="flex flex-col gap-4 p-5 border border-borderColor rounded-lg bg-white/50">
+          <h3 className="font-semibold text-gray-800 text-base border-b border-borderColor pb-2">Additional Information</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="flex flex-col w-full">
+              <label>Document Status</label>
+              <input
+                type="text"
+                placeholder="e.g. Full document 📌"
+                className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none focus:border-primary transition-all"
+                value={car.document_status}
+                onChange={(e) => setCar({ ...car, document_status: e.target.value })}
+              />
+            </div>
+            <div className="flex flex-col w-full">
+              <label>Accessories</label>
+              <input
+                type="text"
+                placeholder="e.g. Full accessorie 📌"
+                className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none focus:border-primary transition-all"
+                value={car.accessories}
+                onChange={(e) => setCar({ ...car, accessories: e.target.value })}
+              />
+            </div>
+            <div className="flex flex-col w-full">
+              <label>Commission</label>
+              <input
+                type="text"
+                placeholder="e.g. 2%"
+                className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none focus:border-primary transition-all"
+                value={car.commission}
+                onChange={(e) => setCar({ ...car, commission: e.target.value })}
+              />
+            </div>
           </div>
         </div>
 

@@ -222,6 +222,79 @@ export const updateUserImage = async (req, res) => {
   }
 };
 
+// API to edit/update a car
+export const editCar = async (req, res) => {
+  try {
+    const { _id, role, approvalStatus } = req.user;
+    if (!isApprovedOwner({ role, approvalStatus })) {
+      return res.json({ success: false, message: "unauthorized" });
+    }
+
+    const { carId } = req.body;
+    let carData = JSON.parse(req.body.carData);
+
+    const car = await Car.findById(carId);
+    if (!car || car.owner.toString() !== _id.toString()) {
+      return res.json({ success: false, message: "unauthorized" });
+    }
+
+    // Handle main image upload if provided
+    const imageFile =
+      req.files && req.files["image"] ? req.files["image"][0] : null;
+    if (imageFile) {
+      const fileBuffer = fs.readFileSync(imageFile.path);
+      const response = await imageKit.upload({
+        file: fileBuffer,
+        fileName: imageFile.originalname,
+        folder: "/cars",
+      });
+      const optimizedImageUrl = imageKit.url({
+        path: response.filePath,
+        transformation: [
+          { width: "1280" },
+          { quality: "auto" },
+          { format: "webp" },
+        ],
+      });
+      carData.image = optimizedImageUrl;
+    }
+
+    // Handle sub-images upload if provided
+    const subImageFiles =
+      req.files && req.files["subImages"] ? req.files["subImages"] : [];
+    if (subImageFiles.length > 0) {
+      const subImages = [];
+      for (const file of subImageFiles) {
+        if (!file) continue;
+        const subFileBuffer = fs.readFileSync(file.path);
+        const subResponse = await imageKit.upload({
+          file: subFileBuffer,
+          fileName: file.originalname,
+          folder: "/cars",
+        });
+        const optimizedSubUrl = imageKit.url({
+          path: subResponse.filePath,
+          transformation: [
+            { width: "1280" },
+            { quality: "auto" },
+            { format: "webp" },
+          ],
+        });
+        subImages.push(optimizedSubUrl);
+      }
+      carData.subImages = subImages;
+    }
+
+    // Update the car document
+    await Car.findByIdAndUpdate(carId, carData);
+
+    res.json({ success: true, message: "Car Updated Successfully" });
+  } catch (error) {
+    console.log(error.message);
+    res.json({ success: false, message: error.message });
+  }
+};
+
 export const updateOwnerProfile = async (req, res) => {
   try {
     const { _id, role, approvalStatus } = req.user;

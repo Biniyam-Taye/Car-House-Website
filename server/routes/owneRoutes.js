@@ -4,6 +4,7 @@ import {
   addCar,
   changeRoleToOwner,
   deleteCar,
+  editCar,
   getDashboardData,
   getOwnerCars,
   toggleCarAvailability,
@@ -27,6 +28,15 @@ ownerRouter.post(
 ownerRouter.get("/cars", protect, getOwnerCars);
 ownerRouter.post("/toggle-car", protect, toggleCarAvailability);
 ownerRouter.post("/delete-car", protect, deleteCar);
+ownerRouter.post(
+  "/edit-car",
+  upload.fields([
+    { name: "image", maxCount: 1 },
+    { name: "subImages", maxCount: 10 },
+  ]),
+  protect,
+  editCar
+);
 
 ownerRouter.get("/dashboard", protect, getDashboardData);
 ownerRouter.post(

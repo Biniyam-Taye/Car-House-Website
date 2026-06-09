@@ -38,6 +38,13 @@ const carSchema = new mongoose.Schema(
     sale_price: { type: Number },
     // Contact
     contact_phone: { type: String },
+    // Listing & Sales Info
+    listing_title: { type: String },
+    option_level: { type: String },
+    document_status: { type: String },
+    accessories: { type: String },
+    commission: { type: String },
+    price_type: { type: String },
     // Multiple Sub Images
     subImages: { type: [String], default: [] },
   },

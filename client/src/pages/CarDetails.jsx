@@ -141,7 +141,7 @@ const CarDetails = () => {
           >
             <div>
               <h1 className="text-3xl font-bold">
-                {car.brand} {car.model}
+                {car.listing_title || `${car.brand} ${car.model}`}
               </h1>
               <p className="text-gray-500 text-lg">
                 {car.category} • {car.year}
@@ -332,6 +332,10 @@ const CarDetails = () => {
                 {car.drive_type && <motion.div whileHover={{ x: 5, backgroundColor: "rgba(99, 102, 241, 0.05)" }} className="px-2 py-1 rounded-lg transition-colors cursor-pointer"><p className="text-gray-400">Drive Type</p><p className="font-semibold text-gray-700">{car.drive_type}</p></motion.div>}
                 {car.top_speed && <motion.div whileHover={{ x: 5, backgroundColor: "rgba(99, 102, 241, 0.05)" }} className="px-2 py-1 rounded-lg transition-colors cursor-pointer"><p className="text-gray-400">Top Speed</p><p className="font-semibold text-gray-700">{car.top_speed}</p></motion.div>}
                 {car.fuel_consumption && <motion.div whileHover={{ x: 5, backgroundColor: "rgba(99, 102, 241, 0.05)" }} className="px-2 py-1 rounded-lg transition-colors cursor-pointer"><p className="text-gray-400">Fuel Consumption</p><p className="font-semibold text-gray-700">{car.fuel_consumption}</p></motion.div>}
+                {car.option_level && <motion.div whileHover={{ x: 5, backgroundColor: "rgba(99, 102, 241, 0.05)" }} className="px-2 py-1 rounded-lg transition-colors cursor-pointer"><p className="text-gray-400">Option Level</p><p className="font-semibold text-gray-700">{car.option_level}</p></motion.div>}
+                {car.document_status && <motion.div whileHover={{ x: 5, backgroundColor: "rgba(99, 102, 241, 0.05)" }} className="px-2 py-1 rounded-lg transition-colors cursor-pointer"><p className="text-gray-400">Document Status</p><p className="font-semibold text-gray-700">{car.document_status}</p></motion.div>}
+                {car.accessories && <motion.div whileHover={{ x: 5, backgroundColor: "rgba(99, 102, 241, 0.05)" }} className="px-2 py-1 rounded-lg transition-colors cursor-pointer"><p className="text-gray-400">Accessories</p><p className="font-semibold text-gray-700">{car.accessories}</p></motion.div>}
+                {car.commission && <motion.div whileHover={{ x: 5, backgroundColor: "rgba(99, 102, 241, 0.05)" }} className="px-2 py-1 rounded-lg transition-colors cursor-pointer"><p className="text-gray-400">Commission</p><p className="font-semibold text-gray-700">{car.commission}</p></motion.div>}
                 {car.dimensions && (
                   <motion.div whileHover={{ x: 5, backgroundColor: "rgba(99, 102, 241, 0.05)" }} className="col-span-2 px-2 py-1 rounded-lg transition-colors cursor-pointer">
                     <p className="text-gray-400">Dimensions (L/W/H/GC)</p>
@@ -358,6 +362,7 @@ const CarDetails = () => {
                 <p className="text-3xl font-extrabold text-gray-900">
                   {car.sale_price.toLocaleString()}
                   <span className="text-base font-semibold text-gray-400 ml-1">ETB</span>
+                  {car.price_type && <span className="text-sm font-medium text-gray-500 ml-2">({car.price_type})</span>}
                 </p>
               ) : (
                 <p className="text-xl font-bold text-gray-500">Price on Request</p>
