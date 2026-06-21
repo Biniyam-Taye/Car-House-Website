@@ -5,6 +5,7 @@ import Loader from "../components/Loader";
 import { useAppContext } from "../context/AppContext";
 import { motion } from "motion/react";
 import toast from "react-hot-toast";
+import CarHero3D from "../components/car-detail/CarHero3D";
 
 const CarDetails = () => {
   const { id } = useParams();
@@ -49,14 +50,18 @@ const CarDetails = () => {
   const ownerEmail = car?.owner?.email || "";
 
   return car ? (
-    <div className="px-6 md:px-16 lg:px-24 xl:px-32 mt-16 pb-20">
-      {/* Back button */}
-      <motion.button
-        onClick={() => navigate(-1)}
-        whileHover={{ x: -5 }}
-        whileTap={{ scale: 0.95 }}
-        className="flex items-center gap-2 mb-6 text-gray-500 hover:text-gray-900 transition-colors"
-      >
+    <div className="w-full">
+      {/* ─── 3D Hero Section ─── */}
+      <CarHero3D car={car} />
+
+      <div className="px-6 md:px-16 lg:px-24 xl:px-32 mt-12 pb-20">
+        {/* Back button */}
+        <motion.button
+          onClick={() => navigate(-1)}
+          whileHover={{ x: -5 }}
+          whileTap={{ scale: 0.95 }}
+          className="flex items-center gap-2 mb-6 text-gray-500 hover:text-gray-900 transition-colors"
+        >
         <motion.img
           src={assets.arrow_icon}
           alt=""
@@ -600,6 +605,7 @@ const CarDetails = () => {
           </div>
         </motion.div>
       </div>
+    </div>
     </div>
   ) : (
     <Loader />
