@@ -41,136 +41,152 @@ const CarModel = memo(({ activeColor, headlightsOn = false, onModelLoaded }) => 
     clonedScene.traverse((child) => {
       if (!child.isMesh || !child.material) return;
 
-      const name = (child.name || '').toLowerCase();
-      const matName = (child.material.name || '').toLowerCase();
+      const meshName = (child.name || '').toLowerCase();
+      
+      const processMaterial = (mat) => {
+        if (!mat) return mat;
+        
+        const matName = (mat.name || '').toLowerCase();
+        
+        // --- 1. IDENTIFICATION LOGIC ---
+        // Paint/Body Detection (Highest Priority for explicitly named paints)
+        const isBodyPart =
+          matName.includes('paint') ||
+          matName.includes('coat') ||
+          matName.includes('body') ||
+          matName.includes('car') ||
+          matName.includes('exterior') ||
+          meshName.includes('body') ||
+          meshName.includes('paint') ||
+          meshName.includes('shell') ||
+          meshName.includes('panel') ||
+          meshName.includes('fender') ||
+          meshName.includes('bumper') ||
+          meshName.includes('door') ||
+          meshName.includes('hood') ||
+          meshName.includes('trunk') ||
+          meshName.includes('boot') ||
+          meshName.includes('roof') ||
+          meshName.includes('quarter');
 
-      // Identify headlight meshes
-      if (
-        name.includes('headlight') ||
-        name.includes('head_light') ||
-        name.includes('frontlight') ||
-        matName.includes('headlight') ||
-        matName.includes('lamp_front')
-      ) {
-        if (Array.isArray(child.material)) {
-          child.material.forEach((m) => {
-            if (m) {
-              m.emissive = new THREE.Color(0xffffff);
-              m.emissiveIntensity = 0;
-              headlights.push(m);
-            }
-          });
-        } else {
-          child.material.emissive = new THREE.Color(0xffffff);
-          child.material.emissiveIntensity = 0;
-          headlights.push(child.material);
+        // Glass Detection
+        let isGlass =
+          matName.includes('glass') ||
+          matName.includes('window') ||
+          matName.includes('windshield') ||
+          matName.includes('screen') ||
+          meshName.includes('glass') ||
+          meshName.includes('window') ||
+          meshName.includes('windshield');
+
+        // Fallback glass detection: Only apply if it's NOT explicitly a body part
+        if (!isGlass && !isBodyPart && (mat.transmission > 0.5 || (mat.transparent && mat.opacity < 1.0 && mat.opacity > 0.1))) {
+          isGlass = true;
         }
-        return;
-      }
 
-      // Identify taillight meshes
-      if (
-        name.includes('taillight') ||
-        name.includes('tail_light') ||
-        name.includes('rearlight') ||
-        name.includes('brake') ||
-        matName.includes('taillight') ||
-        matName.includes('lamp_rear')
-      ) {
-        if (Array.isArray(child.material)) {
-          child.material.forEach((m) => {
-            if (m) {
-              m.emissive = new THREE.Color(0xff1111);
-              m.emissiveIntensity = 0;
-              taillights.push(m);
-            }
-          });
-        } else {
-          child.material.emissive = new THREE.Color(0xff1111);
-          child.material.emissiveIntensity = 0;
-          taillights.push(child.material);
+        // --- 2. NON-PAINT EXCLUSIONS ---
+        const isChrome =
+          matName.includes('chrome') ||
+          matName.includes('metal_bright') ||
+          matName.includes('silver') ||
+          meshName.includes('chrome') ||
+          meshName.includes('trim') ||
+          meshName.includes('logo') ||
+          meshName.includes('badge');
+
+        const isRubber =
+          matName.includes('tire') ||
+          matName.includes('rubber') ||
+          meshName.includes('tire') ||
+          meshName.includes('tyre') ||
+          meshName.includes('rubber');
+
+        const isWheel =
+          matName.includes('wheel') ||
+          matName.includes('rim') ||
+          matName.includes('alloy') ||
+          matName.includes('brake') ||
+          matName.includes('caliper') ||
+          matName.includes('metal') ||
+          matName.includes('steel') ||
+          matName.includes('aluminum') ||
+          meshName.includes('wheel') ||
+          meshName.includes('rim') ||
+          meshName.includes('alloy') ||
+          meshName.includes('brake') ||
+          meshName.includes('caliper') ||
+          meshName.includes('disc') ||
+          meshName.includes('rotor') ||
+          meshName.includes('spoke');
+          
+        const isLight = 
+          matName.includes('light') || 
+          matName.includes('lamp') || 
+          meshName.includes('light') || 
+          meshName.includes('lamp');
+
+        const isLargeSurface =
+          child.geometry &&
+          child.geometry.attributes.position &&
+          child.geometry.attributes.position.count > 500;
+
+        const isActuallyBody = isBodyPart || (isLargeSurface && !isWheel && !isRubber && !isChrome && !isLight && !isGlass);
+
+        // --- APPLY MODIFICATIONS ---
+
+        // Handle lights
+        if (isLight) {
+           const lightMat = mat.clone();
+           if (meshName.includes('head') || meshName.includes('front') || matName.includes('front') || matName.includes('head')) {
+               lightMat.emissive = new THREE.Color(0xffffff);
+               headlights.push(lightMat);
+           } else if (meshName.includes('tail') || meshName.includes('rear') || meshName.includes('brake') || matName.includes('tail') || matName.includes('rear')) {
+               lightMat.emissive = new THREE.Color(0xff1111);
+               taillights.push(lightMat);
+           }
+           return lightMat;
         }
-        return;
-      }
 
-      // Identify body panels — largest surfaces with paint-like materials
-      // Heuristic: look for body-related names, or large geometry
-      const isBodyPart =
-        name.includes('body') ||
-        name.includes('paint') ||
-        name.includes('shell') ||
-        name.includes('panel') ||
-        name.includes('fender') ||
-        name.includes('bumper') ||
-        name.includes('door') ||
-        name.includes('hood') ||
-        name.includes('trunk') ||
-        name.includes('roof') ||
-        name.includes('quarter') ||
-        matName.includes('body') ||
-        matName.includes('paint') ||
-        matName.includes('car') ||
-        matName.includes('exterior');
+        // Handle glass
+        if (isGlass) {
+          const blackGlass = new THREE.MeshPhysicalMaterial({
+            color: new THREE.Color(0x050505), // Permanent dark black tint
+            metalness: 0.9,
+            roughness: 0.05,
+            transmission: 0.0, // Opaque block
+            envMapIntensity: 2.0,
+            clearcoat: 1.0,
+            clearcoatRoughness: 0.0,
+          });
+          return blackGlass;
+        }
 
-      // Also check by geometry size (large surfaces are likely body panels)
-      const isLargeSurface =
-        child.geometry &&
-        child.geometry.attributes.position &&
-        child.geometry.attributes.position.count > 500;
-
-      // Check if the material color suggests a car paint (not glass, chrome, rubber, etc.)
-      const isGlass =
-        name.includes('glass') ||
-        name.includes('window') ||
-        name.includes('windshield') ||
-        matName.includes('glass');
-        
-      const isChrome =
-        name.includes('chrome') ||
-        name.includes('trim') ||
-        matName.includes('chrome') ||
-        matName.includes('metal_bright');
-        
-      const isRubber =
-        name.includes('tire') ||
-        name.includes('tyre') ||
-        name.includes('rubber') ||
-        matName.includes('tire') ||
-        matName.includes('rubber');
-        
-      const isWheel =
-        name.includes('wheel') ||
-        name.includes('rim') ||
-        matName.includes('wheel') ||
-        matName.includes('rim');
-
-      if (!isGlass && !isChrome && !isRubber && !isWheel && (isBodyPart || isLargeSurface)) {
-        // Convert to MeshPhysicalMaterial for realistic car paint
-        const physMat = new THREE.MeshPhysicalMaterial({
-          color: new THREE.Color(0x1a1a1a), // Will be overridden by activeColor
-          metalness: 0.9,
-          roughness: 0.15,
-          clearcoat: 1.0,
-          clearcoatRoughness: 0.05,
-          envMapIntensity: 1.5,
-        });
-        
-        if (Array.isArray(child.material)) {
-          // Keep original material length, replace with physMat
-          child.material = child.material.map(() => physMat.clone());
-          child.material.forEach(m => bodies.push(m));
-        } else {
-          // If the original material has a color, copy it temporarily
-          if (child.material && child.material.color && typeof child.material.color.copy === 'function') {
-            try {
-              physMat.color.copy(child.material.color);
-            } catch (e) {
-              console.warn("Could not copy material color", e);
-            }
+        // Handle paint
+        if (!isGlass && !isChrome && !isRubber && !isWheel && !isLight && isActuallyBody) {
+          const physMat = new THREE.MeshPhysicalMaterial({
+            color: new THREE.Color(0x1a1a1a),
+            metalness: 0.9,
+            roughness: 0.15,
+            clearcoat: 1.0,
+            clearcoatRoughness: 0.05,
+            envMapIntensity: 1.5,
+          });
+          
+          if (mat.color && typeof mat.color.copy === 'function') {
+             try { physMat.color.copy(mat.color); } catch (e) {}
           }
-          child.material = physMat;
+          
           bodies.push(physMat);
+          return physMat;
         }
+
+        return mat; // Return unmodified material if it doesn't match any group
+      };
+
+      if (Array.isArray(child.material)) {
+        child.material = child.material.map(m => processMaterial(m));
+      } else {
+        child.material = processMaterial(child.material);
       }
     });
 
