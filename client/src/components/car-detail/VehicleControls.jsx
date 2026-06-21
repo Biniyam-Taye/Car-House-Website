@@ -86,7 +86,7 @@ const VehicleControls = ({
           transition={{ delay: 1.2 + idx * 0.1, duration: 0.4 }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className="group relative flex items-center justify-center w-10 h-10 rounded-xl cursor-pointer transition-all duration-300"
+          className={`group relative flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-xl cursor-pointer transition-all duration-300 ${['rotate', 'hotspots'].includes(ctrl.id) ? 'hidden md:flex' : ''}`}
           style={{
             background: ctrl.isActive
               ? 'rgba(99, 102, 241, 0.3)'

@@ -10,10 +10,10 @@ const VehicleInfoCard = ({ car }) => {
       initial={{ opacity: 0, x: -30 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 1.5, duration: 0.8, ease: 'easeOut' }}
-      className="absolute top-24 left-4 md:top-1/2 md:-translate-y-1/2 md:left-12 z-20 w-[90%] md:w-96 max-w-sm pointer-events-none"
+      className="absolute top-20 left-4 right-16 md:right-auto md:top-1/2 md:-translate-y-1/2 md:left-12 z-20 md:w-96 max-w-sm pointer-events-none"
     >
       <div
-        className="pointer-events-auto rounded-3xl p-6 overflow-hidden relative"
+        className="pointer-events-auto rounded-2xl md:rounded-3xl p-4 md:p-6 overflow-hidden relative"
         style={{
           background: 'rgba(10, 10, 20, 0.4)',
           backdropFilter: 'blur(25px)',
@@ -29,19 +29,19 @@ const VehicleInfoCard = ({ car }) => {
         />
 
         {/* Header: Brand & Model */}
-        <div className="relative z-10 mb-6">
+        <div className="relative z-10 mb-3 md:mb-6">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.7, duration: 0.5 }}
           >
-            <p className="text-xs font-semibold tracking-widest uppercase mb-1" style={{ color: 'rgba(255,255,255,0.5)' }}>
+            <p className="text-[10px] md:text-xs font-semibold tracking-widest uppercase mb-1" style={{ color: 'rgba(255,255,255,0.5)' }}>
               {car.brand || 'Luxury'}
             </p>
-            <h1 className="text-3xl font-light tracking-wide text-white leading-tight mb-2">
+            <h1 className="text-xl md:text-3xl font-light tracking-wide text-white leading-tight mb-1 md:mb-2">
               {car.model || 'Concept Vehicle'}
             </h1>
-            <p className="text-sm font-medium" style={{ color: 'rgba(255,255,255,0.7)' }}>
+            <p className="text-xs md:text-sm font-medium" style={{ color: 'rgba(255,255,255,0.7)' }}>
               {car.year} • {car.category || 'Premium'}
             </p>
           </motion.div>
@@ -52,29 +52,29 @@ const VehicleInfoCard = ({ car }) => {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 1.9, duration: 0.5 }}
-          className="relative z-10 mb-8 pb-6 border-b border-white/10"
+          className="relative z-10 mb-4 md:mb-8 pb-4 md:pb-6 border-b border-white/10"
         >
-          <p className="text-xs font-medium tracking-wider uppercase mb-1" style={{ color: 'rgba(255,255,255,0.4)' }}>
+          <p className="text-[10px] md:text-xs font-medium tracking-wider uppercase mb-1" style={{ color: 'rgba(255,255,255,0.4)' }}>
             Starting at
           </p>
           <div className="flex items-baseline gap-2">
-            <span className="text-4xl font-extralight text-white">
+            <span className="text-2xl md:text-4xl font-extralight text-white">
               {formatPrice(car.sale_price)}
             </span>
             {car.sale_price && (
-              <span className="text-sm font-medium" style={{ color: 'rgba(255,255,255,0.5)' }}>
+              <span className="text-xs md:text-sm font-medium" style={{ color: 'rgba(255,255,255,0.5)' }}>
                 ETB
               </span>
             )}
           </div>
         </motion.div>
 
-        {/* Quick Specs Grid */}
+        {/* Quick Specs Grid - Hidden on Mobile */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 2.1, duration: 0.5 }}
-          className="relative z-10 grid grid-cols-2 gap-y-5 gap-x-4 mb-8"
+          className="relative z-10 hidden md:grid grid-cols-2 gap-y-5 gap-x-4 mb-8"
         >
           {[
             { label: 'Transmission', value: car.transmission || 'Automatic' },
@@ -105,14 +105,14 @@ const VehicleInfoCard = ({ car }) => {
             onClick={() => {
               window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
             }}
-            className="w-full py-3.5 px-6 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 relative overflow-hidden group"
+            className="w-full py-2.5 md:py-3.5 px-4 md:px-6 rounded-lg md:rounded-xl flex items-center justify-center gap-2 transition-all duration-300 relative overflow-hidden group"
             style={{
               background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 100%)',
               border: '1px solid rgba(255,255,255,0.15)',
             }}
           >
             <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-            <span className="text-sm font-medium tracking-wider text-white">View Full Details</span>
+            <span className="text-xs md:text-sm font-medium tracking-wider text-white">View Full Details</span>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-70 group-hover:translate-x-1 transition-transform">
               <line x1="5" y1="12" x2="19" y2="12" />
               <polyline points="12 5 19 12 12 19" />

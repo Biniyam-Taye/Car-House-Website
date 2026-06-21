@@ -70,7 +70,7 @@ const EnvironmentSwitcher = ({ activeEnvironment, onEnvironmentChange }) => {
       className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20"
     >
       <div
-        className="flex items-center gap-1 px-2 py-1.5 rounded-xl"
+        className="flex items-center gap-1 px-1 md:px-2 py-1 md:py-1.5 rounded-xl"
         style={{
           background: 'rgba(10, 10, 20, 0.7)',
           backdropFilter: 'blur(20px)',
@@ -86,7 +86,7 @@ const EnvironmentSwitcher = ({ activeEnvironment, onEnvironmentChange }) => {
               onClick={() => onEnvironmentChange(env.id)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="relative px-3 py-1.5 rounded-lg cursor-pointer transition-colors duration-200"
+              className="relative px-2 md:px-3 py-1 md:py-1.5 rounded-lg cursor-pointer transition-colors duration-200"
               style={{
                 background: isActive
                   ? 'rgba(99, 102, 241, 0.2)'

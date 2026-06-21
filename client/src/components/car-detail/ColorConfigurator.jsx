@@ -55,7 +55,7 @@ const ColorConfigurator = ({ activeColor, onColorChange }) => {
 
                 {/* Color circle */}
                 <div
-                  className="w-7 h-7 rounded-full relative overflow-hidden"
+                  className="w-5 h-5 md:w-7 md:h-7 rounded-full relative overflow-hidden"
                   style={{
                     background: color.hex,
                     boxShadow: isActive
