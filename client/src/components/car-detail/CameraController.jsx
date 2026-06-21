@@ -8,6 +8,7 @@ const CameraController = ({
   autoRotate,
   onUserInteraction,
   flyToTarget,
+  zoomCommand,
   onFlyComplete,
   isInteriorMode,
   startupComplete,
@@ -78,6 +79,38 @@ const CameraController = ({
       2.0
     );
   }, [isInteriorMode, camera]);
+
+  // Handle Manual Zoom Commands
+  useEffect(() => {
+    if (!zoomCommand) return;
+    const controls = controlsRef.current;
+    if (!controls) return;
+    
+    // Stop auto-rotate or flying if we manually zoom
+    if (isFlying.current) return;
+
+    // Use three.js to move camera position closer/further from target
+    const THREE = require('three');
+    const dir = new THREE.Vector3().subVectors(camera.position, controls.target).normalize();
+    const currentDistance = camera.position.distanceTo(controls.target);
+    
+    let newDistance = currentDistance;
+    if (zoomCommand.direction === 'in') {
+      newDistance = Math.max(controls.minDistance || 2, currentDistance - 2.5);
+    } else if (zoomCommand.direction === 'out') {
+      newDistance = Math.min(controls.maxDistance || 15, currentDistance + 2.5);
+    }
+
+    const newPos = new THREE.Vector3().copy(controls.target).add(dir.multiplyScalar(newDistance));
+
+    animateCameraTo(
+      camera,
+      controls,
+      [newPos.x, newPos.y, newPos.z],
+      [controls.target.x, controls.target.y, controls.target.z],
+      0.5 // faster transition for manual zoom
+    );
+  }, [zoomCommand, camera]);
 
   // Track user interaction
   const handleInteraction = useCallback(() => {

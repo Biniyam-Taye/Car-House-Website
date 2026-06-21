@@ -15,6 +15,7 @@ const CarViewer = ({
   isInteriorMode,
   activeHotspot,
   flyToTarget,
+  zoomCommand,
   startupComplete,
   onUserInteraction,
   onHotspotClick,
@@ -69,6 +70,7 @@ const CarViewer = ({
           autoRotate={autoRotate}
           onUserInteraction={onUserInteraction}
           flyToTarget={flyToTarget}
+          zoomCommand={zoomCommand}
           onFlyComplete={onFlyComplete}
           isInteriorMode={isInteriorMode}
           startupComplete={startupComplete}

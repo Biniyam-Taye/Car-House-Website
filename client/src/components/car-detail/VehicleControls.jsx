@@ -10,8 +10,39 @@ const VehicleControls = ({
   onToggleAutoRotate,
   showHotspots,
   onToggleHotspots,
+  onZoomIn,
+  onZoomOut,
 }) => {
   const controls = [
+    {
+      id: 'zoomIn',
+      label: 'Zoom In',
+      isActive: false,
+      onClick: onZoomIn,
+      alwaysShow: true,
+      icon: (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          <line x1="11" y1="8" x2="11" y2="14" />
+          <line x1="8" y1="11" x2="14" y2="11" />
+        </svg>
+      ),
+    },
+    {
+      id: 'zoomOut',
+      label: 'Zoom Out',
+      isActive: false,
+      onClick: onZoomOut,
+      alwaysShow: true,
+      icon: (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          <line x1="8" y1="11" x2="14" y2="11" />
+        </svg>
+      ),
+    },
     {
       id: 'headlights',
       label: 'Lights',
@@ -86,7 +117,7 @@ const VehicleControls = ({
           transition={{ delay: 1.2 + idx * 0.1, duration: 0.4 }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className={`group relative flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-xl cursor-pointer transition-all duration-300 ${['rotate', 'hotspots'].includes(ctrl.id) ? 'hidden md:flex' : ''}`}
+          className={`group relative flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-xl cursor-pointer transition-all duration-300 ${['rotate', 'hotspots'].includes(ctrl.id) && !ctrl.alwaysShow ? 'hidden md:flex' : ''}`}
           style={{
             background: ctrl.isActive
               ? 'rgba(99, 102, 241, 0.3)'

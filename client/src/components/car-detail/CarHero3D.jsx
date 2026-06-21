@@ -21,6 +21,7 @@ const CarHero3D = ({ car }) => {
   const [activeHotspot, setActiveHotspot] = useState(null);
   const [flyToTarget, setFlyToTarget] = useState(null);
   const [showHotspots, setShowHotspots] = useState(true);
+  const [zoomCommand, setZoomCommand] = useState(null);
 
   // Idle timer ref for auto-rotate
   const idleTimerRef = useRef(null);
@@ -112,6 +113,14 @@ const CarHero3D = ({ car }) => {
     setFlyToTarget(null);
   }, []);
 
+  const handleZoomIn = useCallback(() => {
+    setZoomCommand({ direction: 'in', ts: Date.now() });
+  }, []);
+
+  const handleZoomOut = useCallback(() => {
+    setZoomCommand({ direction: 'out', ts: Date.now() });
+  }, []);
+
   return (
     <div className="relative w-full h-[95vh] min-h-[600px] overflow-hidden bg-[#0a0a0f]">
       {/* Premium Loading Screen */}
@@ -128,6 +137,7 @@ const CarHero3D = ({ car }) => {
           activeHotspot={activeHotspot}
           showHotspots={showHotspots}
           flyToTarget={flyToTarget}
+          zoomCommand={zoomCommand}
           startupComplete={startupComplete}
           onUserInteraction={handleUserInteraction}
           onHotspotClick={handleHotspotClick}
@@ -168,6 +178,8 @@ const CarHero3D = ({ car }) => {
               onToggleAutoRotate={handleToggleAutoRotate}
               showHotspots={showHotspots}
               onToggleHotspots={handleToggleHotspots}
+              onZoomIn={handleZoomIn}
+              onZoomOut={handleZoomOut}
             />
           </div>
         </div>
