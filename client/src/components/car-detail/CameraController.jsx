@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useCallback } from 'react';
 import { useThree, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
+import * as THREE from 'three';
 import { CAMERA_POSITIONS, AUTO_ROTATE_DELAY, AUTO_ROTATE_SPEED } from './ViewerUtils';
 import { animateCameraFlyIn, animateCameraTo } from './Animations';
 
@@ -90,7 +91,6 @@ const CameraController = ({
     if (isFlying.current) return;
 
     // Use three.js to move camera position closer/further from target
-    const THREE = require('three');
     const dir = new THREE.Vector3().subVectors(camera.position, controls.target).normalize();
     const currentDistance = camera.position.distanceTo(controls.target);
     
