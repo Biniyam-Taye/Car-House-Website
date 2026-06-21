@@ -158,7 +158,7 @@ const CarHero3D = ({ car }) => {
 
           <VehicleInfoCard car={car} />
 
-          <div className="pointer-events-auto">
+          <div className="pointer-events-auto absolute bottom-6 w-full flex flex-row flex-wrap justify-center md:justify-start items-end gap-3 px-4 md:pl-6 md:pr-20 z-20">
             <ColorConfigurator
               activeColor={activeColor}
               onColorChange={handleColorChange}
@@ -168,6 +168,9 @@ const CarHero3D = ({ car }) => {
               activeEnvironment={activeEnvironment}
               onEnvironmentChange={handleEnvironmentChange}
             />
+          </div>
+
+          <div className="pointer-events-auto">
 
             <VehicleControls
               headlightsOn={headlightsOn}

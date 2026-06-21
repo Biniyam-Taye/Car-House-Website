@@ -8,7 +8,7 @@ const ColorConfigurator = ({ activeColor, onColorChange }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.8, duration: 0.6 }}
-      className="absolute bottom-24 left-1/2 -translate-x-1/2 z-20 md:bottom-6 md:left-6 md:translate-x-0"
+      className="z-20"
     >
       <div
         className="flex items-center gap-3 px-5 py-3 rounded-2xl"

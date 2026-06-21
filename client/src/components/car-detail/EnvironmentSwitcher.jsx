@@ -67,7 +67,7 @@ const EnvironmentSwitcher = ({ activeEnvironment, onEnvironmentChange }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 1.0, duration: 0.6 }}
-      className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20"
+      className="z-20"
     >
       <div
         className="flex items-center gap-1 px-1 md:px-2 py-1 md:py-1.5 rounded-xl"
