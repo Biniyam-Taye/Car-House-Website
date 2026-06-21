@@ -28,7 +28,7 @@ const ColorConfigurator = ({ activeColor, onColorChange }) => {
         </span>
 
         {/* Color swatches */}
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap justify-center items-center gap-2 max-w-[280px] sm:max-w-md">
           {CAR_COLORS.map((color) => {
             const isActive = activeColor === color.id;
             return (
