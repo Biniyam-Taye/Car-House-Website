@@ -20,6 +20,7 @@ const CarModel = memo(({ activeColor, headlightsOn = false, onModelLoaded }) => 
       if (child.isMesh) {
         child.castShadow = true;
         child.receiveShadow = true;
+        child.frustumCulled = false; // Prevent disappearing when zooming/rotating
 
         // Clone material so each instance is independent
         if (child.material) {
@@ -160,8 +161,12 @@ const CarModel = memo(({ activeColor, headlightsOn = false, onModelLoaded }) => 
           child.material.forEach(m => bodies.push(m));
         } else {
           // If the original material has a color, copy it temporarily
-          if (child.material && child.material.color) {
-            physMat.color.copy(child.material.color);
+          if (child.material && child.material.color && typeof child.material.color.copy === 'function') {
+            try {
+              physMat.color.copy(child.material.color);
+            } catch (e) {
+              console.warn("Could not copy material color", e);
+            }
           }
           child.material = physMat;
           bodies.push(physMat);

@@ -74,8 +74,6 @@ const CarViewer = ({
           startupComplete={startupComplete}
           onStartupComplete={onStartupComplete}
         />
-
-        <Preload all />
       </Suspense>
     </Canvas>
   );
