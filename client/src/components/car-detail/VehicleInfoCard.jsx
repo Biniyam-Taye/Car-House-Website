@@ -10,10 +10,10 @@ const VehicleInfoCard = ({ car }) => {
       initial={{ opacity: 0, x: -30 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 1.5, duration: 0.8, ease: 'easeOut' }}
-      className="absolute top-20 left-4 right-16 md:right-auto md:top-1/2 md:-translate-y-1/2 md:left-12 z-20 md:w-96 max-w-sm pointer-events-none"
+      className="hidden md:block absolute top-20 left-4 right-16 md:right-auto md:top-1/2 md:-translate-y-1/2 md:left-12 z-20 md:w-96 max-w-sm pointer-events-none"
     >
       <div
-        className="pointer-events-auto rounded-2xl md:rounded-3xl p-4 md:p-6 overflow-hidden relative"
+        className="pointer-events-auto rounded-xl md:rounded-3xl p-3 md:p-6 overflow-hidden relative"
         style={{
           background: 'rgba(10, 10, 20, 0.4)',
           backdropFilter: 'blur(25px)',
@@ -29,7 +29,7 @@ const VehicleInfoCard = ({ car }) => {
         />
 
         {/* Header: Brand & Model */}
-        <div className="relative z-10 mb-3 md:mb-6">
+        <div className="relative z-10 mb-1 md:mb-6">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -52,7 +52,7 @@ const VehicleInfoCard = ({ car }) => {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 1.9, duration: 0.5 }}
-          className="relative z-10 mb-4 md:mb-8 pb-4 md:pb-6 border-b border-white/10"
+          className="relative z-10 mb-2 md:mb-8 pb-2 md:pb-6 border-b border-white/10"
         >
           <p className="text-[10px] md:text-xs font-medium tracking-wider uppercase mb-1" style={{ color: 'rgba(255,255,255,0.4)' }}>
             Starting at
@@ -98,14 +98,14 @@ const VehicleInfoCard = ({ car }) => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 2.3, duration: 0.5 }}
-          className="relative z-10 flex flex-col gap-3"
+          className="relative z-10 flex flex-col gap-2 md:gap-3"
         >
           {/* Main Action */}
           <button
             onClick={() => {
               window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
             }}
-            className="w-full py-2.5 md:py-3.5 px-4 md:px-6 rounded-lg md:rounded-xl flex items-center justify-center gap-2 transition-all duration-300 relative overflow-hidden group"
+            className="w-full py-1.5 md:py-3.5 px-3 md:px-6 rounded-lg md:rounded-xl flex items-center justify-center gap-2 transition-all duration-300 relative overflow-hidden group"
             style={{
               background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 100%)',
               border: '1px solid rgba(255,255,255,0.15)',

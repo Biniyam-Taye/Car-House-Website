@@ -89,6 +89,7 @@ const CameraController = ({
     <OrbitControls
       ref={controlsRef}
       enablePan={false}
+      enableZoom={false}
       enableDamping
       dampingFactor={0.05}
       minDistance={2}
