@@ -179,6 +179,11 @@ const CarModel = memo(({ activeColor, headlightsOn = false, onModelLoaded }) => 
     taillightMaterials.current = taillights;
 
     // Auto-center and scale the model
+    // Reset position and scale first in case of React StrictMode double-invocation
+    clonedScene.position.set(0, 0, 0);
+    clonedScene.scale.setScalar(1);
+    clonedScene.updateMatrixWorld(true);
+
     const box = new THREE.Box3().setFromObject(clonedScene);
     const center = box.getCenter(new THREE.Vector3());
     const size = box.getSize(new THREE.Vector3());
@@ -187,6 +192,7 @@ const CarModel = memo(({ activeColor, headlightsOn = false, onModelLoaded }) => 
 
     clonedScene.position.set(-center.x * scale, -box.min.y * scale, -center.z * scale);
     clonedScene.scale.setScalar(scale);
+    clonedScene.updateMatrixWorld(true);
 
     if (onModelLoaded) {
       onModelLoaded({ box, center, size, scale });
