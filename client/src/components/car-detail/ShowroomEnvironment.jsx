@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, Suspense } from 'react';
 import {
   Environment,
   ContactShadows,
@@ -16,10 +16,12 @@ const ShowroomEnvironment = ({ activeEnvironment = 'showroom' }) => {
   return (
     <>
       {/* HDRI Environment Map */}
-      <Environment
-        preset={env.preset}
-        environmentIntensity={env.envIntensity}
-      />
+      <Suspense fallback={null}>
+        <Environment
+          preset={env.preset}
+          environmentIntensity={env.envIntensity}
+        />
+      </Suspense>
 
       {/* Scene background color + fog */}
       <color attach="background" args={[env.bgColor]} />

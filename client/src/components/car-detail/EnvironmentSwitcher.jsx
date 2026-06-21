@@ -2,6 +2,65 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { ENVIRONMENTS } from './ViewerUtils';
 
+const EnvIcon = ({ id, isActive }) => {
+  const color = isActive ? 'rgba(255,255,255,1)' : 'rgba(255,255,255,0.6)';
+  
+  switch (id) {
+    case 'showroom':
+      return (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="4" y="10" width="16" height="10" rx="2" />
+          <path d="M2 10l10-6 10 6" />
+          <path d="M8 10v10" />
+          <path d="M16 10v10" />
+        </svg>
+      );
+    case 'garage':
+      return (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M3 21V8L12 3l9 5v13" />
+          <path d="M13 21v-8a1 1 0 0 0-1-1h-0a1 1 0 0 0-1 1v8" />
+          <line x1="8" y1="12" x2="8" y2="12.01" />
+          <line x1="16" y1="12" x2="16" y2="12.01" />
+        </svg>
+      );
+    case 'daylight':
+      return (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v2" />
+          <path d="M12 20v2" />
+          <path d="M4.93 4.93l1.41 1.41" />
+          <path d="M17.66 17.66l1.41 1.41" />
+          <path d="M2 12h2" />
+          <path d="M20 12h2" />
+          <path d="M6.34 17.66l-1.41 1.41" />
+          <path d="M19.07 4.93l-1.41 1.41" />
+        </svg>
+      );
+    case 'sunset':
+      return (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 2v2" />
+          <path d="M4.93 4.93l1.41 1.41" />
+          <path d="M19.07 4.93l-1.41 1.41" />
+          <path d="M2 12h2" />
+          <path d="M20 12h2" />
+          <path d="M22 17H2" />
+          <path d="M8 17a4 4 0 0 1 8 0" />
+        </svg>
+      );
+    case 'night':
+      return (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+      );
+    default:
+      return null;
+  }
+};
+
 const EnvironmentSwitcher = ({ activeEnvironment, onEnvironmentChange }) => {
   return (
     <motion.div
@@ -46,7 +105,9 @@ const EnvironmentSwitcher = ({ activeEnvironment, onEnvironmentChange }) => {
                 />
               )}
               <span className="relative z-10 flex items-center gap-1.5">
-                <span className="text-sm">{env.icon}</span>
+                <span className="text-sm flex items-center justify-center">
+                  <EnvIcon id={env.id} isActive={isActive} />
+                </span>
                 <span
                   className="text-xs font-medium tracking-wide hidden sm:block"
                   style={{
